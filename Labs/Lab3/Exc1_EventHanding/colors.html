@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a {
+            color: black;
+        }
+
+        #list {
+            font-size: 1.2em;
+        }
+
+        li {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="list">
+        <li>
+            <a href="#" class="red" onmouseover="setColorMouseOver(this)" onmouseout="setColorMouseOut(this)">
+                RED</a>
+            <p>Link màu red khi di chuột vào</p>
+        </li>
+        <li>
+            <a href="#" class="green" onmouseover="setColorMouseOver(this)"
+                onmouseout="setColorMouseOut(this)">GREEN</a>
+            <p>Link màu green khi di chuột vào</p>
+        </li>
+        <li>
+            <a href="#" class="blue" onmouseover="setColorMouseOver(this)" onmouseout="setColorMouseOut(this)">BLUE</a>
+            <p>Link màu blue khi di chuột vào</p>
+        </li>
+    </div>
+
+    <script>
+        function setColorMouseOver(data) {
+            data.style.color = data.className;
+        }
+
+        function setColorMouseOut(data) {
+            data.style.color = 'black';
+        }
+    </script>
+</body>
+
+</html>
