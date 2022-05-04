@@ -1,0 +1,18 @@
+<!doctype html "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <script type="text/javascript">
+            num=0;
+            function myFunc(){
+                num++;
+                document.myForm.outputField.value = "Called " + num + " times";
+            }
+            window.setInterval("myFunc()", 1000);
+        </script>
+    </head>
+    <body>
+        <form name="myForm">
+            <input type="text" name="outputField" readonly>
+        </form>
+    </body>
+</html>
