@@ -1,7 +1,5 @@
 function getCookie(name) {
-    var cookieList = document.cookie.split(";");
-
-    console.log(cookieList)
+    var cookieArr = document.cookie.split(";");
 
     for(var i = 0; i < cookieArr.length; i++) {
         var cookiePair = cookieArr[i].split("=");
@@ -21,14 +19,14 @@ function addCookie () {
 		return false;
 	} else {
 		var oldCookie = getCookie("cookie");
-		var cookieValue = "";
+		var cookievalue = "";
 		if(oldCookie != null){
-			cookieValue= encodeURIComponent(oldCookie + " " + data); 
+			cookievalue= encodeURIComponent(oldCookie + " " + data); 
 		} else {
-			cookieValue = encodeURIComponent(data);
+			cookievalue = encodeURIComponent(data);
 		}
 		var maxAge = "; max-age=" + 1*24*60*60 + ";";
-		document.cookie="cookie=" + cookieValue + maxAge;
+		document.cookie="cookie=" + cookievalue + maxAge;
        	document.myform.textarea.value = "";
 	}
 }
