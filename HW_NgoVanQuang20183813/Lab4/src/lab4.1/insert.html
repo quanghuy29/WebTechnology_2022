@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Insert Inventory</title>
+    </head>
+
+    <style>
+        .container {
+            max-width:40%;
+        }
+        .wrap {
+            width: 100%;
+        }
+        .form_line {
+            padding: 5px;
+            width: 100%;
+            background-color: bisque;
+            display: flex;
+        }
+        .form_line__label {
+            width: 30%;
+        }
+        .form_line__box {
+            width: 50%;
+        }
+    </style>
+
+    <body>
+        <div class="container">
+            <form action="/insert_table.php" method="get" target="_blank">
+                <div class="wrap">
+                    <div class="form_line">
+                        <div class="form_line__label">
+                            <label for="item_description">Item Description:</label>
+                        </div>
+                        <div class="from_line__box">
+                            <input type="text" id="item_description" name="item_description">
+                        </div>
+                    </div>
+                    
+                    <div class="form_line">
+                        <div class="form_line__label">
+                            <label for="weight">Weight:</label>
+                        </div>
+                        <div class="from_line__box">
+                            <input type="text" id="weight" name="weight">
+                        </div>
+                    </div>
+
+                    <div class="form_line">
+                        <div class="form_line__label">
+                            <label for="cost">Cost:</label>
+                        </div>
+                        <div class="from_line__box">
+                            <input type="text" id="cost" name="cost">
+                        </div>
+                    </div>
+
+                    <div class="form_line">
+                        <div class="form_line__label">
+                            <label for="number_available">Number Available:</label>
+                        </div>
+                        <div class="from_line__box">
+                            <input type="text" id="number_available" name="number_available">
+                        </div>
+                    </div>
+
+                    <div class="form_line">
+                        <div class="form_line__label">
+                            <input type="submit" id="submit_btn" value="Click To Submit">
+                        </div>
+
+                        <div class="from_line__box">
+                            <input type="button" id="reset_btn" value="Reset">
+                        </div>
+                    </div>
+                    
+                </div>
+            
+
+          </form>
+        </div>
+        
+    </body>
+</html>
