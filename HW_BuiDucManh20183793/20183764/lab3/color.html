@@ -1,0 +1,27 @@
+<!DOCTYPE html "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>Event Handling</title>
+        <script type="text/javascript">
+            function setColor(color){
+                var pTag = window.document.getElementById("paragraph");
+                pTag.style.color = color;
+            }
+
+            function doLoad(){
+                document.getElementById("red").addEventListener('click', setColor(red), false);
+            }
+            window.addEventListener('load', doLoad, false);
+        </script>
+    </head>
+    <body>
+        <a id = "red" href="#" style="color: red" onmouseover="setColor('red')" onmouseout="setColor('black')">RED</a> <br>
+        <a id = "green" href="#" style="color: green" onmouseover="setColor('green')" onmouseout="setColor('black')">GREEN</a> <br>
+        <a id = "blue" href="#" style="color: blue" onmouseover="setColor('blue')" onmouseout="setColor('black')">BLUE</a> <br>
+        
+        <p id = "paragraph">
+            I’m selfish, impatient and a little insecure. I make mistakes, I am out of control and at times hard to handle. 
+        But if you can’t handle me at my worst, then you sure as hell don’t deserve me at my best. ― Marilyn Monroe
+        </p>
+    </body>
+</html>
