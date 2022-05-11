@@ -697,8 +697,50 @@
 
 ## 4.2 Open and use phpMyAdmin to create a database and tables
 ### 4.2.1 Open Zend Server Community Edition
+Phần này nhóm cài đặt phpmyadmin từ apt package manager nên không sử dụng Zend Server 
 ### 4.2.2 Open phpMyAdmin
+
+Màn hình login của phpMyAdmin:
+
+![Finger 9: phpmyadmin login screen](imgs/phpmyadmin_login_screen.png)
+
+*Finger 9: phpmyadmin login screen*
+
+<br>
+
+Màn hình Home page của phpMyAdmin:
+![Finger 10: phpmyadmin homepage](imgs/phpmyadmin_homepage.png)
+
+*Finger 10: phpmyadmin homepage*
+
+<br>
+
 ### 4.2.3 Create tables and relationships for business listing service
+
+
+Tạo các bảng và quan hệ giữa các bảng trong bussiness_service database:
+
+![Finger 11: business_service database table structure 1](imgs/business_service_database_table_structure_1.png)
+
+*Finger 11: business_service database table structure 1*
+
+<br>
+
+![Finger 12: business_service database table structure 2](imgs/business_service_database_table_structure_2.png)
+
+*Finger 12: business_service database table structure 2*
+
+<br>
+
 ## 4.3 Category Administration page
+
+<br>
+
+![Finger 13: Category Administration page](imgs/category_adminstration.png)
+
+*Finger 13: Category Administration page*
+
+<br>
+
 ## 4.4 Business Registration page
 ## 4.5 Business Listing page
