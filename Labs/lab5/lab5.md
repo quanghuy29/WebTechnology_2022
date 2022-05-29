@@ -18,7 +18,9 @@
 ![Finger 2.1: View all item](ex2/lab5-ex2_1.png)
 
 ### 2.2 Add Items
-![Finger 2.2: Add Items](imgs/lab5-ex2_2.png)
+![Finger 2.2.1: Add Items](ex2/lab5-ex2_0.png)
+![Finger 2.2.2: Add Items](ex2/lab5-ex2_2.png)
 
 ### 2.3 Delete Items
-![Finger 2.3: Delete Items](imgs/lab5-ex2_3.png)
+![Finger 2.3.1: Delete Items](ex2/lab5-ex2_3.png)
+![Finger 2.3.2: Delete Items](ex2/lab5-ex2_4.png)
