@@ -10,7 +10,8 @@
 | 3   | Trần Đình Nguyên | 20183807 |
 | 4   | Bùi Đức Mạnh     | 20183793 |
 
-<hr>
+</hr>
+
 ## 1. EX1
 ### 1.1. View All Books
 ![Finger 1.1: View All Books](ex1/lab5-ex1-1.png)
