@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Placemark>
+    <name>Đường Hoàng Mai, Hoàng Văn Thụ, Hoàng Mai, Hà Nội, Việt Nam</name>
+    <description>Nhà của tôi</description>
+    <Point>
+      <coordinates>105.85185022310012, 20.992776055749935</coordinates>
+    </Point>
+  </Placemark>
+</kml>
