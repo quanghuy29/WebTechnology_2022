@@ -1,13 +1,13 @@
 package web.nhom8.quanlyktx.model;
 
 public class UserModel {
-    private int UserId;
-    private int RoleId;
+    private Integer UserId;
+    private Long RoleId;
     private String Username;
     private String Password;
     private int State;
 
-    public UserModel(int userId, int roleId, String username, String password, int state) {
+    public UserModel(Integer userId, Long roleId, String username, String password, int state) {
         UserId = userId;
         RoleId = roleId;
         Username = username;
@@ -15,17 +15,20 @@ public class UserModel {
         State = state;
     }
 
+    public void setUserId(Integer userId) {
+        UserId = userId;
+    }
+
+    public void setRoleId(Long roleId) {
+        RoleId = roleId;
+    }
+
     public int getUserId() {
         return UserId;
     }
 
-
     public int getRoleId() {
         return RoleId;
-    }
-
-    public void setRoleId(int roleId) {
-        RoleId = roleId;
     }
 
     public String getUsername() {

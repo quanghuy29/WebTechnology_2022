@@ -53,7 +53,7 @@ public class MysqlDao {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 RoleModel roleModel = new RoleModel();
-                roleModel.setRoleId(resultSet.getInt("RoleId"));
+                roleModel.setRoleId(resultSet.getLong("RoleId"));
                 roleModel.setRoleName(resultSet.getString("RoleName"));
                 roleModel.setRoleCode(resultSet.getString("RoleCode"));
                 results.add(roleModel);

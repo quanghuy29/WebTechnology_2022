@@ -1,24 +1,24 @@
 package web.nhom8.quanlyktx.model;
 
 public class RoleModel {
-    private int RoleId;
+    private Long RoleId;
     private String RoleName;
     private String RoleCode;
 
 
 
-    public RoleModel(int roleId, String roleName, String roleCode) {
+    public RoleModel(Long roleId, String roleName, String roleCode) {
         RoleId = roleId;
         RoleName = roleName;
         RoleCode = roleCode;
     }
 
-    public RoleModel() {
-        super();
+    public void setRoleId(Long roleId) {
+        RoleId = roleId;
     }
 
-    public void setRoleId(int roleId) {
-        RoleId = roleId;
+    public RoleModel() {
+        super();
     }
 
     public int getRoleId() {
