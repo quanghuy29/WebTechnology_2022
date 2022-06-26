@@ -21,7 +21,7 @@ public class RoleModel {
         super();
     }
 
-    public int getRoleId() {
+    public long getRoleId() {
         return RoleId;
     }
 

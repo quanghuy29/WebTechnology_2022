@@ -15,6 +15,9 @@ public class UserModel {
         State = state;
     }
 
+    public UserModel() {
+    }
+
     public void setUserId(Integer userId) {
         UserId = userId;
     }
@@ -27,7 +30,7 @@ public class UserModel {
         return UserId;
     }
 
-    public int getRoleId() {
+    public long getRoleId() {
         return RoleId;
     }
 
@@ -57,11 +60,11 @@ public class UserModel {
 
     @Override
     public String toString() {
-        return "User{" +
-                "UserId=" + UserId +
-                ", RoleId=" + RoleId +
-                ", Username='" + Username + '\'' +
-                ", Password='" + Password + '\'' +
+        return "{" +
+                "UserId:" + UserId +
+                ", RoleId:" + RoleId +
+                ", Username:'" + Username + '\'' +
+                ", Password:'" + Password + '\'' +
                 ", State=" + State +
                 '}';
     }
