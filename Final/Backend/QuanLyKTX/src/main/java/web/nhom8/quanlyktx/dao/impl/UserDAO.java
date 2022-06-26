@@ -26,4 +26,11 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
         List<UserModel> userModels = query(sql, new UserMapper(), userName);
         return userModels.isEmpty() ? null : userModels.get(0);
     }
+
+    @Override
+    public UserModel findByUsernameAndPasswordAndState(String userName, String password, int state) {
+        String sql = "SELECT * FROM `User` WHERE `Username` = ? AND `Password` = ? AND `State` = ?";
+        List<UserModel> userModels = query(sql, new UserMapper(), userName, password, state);
+        return userModels.isEmpty() ? null : userModels.get(0);
+    }
 }

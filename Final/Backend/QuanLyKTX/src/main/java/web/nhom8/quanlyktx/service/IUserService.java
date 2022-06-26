@@ -9,4 +9,6 @@ public interface IUserService {
     UserModel findOne(int userId);
 
     UserModel findByUserName(String userName);
+
+    UserModel findByUsernameAndPasswordAndState(String userName, String password, int state);
 }

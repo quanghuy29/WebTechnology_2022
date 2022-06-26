@@ -1,8 +1,13 @@
 package web.nhom8.quanlyktx.controller.guest;
 
 import com.google.gson.Gson;
+import org.codehaus.jackson.map.ObjectMapper;
+import web.nhom8.quanlyktx.model.ResponseObject;
 import web.nhom8.quanlyktx.model.UserModel;
 import web.nhom8.quanlyktx.service.IUserService;
+import web.nhom8.quanlyktx.utils.FormUtil;
+import web.nhom8.quanlyktx.utils.HttpUtil;
+import web.nhom8.quanlyktx.utils.SessionUtil;
 
 import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
@@ -28,25 +33,30 @@ public class LoginAPI extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
         req.setCharacterEncoding("UTF-8");
-        System.out.println(req.getParameter("username"));
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
-        UserModel userModel = userService.findByUserName(req.getParameter("username"));
-        if(userModel != null)
+        // read json body mapping model
+        UserModel userModel = HttpUtil.of(req.getReader()).toModel(UserModel.class);
+        userModel = userService.findByUsernameAndPasswordAndState(userModel.getUsername(), userModel.getPassword(), 1);
+        String msg;
+        int status;
+        if(userModel == null)
         {
-            System.out.println(userModel);
-            if(userModel.getPassword().equals(req.getParameter("password")) && userModel.getState() == 1) {
-                System.out.println("Dang nhap thanh cong");
-            } else {
-                System.out.println("tai khoan da bi vo hieu hoa!");
-            }
+            msg = "Username or password failed!";
+            status = 400;
+            System.out.println(msg);
+        } else {
+            SessionUtil.getInstance().putValue(req, "USERMODEL", userModel);
+            msg = "Login successfull!";
+            status = 200;
+            System.out.println(msg);
         }
-        PrintWriter out = resp.getWriter();
-        Gson gson = new Gson();
-        String userJson = gson.toJson(userModel);
-        out.print(userJson);
-        out.flush();
+        ResponseObject responseObject = new ResponseObject();
+        responseObject.setMessage(msg);
+        responseObject.setStatus(status);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(resp.getOutputStream(), responseObject);
     }
 }
