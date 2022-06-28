@@ -14,7 +14,7 @@ public class RoomMapper implements RowMapper<RoomModel> {
             room.setRoomCode(rs.getString("RoomCode"));
             room.setAvailableSlots(rs.getInt("AvailableSlots"));
             room.setMaxSlots(rs.getInt("MaxSlots"));
-            room.setPaymentState(rs.getInt("RoomPaymentState"));
+            room.setRoomPaymentState(rs.getInt("RoomPaymentState"));
             room.setRoomState(rs.getInt("RoomState"));
             return room;
         } catch (SQLException e){

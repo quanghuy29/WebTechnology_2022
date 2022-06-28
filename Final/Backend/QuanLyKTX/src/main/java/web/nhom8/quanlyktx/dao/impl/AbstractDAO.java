@@ -101,6 +101,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
+            System.out.println(e + sql);
         } finally {
             try {
                 if (connection != null) {

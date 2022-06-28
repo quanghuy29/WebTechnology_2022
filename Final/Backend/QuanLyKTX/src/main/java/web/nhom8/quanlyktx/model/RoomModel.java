@@ -5,15 +5,15 @@ public class RoomModel {
     private String RoomCode;
     private int MaxSlots;
     private int AvailableSlots;
-    private int PaymentState;
+    private int RoomPaymentState;
     private int RoomState;
 
-    public RoomModel(Long roomId, String roomCode, int maxSlots, int availableSlots, int paymentState) {
+    public RoomModel(Long roomId, String roomCode, int maxSlots, int availableSlots, int roomPaymentState) {
         RoomId = roomId;
         RoomCode = roomCode;
         MaxSlots = maxSlots;
         AvailableSlots = availableSlots;
-        PaymentState = paymentState;
+        RoomPaymentState = roomPaymentState;
     }
 
     public RoomModel(){
@@ -52,12 +52,12 @@ public class RoomModel {
         AvailableSlots = availableSlots;
     }
 
-    public int getPaymentState() {
-        return PaymentState;
+    public int getRoomPaymentState() {
+        return RoomPaymentState;
     }
 
-    public void setPaymentState(int paymentState) {
-        PaymentState = paymentState;
+    public void setRoomPaymentState(int roomPaymentState) {
+        RoomPaymentState = roomPaymentState;
     }
 
     public int getRoomState() {
@@ -75,7 +75,7 @@ public class RoomModel {
                 ", \nRoomCode: " + RoomCode + '\'' +
                 ", \nMaxSlots: " + MaxSlots +
                 ", \nAvailableSlots: " + AvailableSlots +
-                ", \nPaymentState: " + PaymentState +
+                ", \nPaymentState: " + RoomPaymentState +
                 ", \nRoomState= " + RoomState +
                 "\n}";
     }

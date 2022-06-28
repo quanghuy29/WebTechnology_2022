@@ -1,4 +1,4 @@
-package web.nhom8.quanlyktx.Service.implement;
+package web.nhom8.quanlyktx.Service.impl;
 
 import web.nhom8.quanlyktx.Service.IRoomService;
 import web.nhom8.quanlyktx.dao.IRoomDAO;
