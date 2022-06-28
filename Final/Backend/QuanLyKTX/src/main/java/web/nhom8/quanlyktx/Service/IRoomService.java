@@ -1,10 +1,10 @@
-package web.nhom8.quanlyktx.dao;
+package web.nhom8.quanlyktx.Service;
 
 import web.nhom8.quanlyktx.model.RoomModel;
 
 import java.util.List;
 
-public interface IRoomDAO extends GenericDAO<RoomModel> {
+public interface IRoomService {
     RoomModel findOne(Long roomId);
     List<RoomModel> findAll();
     RoomModel save(RoomModel room);

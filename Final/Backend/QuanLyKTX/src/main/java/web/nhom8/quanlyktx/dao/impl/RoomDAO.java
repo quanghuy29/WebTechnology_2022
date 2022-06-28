@@ -39,7 +39,7 @@ public class RoomDAO extends AbstractDAO<RoomModel> implements IRoomDAO {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         String sql = "DELETE FROM Room WHERE RoomId = ?";
         update(sql, id);
     }
