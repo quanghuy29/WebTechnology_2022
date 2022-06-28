@@ -1,21 +1,23 @@
 package web.nhom8.quanlyktx.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HttpUtil {
     private String value;
 
-    public HttpUtil (String value) {
+    public HttpUtil(String value) {
         this.value = value;
     }
 
     public <T> T toModel(Class<T> tClass) {
         try {
             return new ObjectMapper().readValue(value, tClass);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -23,12 +25,12 @@ public class HttpUtil {
     public static HttpUtil of (BufferedReader reader) {
         StringBuilder sb = new StringBuilder();
         try {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
+           String line;
+           while ((line = reader.readLine()) != null) {
+               sb.append(line);
+           }
         } catch (IOException e) {
-            System.out.print(e.getMessage());
+            System.out.println(e.getMessage());
         }
         return new HttpUtil(sb.toString());
     }
