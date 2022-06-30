@@ -22,7 +22,7 @@ public class LoginAPI extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req .setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
