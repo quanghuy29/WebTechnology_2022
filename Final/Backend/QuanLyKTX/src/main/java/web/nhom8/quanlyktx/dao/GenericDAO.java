@@ -1,7 +1,6 @@
 package web.nhom8.quanlyktx.dao;
 
 import web.nhom8.quanlyktx.mapper.RowMapper;
-
 import java.util.List;
 /**
  * @bief general interface class to reused code.
