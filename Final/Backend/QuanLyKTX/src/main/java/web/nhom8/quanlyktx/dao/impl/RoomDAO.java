@@ -48,4 +48,16 @@ public class RoomDAO extends AbstractDAO<RoomModel> implements IRoomDAO {
         String sql = "SELECT count(*) FROM Room";
         return count(sql);
     }
+
+    @Override
+    public int getIdMax() {
+        String sql = "SELECT MAX(RoomId) FROM Room";
+        return count(sql);
+    }
+
+    @Override
+    public void resetAI() {
+        String sql = "ALTER TABLE Room AUTO_INCREMENT = ?";
+        update(sql, getIdMax());
+    }
 }

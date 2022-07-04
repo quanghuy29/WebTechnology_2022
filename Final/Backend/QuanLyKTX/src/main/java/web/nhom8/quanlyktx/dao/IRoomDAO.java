@@ -11,4 +11,6 @@ public interface IRoomDAO extends GenericDAO<RoomModel> {
     RoomModel update(RoomModel room);
     void delete(Long id);
     int getTotalItem();
+    int getIdMax();
+    void resetAI();
 }
