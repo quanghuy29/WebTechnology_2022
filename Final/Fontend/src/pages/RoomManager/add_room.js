@@ -5,7 +5,6 @@ import axios from "axios";
 
 
 const AddRoom = forwardRef((props, ref) => {
-
     const [roomCode, setRoomCode] = useState('');
     const [maxSlots, setMaxSlots] = useState(0);
 

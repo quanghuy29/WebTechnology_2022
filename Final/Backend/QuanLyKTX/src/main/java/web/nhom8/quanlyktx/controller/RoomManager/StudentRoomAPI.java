@@ -34,6 +34,7 @@ public class StudentRoomAPI extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
 

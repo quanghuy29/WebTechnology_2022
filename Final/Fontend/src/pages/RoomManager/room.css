@@ -69,3 +69,25 @@ i.fa-pen:hover {
 i.fa-trash:hover {
     cursor: pointer;
 }
+
+i.fa-user-plus:hover {
+    cursor: pointer;
+}
+
+.container-fluid-half-l {
+    width: 40%;
+    padding-right: 15px;
+    padding-left: 15px;
+    border-radius: 0.7rem;
+    float: left;
+}
+
+.container-fluid-half-r {
+    width: 55%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-bottom: 15px;
+    float: right;
+    margin-right: 1rem;
+    border: 0.2rem solid rgb(0, 0, 0, 20%);
+}

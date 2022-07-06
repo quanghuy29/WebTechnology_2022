@@ -7,6 +7,9 @@ import Popup from "../../component/popup/popup";
 import AddRoom from "./add_room";
 import UpdateRoom from "./update_room";
 import DeleteRoom from "./delete_room";
+import StudentRoom from "./room_student";
+import ShowRoom from "./show_info_room";
+import "./room.css";
 
 
 const Room = () => {
@@ -20,6 +23,8 @@ const Room = () => {
     const deleteChildRef = useRef()
     const addChildRef = useRef()
     const updateChildRef = useRef()
+    const getStudent = useRef()
+    const getRoom = useRef()
 
     useEffect(() => {
         fetch(urlGet)
@@ -37,6 +42,7 @@ const Room = () => {
         if (addChildRef.current.postRoom() === true) {
             setIsOpenPopup(!isOpenPopup)
         }
+
         setTimeout(() => setChange(!change), 500);
     }
 
@@ -44,6 +50,7 @@ const Room = () => {
         if (updateChildRef.current.putRoom() === true) {
             setIsUpdate(!isUpdate)
         }
+        getRoom.current.update(room.roomId);
         setTimeout(() => setChange(!change), 500);
     }
 
@@ -51,33 +58,24 @@ const Room = () => {
         'Room ID',
         'Room Code',
         'Max Slots',
-        'Available Slots',
-        'Room Payment State',
-        'RoomState'
+        'Available Slots'
     ]
 
     const renderHead = (item, index) => <th key={index}>{item}</th>
 
-    const checkPaymentRoomState = (item) => {
-        if (item.roomPaymentState === 1) return "Đã trả đủ tiền điện nước"
-        else return "Còn thiếu tiền điện nước"
-    }
-
-    const checkRoomState = (item) => {
-        if (item.roomState === 1) return "Đang ở"
-        else if (item.roomState === 2) return "Đang khoá"
-    }
-
     const renderBody = (item, index) => (
         <tr key={index}>
             <td>{item.roomId}</td>
-            <td>{item.roomCode}</td>
+            <td><button onClick={() => {
+                setRoom(item);
+                getStudent.current.update(item.roomId);
+                getRoom.current.update(item.roomId)
+            }}>{item.roomCode}</button></td>
             <td>{item.maxSlots}</td>
             <td>{item.availableSlots}</td>
-            <td>{checkPaymentRoomState(item)}</td>
-            <td>{checkRoomState(item)}</td>
             <td><i className="fas fa-pen" onClick={() => {
                 setRoom(item);
+                getStudent.current.update(item.roomId);
                 setIsUpdate(!isUpdate);
             }}></i>
             </td>
@@ -100,13 +98,17 @@ const Room = () => {
                             <li className="breadcrumb-item">
                                 <Link to={'/dashboard'} >Dashboard</Link>
                             </li>
-                            <li className="breadcrumb-item active">Room</li>
-                            <button className="ml-auto" onClick={() => setIsOpenPopup(!isOpenPopup)}>Add Room</button>
+                            <li className="breadcrumb-item active">Room</li>                        
                         </ol>
                     </div>
-                    <div className="container-fluid">
+                    <div className="container-fluid-half-l">
                         <div className="card mx-auto">
-                            <div className="card-header">Room</div>
+                            <div className="container-fluid">
+                                <ol className="breadcrumb">
+                                    <li className="breadcrumb-item active">Room</li>
+                                    <button className="ml-auto" onClick={() => setIsOpenPopup(!isOpenPopup)}>Add Room</button>
+                                </ol>
+                            </div>
                             <div className="card-body">
                                 {isOpenPopup && <Popup
                                     content={
@@ -147,6 +149,26 @@ const Room = () => {
                                 />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="container-fluid-half-r">
+                        <ShowRoom
+                            roomId={room.roomId}
+                            roomCode={room.roomCode}
+                            maxSlots={room.maxSlots}
+                            availableSlots={room.availableSlots}
+                            roomPaymentState={room.roomPaymentState}
+                            roomState={room.roomState}
+                            ref={getRoom}
+                            reloadStudents={()=>getStudent.current.update(room.roomId)}
+                        ></ShowRoom>
+                    </div>
+
+                    <div className="container-fluid-half-r">
+                        <StudentRoom
+                            roomId={room.roomId}
+                            ref={getStudent}
+                        ></StudentRoom>
                     </div>
                     <footer className="sticky-footer">
                         <div className="container my-auto">
