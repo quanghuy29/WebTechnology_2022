@@ -153,12 +153,12 @@ const Room = () => {
 
                     <div className="container-fluid-half-r">
                         <ShowRoom
-                            roomId={room.roomId}
-                            roomCode={room.roomCode}
-                            maxSlots={room.maxSlots}
-                            availableSlots={room.availableSlots}
-                            roomPaymentState={room.roomPaymentState}
-                            roomState={room.roomState}
+                            roomId={''}
+                            roomCode={''}
+                            maxSlots={0}
+                            availableSlots={0}
+                            roomPaymentState={1}
+                            roomState={1}
                             ref={getRoom}
                             reloadStudents={()=>getStudent.current.update(room.roomId)}
                         ></ShowRoom>

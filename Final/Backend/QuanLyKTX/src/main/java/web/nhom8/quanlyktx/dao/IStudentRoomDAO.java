@@ -12,4 +12,6 @@ public interface IStudentRoomDAO {
     StudentRoomModel update(StudentRoomModel model);
     StudentRoomModel findOne(Long id);
     StudentRoomModel findByStudentId(Long idStudent);
+    int getIdMax();
+    void resetAI();
 }

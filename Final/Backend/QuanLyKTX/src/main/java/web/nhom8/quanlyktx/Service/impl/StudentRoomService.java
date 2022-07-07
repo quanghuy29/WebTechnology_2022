@@ -31,6 +31,7 @@ public class StudentRoomService implements IStudentRoomService {
     @Override
     public void delete(Long idStudent) {
         studentRoomDAO.delete(idStudent);
+        studentRoomDAO.resetAI();
     }
 
     @Override

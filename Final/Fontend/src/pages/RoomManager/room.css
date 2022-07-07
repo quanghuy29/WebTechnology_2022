@@ -74,6 +74,14 @@ i.fa-user-plus:hover {
     cursor: pointer;
 }
 
+i.fa-edit:hover {
+    cursor: pointer;
+}
+
+i.fa-minus-circle:hover {
+    cursor: pointer;
+}
+
 .container-fluid-half-l {
     width: 40%;
     padding-right: 15px;

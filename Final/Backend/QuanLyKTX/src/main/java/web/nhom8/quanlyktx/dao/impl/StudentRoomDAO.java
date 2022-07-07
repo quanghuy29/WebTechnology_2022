@@ -41,8 +41,8 @@ public class StudentRoomDAO extends AbstractDAO<StudentRoomModel> implements ISt
     public StudentRoomModel update(StudentRoomModel model) {
         String sql = "UPDATE StudentRoom SET PayMoneyRemain = ?, PaymentState = ? " +
                 "WHERE StudentId = ?";
-        update(sql, model.getPayMoneyRemain(), model.getPaymentState(), model.getId());
-        return findOne(model.getStudentId());
+        update(sql, model.getPayMoneyRemain(), model.getPaymentState(), model.getStudentId());
+        return findByStudentId(model.getStudentId());
     }
 
     @Override
@@ -57,5 +57,17 @@ public class StudentRoomDAO extends AbstractDAO<StudentRoomModel> implements ISt
         String sql = "SELECT * FROM StudentRoom WHERE StudentId = ?";
         List<StudentRoomModel> models = query(sql, new StudentRoomMapper(), idStudent);
         return models.isEmpty() ? null : models.get(0);
+    }
+
+    @Override
+    public int getIdMax() {
+        String sql = "SELECT MAX(StudentRoomId) FROM StudentRoom";
+        return count(sql);
+    }
+
+    @Override
+    public void resetAI() {
+        String sql = "ALTER TABLE StudentRoom AUTO_INCREMENT = ?";
+        update(sql, getIdMax());
     }
 }
