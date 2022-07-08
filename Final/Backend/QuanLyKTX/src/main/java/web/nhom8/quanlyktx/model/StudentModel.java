@@ -23,6 +23,9 @@ public class StudentModel {
     private String StudentClass;
     private int State;
 
+    public StudentModel() {
+    }
+
     public StudentModel(int studentId, String studentCode, String fullname, Date dateOfBirth, String email, String address,
                         String phone, int yearSchool, String studentClass, int state) {
         StudentId = studentId;
@@ -35,6 +38,10 @@ public class StudentModel {
         YearSchool = yearSchool;
         StudentClass = studentClass;
         State = state;
+    }
+
+    public void setStudentId(int studentId) {
+        StudentId = studentId;
     }
 
     public int getStudentId() {
