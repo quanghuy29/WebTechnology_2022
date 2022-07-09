@@ -10,4 +10,6 @@ public interface IStudentDAO extends GenericDAO<StudentModel>{
     StudentModel findByStudentCode(String studentCode);
 
     List<StudentModel> findByStudentClass(String studentClass);
+
+    int addNewStudent(StudentModel newStudentModel);
 }

@@ -2,6 +2,7 @@ package web.nhom8.quanlyktx.controller.quanlysinhvien;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import web.nhom8.quanlyktx.model.RequestObject;
+import web.nhom8.quanlyktx.model.ResponseObject;
 import web.nhom8.quanlyktx.model.StudentModel;
 import web.nhom8.quanlyktx.service.IStudentService;
 import web.nhom8.quanlyktx.utils.HttpUtil;
@@ -20,6 +21,7 @@ public class StudentManagerAPI extends HttpServlet {
 
     @Inject
     private IStudentService studentService;
+    // search student[s]
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -44,5 +46,21 @@ public class StudentManagerAPI extends HttpServlet {
             List<StudentModel> studentModels = studentService.findByStudentClass(requestObject.getMessage());
             mapper.writeValue(resp.getOutputStream(), studentModels);
         }
+    }
+
+    // add new student
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
+
+        StudentModel studentModel = HttpUtil.of(req.getReader()).toModel(StudentModel.class);
+        Integer result = studentService.addNewStudent(studentModel);
+        ResponseObject responseObject = new ResponseObject();
+        responseObject.setMessage(result.toString());
+        responseObject.setStatus(200);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(resp.getOutputStream(), responseObject);
     }
 }
