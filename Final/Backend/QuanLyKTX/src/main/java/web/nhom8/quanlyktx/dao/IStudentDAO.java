@@ -1,6 +1,7 @@
 package web.nhom8.quanlyktx.dao;
 
 import web.nhom8.quanlyktx.model.StudentModel;
+import web.nhom8.quanlyktx.model.UserModel;
 
 import java.util.List;
 
@@ -11,5 +12,10 @@ public interface IStudentDAO extends GenericDAO<StudentModel>{
 
     List<StudentModel> findByStudentClass(String studentClass);
 
-    int addNewStudent(StudentModel newStudentModel);
+    Long addNewStudent(StudentModel newStudentModel);
+
+    void updateStudentInfo(StudentModel newStudentModel);
+
+    void deleteStudent(Long studentId);
+
 }

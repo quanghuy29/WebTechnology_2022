@@ -27,7 +27,21 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public int addNewStudent(StudentModel newStudentModel) {
+    public Long addNewStudent(StudentModel newStudentModel) {
         return studentDAO.addNewStudent(newStudentModel);
+    }
+
+    @Override
+    public StudentModel updateStudentInfo(StudentModel newStudentModel) {
+        studentDAO.updateStudentInfo(newStudentModel);
+        return studentDAO.findByStudentCode(newStudentModel.getStudentCode());
+    }
+
+    @Override
+    public void deleteStudent(List<Long> studentIds) {
+        for (Long i:
+             studentIds) {
+           studentDAO.deleteStudent(i);
+        }
     }
 }
