@@ -11,4 +11,7 @@ public interface IStudentService {
 
     List<StudentModel> findByStudentClass(String studentClass);
 
+    // add new student
+    int addNewStudent(StudentModel newStudentModel);
+
 }

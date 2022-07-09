@@ -29,4 +29,16 @@ public class StudentDAO extends AbstractDAO<StudentModel> implements IStudentDAO
         List<StudentModel> studentModels = query(sql, new StudentMapper(), studentClass);
         return studentModels;
     }
+
+    @Override
+    public int addNewStudent(StudentModel newStudentModel) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("INSERT INTO Student (StudentId, StudentCode, Fullname, DateOfBirth, Email, Address, Phone, ");
+        sql.append("YearSchool, Class, State) VALUES (NULL, ?, ?, ?, ?, ? , ?, ? , ? , ? , ? , ?");
+
+        return insert(sql.toString(), newStudentModel.getStudentCode(), newStudentModel.getFullname(),
+                newStudentModel.getDateOfBirth(), newStudentModel.getEmail(), newStudentModel.getAddress(),
+                newStudentModel.getPhone(), newStudentModel.getYearSchool(), newStudentModel.getStudentClass(),
+                newStudentModel.getState());
+    }
 }

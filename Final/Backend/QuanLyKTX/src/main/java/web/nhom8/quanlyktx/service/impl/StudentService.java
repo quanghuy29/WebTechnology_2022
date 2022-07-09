@@ -25,4 +25,9 @@ public class StudentService implements IStudentService {
     public List<StudentModel> findByStudentClass(String studentClass) {
         return studentDAO.findByStudentClass(studentClass);
     }
+
+    @Override
+    public int addNewStudent(StudentModel newStudentModel) {
+        return studentDAO.addNewStudent(newStudentModel);
+    }
 }
