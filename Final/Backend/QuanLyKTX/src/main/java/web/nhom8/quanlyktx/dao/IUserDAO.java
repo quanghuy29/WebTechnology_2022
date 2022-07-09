@@ -11,4 +11,5 @@ public interface IUserDAO extends GenericDAO<UserModel> {
     UserModel findByUserName(String userName);
 
     UserModel findByUsernameAndPasswordAndState(String userName, String password, int state);
+    Long addNewUser(UserModel newUserModel);
 }
