@@ -39,6 +39,8 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                     statement.setTimestamp(index, (Timestamp) parameter);
                 } else if (parameter instanceof String) {
                     statement.setString(index, (String) parameter);
+                } else if (parameter instanceof Date) {
+                    statement.setDate(index, (Date) parameter);
                 }
             }
         } catch (SQLException e)
