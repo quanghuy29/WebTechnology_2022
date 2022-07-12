@@ -1,8 +1,8 @@
-package web.nhom8.quanlyktx.Service.impl;
+package web.nhom8.quanlyktx.service.impl;
 
 import web.nhom8.quanlyktx.dao.IStudentDAO;
 import web.nhom8.quanlyktx.model.StudentModel;
-import web.nhom8.quanlyktx.Service.IStudentService;
+import web.nhom8.quanlyktx.service.IStudentService;
 
 import javax.inject.Inject;
 import java.util.List;

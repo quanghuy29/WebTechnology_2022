@@ -3,7 +3,7 @@ package web.nhom8.quanlyktx.controller.quanlysinhvien;
 import org.codehaus.jackson.map.ObjectMapper;
 import web.nhom8.quanlyktx.model.RequestObject;
 import web.nhom8.quanlyktx.model.StudentModel;
-import web.nhom8.quanlyktx.Service.IStudentService;
+import web.nhom8.quanlyktx.service.IStudentService;
 import web.nhom8.quanlyktx.utils.HttpUtil;
 
 import javax.inject.Inject;
