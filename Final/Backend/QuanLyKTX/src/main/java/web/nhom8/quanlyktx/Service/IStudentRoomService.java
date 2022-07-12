@@ -1,4 +1,4 @@
-package web.nhom8.quanlyktx.service;
+package web.nhom8.quanlyktx.Service;
 
 import web.nhom8.quanlyktx.model.StudentRoomModel;
 

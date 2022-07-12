@@ -1,6 +1,6 @@
-package web.nhom8.quanlyktx.service.impl;
+package web.nhom8.quanlyktx.Service.impl;
 
-import web.nhom8.quanlyktx.service.IRoomService;
+import web.nhom8.quanlyktx.Service.IRoomService;
 import web.nhom8.quanlyktx.dao.IRoomDAO;
 import web.nhom8.quanlyktx.dao.IStudentRoomDAO;
 import web.nhom8.quanlyktx.model.RoomModel;
