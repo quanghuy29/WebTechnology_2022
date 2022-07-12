@@ -1,4 +1,4 @@
-package web.nhom8.quanlyktx.Service.impl;
+package web.nhom8.quanlyktx.service.impl;
 
 import web.nhom8.quanlyktx.dao.IStudentDAO;
 import web.nhom8.quanlyktx.model.StudentModel;

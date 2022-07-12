@@ -1,7 +1,7 @@
 package web.nhom8.quanlyktx.controller.RoomManager;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import web.nhom8.quanlyktx.Service.IRoomService;
+import web.nhom8.quanlyktx.service.IRoomService;
 import web.nhom8.quanlyktx.model.ResponseObject;
 import web.nhom8.quanlyktx.model.RoomModel;
 import web.nhom8.quanlyktx.utils.HttpUtil;
