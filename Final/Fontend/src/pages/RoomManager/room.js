@@ -10,6 +10,7 @@ import DeleteRoom from "./delete_room";
 import StudentRoom from "./room_student";
 import ShowRoom from "./show_info_room";
 import "./room.css";
+import SearchBar from "../../component/searchbar/searchbar";
 
 
 const Room = () => {
@@ -29,29 +30,28 @@ const Room = () => {
     useEffect(() => {
         fetch(urlGet)
             .then(res => res.json())
-            .then(data => setRooms(data))
+            .then(data => { setRooms(data); console.log(data); })
     }, [change]);
 
     const deleteFunction = () => {
         deleteChildRef.current.deleteRoom();
         setIsDelete(!isDelete);
-        setTimeout(() => setChange(!change), 500);
+        setTimeout(() => setChange(!change), 100);
     }
 
     const addFunction = () => {
-        if (addChildRef.current.postRoom() === true) {
+        if (addChildRef.current.postRoom(rooms) === true) {
             setIsOpenPopup(!isOpenPopup)
+            setTimeout(() => setChange(!change), 100);
         }
-
-        setTimeout(() => setChange(!change), 500);
     }
 
     const updateFunction = () => {
         if (updateChildRef.current.putRoom() === true) {
             setIsUpdate(!isUpdate)
+            getRoom.current.update(room.roomId);
+            setTimeout(() => setChange(!change), 100);
         }
-        getRoom.current.update(room.roomId);
-        setTimeout(() => setChange(!change), 500);
     }
 
     const customerTableHead = [
@@ -61,21 +61,22 @@ const Room = () => {
         'Available Slots'
     ]
 
+    const clickItem = (item) => {
+        setRoom(item);
+        getStudent.current.update(item.roomId);
+        getRoom.current.update(item.roomId)
+    }
+
     const renderHead = (item, index) => <th key={index}>{item}</th>
 
     const renderBody = (item, index) => (
         <tr key={index}>
             <td>{item.roomId}</td>
-            <td><button onClick={() => {
-                setRoom(item);
-                getStudent.current.update(item.roomId);
-                getRoom.current.update(item.roomId)
-            }}>{item.roomCode}</button></td>
+            <td><div className="room" onClick={() => clickItem(item)}>{item.roomCode}</div></td>
             <td>{item.maxSlots}</td>
             <td>{item.availableSlots}</td>
             <td><i className="fas fa-pen" onClick={() => {
-                setRoom(item);
-                getStudent.current.update(item.roomId);
+                clickItem(item);
                 setIsUpdate(!isUpdate);
             }}></i>
             </td>
@@ -98,15 +99,17 @@ const Room = () => {
                             <li className="breadcrumb-item">
                                 <Link to={'/dashboard'} >Dashboard</Link>
                             </li>
-                            <li className="breadcrumb-item active">Room</li>                        
+                            <li className="breadcrumb-item active">Room</li>
+                            <SearchBar data={rooms} showItem={clickItem}></SearchBar>
                         </ol>
+
                     </div>
                     <div className="container-fluid-half-l">
                         <div className="card mx-auto">
                             <div className="container-fluid">
                                 <ol className="breadcrumb">
                                     <li className="breadcrumb-item active">Room</li>
-                                    <button className="ml-auto" onClick={() => setIsOpenPopup(!isOpenPopup)}>Add Room</button>
+                                    <button className="btn-add" onClick={() => setIsOpenPopup(!isOpenPopup)}>Thêm phòng</button>
                                 </ol>
                             </div>
                             <div className="card-body">
@@ -160,7 +163,8 @@ const Room = () => {
                             roomPaymentState={1}
                             roomState={1}
                             ref={getRoom}
-                            reloadStudents={()=>getStudent.current.update(room.roomId)}
+                            reloadStudents={() => getStudent.current.update(room.roomId)}
+                            reloadRoom={() => setChange(!change)}
                         ></ShowRoom>
                     </div>
 

@@ -4898,7 +4898,9 @@ input[type="button"].btn-block {
   -webkit-box-flex: 1;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
-  padding: 1.25rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 
 .card-title {
@@ -5138,7 +5140,7 @@ input[type="button"].btn-block {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   list-style: none;
   background-color: #e9ecef;
   border-radius: 0.5rem;
@@ -8857,6 +8859,7 @@ button.bg-dark:focus {
 .mr-auto,
 .mx-auto {
   margin-right: auto !important;
+  
 }
 
 .mb-auto,
@@ -8867,6 +8870,7 @@ button.bg-dark:focus {
 .ml-auto,
 .mx-auto {
   margin-left: auto !important;
+  border-radius: 15px;
 }
 
 @media (min-width: 576px) {

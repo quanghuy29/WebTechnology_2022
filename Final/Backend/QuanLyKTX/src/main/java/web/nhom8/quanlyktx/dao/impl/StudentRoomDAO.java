@@ -27,7 +27,8 @@ public class StudentRoomDAO extends AbstractDAO<StudentRoomModel> implements ISt
         String sql = "INSERT INTO StudentRoom (StudentId, RoomId, PayMoneyRemain, " +
                 "PaymentState) VALUES(?, ? ,? ,?)";
         Long id = insert(sql, model.getStudentId(), model.getRoomId(),
-                model.getPayMoneyRemain(), model.getPaymentState());;
+                model.getPayMoneyRemain(), model.getPaymentState());
+        if (id == null) return null;
         return findOne(id);
     }
 
@@ -62,7 +63,7 @@ public class StudentRoomDAO extends AbstractDAO<StudentRoomModel> implements ISt
     @Override
     public int getIdMax() {
         String sql = "SELECT MAX(StudentRoomId) FROM StudentRoom";
-        return count(sql);
+        return count(sql) == 0 ? 1 : count(sql);
     }
 
     @Override

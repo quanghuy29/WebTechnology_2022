@@ -52,7 +52,7 @@ public class RoomDAO extends AbstractDAO<RoomModel> implements IRoomDAO {
     @Override
     public int getIdMax() {
         String sql = "SELECT MAX(RoomId) FROM Room";
-        return count(sql);
+        return count(sql) == 0 ? 1 : count(sql);
     }
 
     @Override

@@ -82,8 +82,12 @@ i.fa-minus-circle:hover {
     cursor: pointer;
 }
 
+i.fa-times:hover {
+    cursor: pointer;
+}
+
 .container-fluid-half-l {
-    width: 40%;
+    width: 42%;
     padding-right: 15px;
     padding-left: 15px;
     border-radius: 0.7rem;
@@ -97,5 +101,19 @@ i.fa-minus-circle:hover {
     margin-bottom: 15px;
     float: right;
     margin-right: 1rem;
+    border-radius: 0.7rem;
     border: 0.2rem solid rgb(0, 0, 0, 20%);
+}
+
+.btn-add {
+    margin-left: auto !important;
+}
+
+.room {
+    font-style: normal;
+}
+
+.room:hover {
+    cursor: pointer;
+    font-weight: bolder;
 }

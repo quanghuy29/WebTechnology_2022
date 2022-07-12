@@ -4,7 +4,7 @@ import "./room.css";
 import axios from "axios";
 
 const UpdateRoom = forwardRef((props, ref) => {
-    const [roomId, setRoomId] = useState(props.roomId);
+    const roomId = props.roomId;
     const [roomCode, setRoomCode] = useState(props.roomCode);
     const [maxSlots, setMaxSlots] = useState(props.maxSlots);
     const [paymentState, setPaymentState] = useState(props.roomPaymentState);
@@ -31,7 +31,7 @@ const UpdateRoom = forwardRef((props, ref) => {
                 isValid = false;
             }
 
-            if (isValid == true) {
+            if (isValid === true) {
                 axios.put(urlPut, putData, { params: { idRoom: roomId } })
                     .then(res => console.log(res));
             }

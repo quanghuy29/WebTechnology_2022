@@ -1,7 +1,9 @@
 package web.nhom8.quanlyktx.Service.impl;
 
+import web.nhom8.quanlyktx.Service.IRoomService;
 import web.nhom8.quanlyktx.Service.IStudentRoomService;
 import web.nhom8.quanlyktx.dao.IStudentRoomDAO;
+import web.nhom8.quanlyktx.model.RoomModel;
 import web.nhom8.quanlyktx.model.StudentRoomModel;
 
 import javax.inject.Inject;
@@ -10,6 +12,8 @@ import java.util.List;
 public class StudentRoomService implements IStudentRoomService {
     @Inject
     private IStudentRoomDAO studentRoomDAO;
+    @Inject
+    private IRoomService roomService;
 
     @Override
     public List<StudentRoomModel> findAllStudentByRoom(Long idRoom) {
@@ -25,7 +29,17 @@ public class StudentRoomService implements IStudentRoomService {
     public StudentRoomModel save(StudentRoomModel model) {
         if (model.getPayMoneyRemain() == null) model.setPayMoneyRemain(0f);
         if (model.getPaymentState() == null) model.setPaymentState(1);
-        return studentRoomDAO.save(model);
+        List<StudentRoomModel> list = studentRoomDAO.findAllStudentByRoom(model.getRoomId());
+        RoomModel room = roomService.findOne(model.getRoomId());
+        if (room.getMaxSlots() - list.size() < 1) return null;
+
+        if (studentRoomDAO.save(model) != null) {
+            list = studentRoomDAO.findAllStudentByRoom(model.getRoomId());
+            room.setAvailableSlots(room.getMaxSlots() - list.size());
+            roomService.update(room);
+            return findByStudentId(model.getStudentId());
+        }
+        return null;
     }
 
     @Override
@@ -36,6 +50,8 @@ public class StudentRoomService implements IStudentRoomService {
 
     @Override
     public StudentRoomModel update(StudentRoomModel model) {
+        if (model.getPayMoneyRemain() == 0) model.setPaymentState(1);
+        else model.setPaymentState(2);
         return studentRoomDAO.update(model);
     }
 

@@ -4,6 +4,7 @@ import "./popup.css"
 const Popup = props => {
     return (
         <div className="popup-box">
+            <div className="background" onClick={props.handleClose}></div>
             <div className="box">
                 <div className="close-icon" onClick={props.handleClose}></div>
                 {props.content}
