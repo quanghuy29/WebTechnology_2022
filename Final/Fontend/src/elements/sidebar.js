@@ -36,6 +36,10 @@ export default class Sidebar extends Component {
                             <span>&nbsp;File Upload</span></Link>
                     </li>
                     <li className="nav-item">
+                        <Link to={'/room'} className="nav-link"><i className="fas fa-fw fa-chart-area"></i>
+                            <span>&nbsp;Room</span></Link>
+                    </li>
+                    <li className="nav-item">
                         <a className="nav-link" href="tables.html">
                             <i className="fas fa-fw fa-table"></i>
                             <span>&nbsp;Tables</span></a>

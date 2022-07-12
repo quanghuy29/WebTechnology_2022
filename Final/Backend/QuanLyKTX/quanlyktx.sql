@@ -36,7 +36,7 @@ CREATE TABLE `Manager` (
   `Phone` varchar(12) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
   `YearOfService` int NOT NULL,
   `State` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -52,7 +52,7 @@ CREATE TABLE `OrderK` (
   `Content` text CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
   `SentDate` date NOT NULL,
   `State` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,7 @@ CREATE TABLE `OrderK` (
 CREATE TABLE `OrderType` (
   `TypeId` int NOT NULL,
   `TypeName` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -75,7 +75,7 @@ CREATE TABLE `Role` (
   `RoleId` bigint NOT NULL,
   `RoleName` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
   `RoleCode` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Role`
@@ -100,7 +100,7 @@ CREATE TABLE `Room` (
   `AvailableSlots` int NOT NULL,
   `RoomState` int NOT NULL,
   `RoomPaymentState` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  ;
 
 -- --------------------------------------------------------
 
@@ -114,7 +114,7 @@ CREATE TABLE `RoomPayment` (
   `PaymentMoney` int NOT NULL,
   `PaymentDate` date NOT NULL,
   `State` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -133,7 +133,7 @@ CREATE TABLE `Student` (
   `YearSchool` int NOT NULL,
   `Class` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
   `State` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -147,7 +147,7 @@ CREATE TABLE `StudentRoom` (
   `RoomId` int NOT NULL,
   `PayMoneyRemain` float NOT NULL,
   `PaymentState` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  ;
 
 -- --------------------------------------------------------
 
@@ -161,7 +161,7 @@ CREATE TABLE `User` (
   `Username` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
   `Password` varchar(256) CHARACTER SET utf8mb3 COLLATE utf8_general_ci NOT NULL,
   `State` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -175,7 +175,7 @@ CREATE TABLE `UtilityBill` (
   `Money` int NOT NULL,
   `PaymentDate` date NOT NULL,
   `State` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables

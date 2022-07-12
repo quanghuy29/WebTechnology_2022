@@ -1,21 +1,30 @@
 package web.nhom8.quanlyktx.model;
 
 public class RoomModel {
-    private int RoomId;
+    private Long RoomId;
     private String RoomCode;
     private int MaxSlots;
     private int AvailableSlots;
-    private int PaymentState;
+    private int RoomPaymentState;
+    private int RoomState;
 
-    public RoomModel(int roomId, String roomCode, int maxSlots, int availableSlots, int paymentState) {
+    public RoomModel(Long roomId, String roomCode, int maxSlots, int availableSlots, int roomPaymentState) {
         RoomId = roomId;
         RoomCode = roomCode;
         MaxSlots = maxSlots;
         AvailableSlots = availableSlots;
-        PaymentState = paymentState;
+        RoomPaymentState = roomPaymentState;
     }
 
-    public int getRoomId() {
+    public RoomModel(){
+
+    }
+
+    public void setRoomId(Long roomId) {
+        RoomId = roomId;
+    }
+
+    public Long getRoomId() {
         return RoomId;
     }
 
@@ -43,22 +52,31 @@ public class RoomModel {
         AvailableSlots = availableSlots;
     }
 
-    public int getPaymentState() {
-        return PaymentState;
+    public int getRoomPaymentState() {
+        return RoomPaymentState;
     }
 
-    public void setPaymentState(int paymentState) {
-        PaymentState = paymentState;
+    public void setRoomPaymentState(int roomPaymentState) {
+        RoomPaymentState = roomPaymentState;
+    }
+
+    public int getRoomState() {
+        return RoomState;
+    }
+
+    public void setRoomState(int roomState) {
+        RoomState = roomState;
     }
 
     @Override
     public String toString() {
-        return "Room{" +
-                "RoomId=" + RoomId +
-                ", RoomCode='" + RoomCode + '\'' +
-                ", MaxSlots=" + MaxSlots +
-                ", AvailableSlots=" + AvailableSlots +
-                ", PaymentState=" + PaymentState +
-                '}';
+        return "{\n" +
+                "RoomId: " + RoomId +
+                ", \nRoomCode: " + RoomCode + '\'' +
+                ", \nMaxSlots: " + MaxSlots +
+                ", \nAvailableSlots: " + AvailableSlots +
+                ", \nPaymentState: " + RoomPaymentState +
+                ", \nRoomState= " + RoomState +
+                "\n}";
     }
 }

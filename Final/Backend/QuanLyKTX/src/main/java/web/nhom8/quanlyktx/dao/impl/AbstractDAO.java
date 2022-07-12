@@ -39,6 +39,8 @@ public class AbstractDAO<T> implements GenericDAO<T> {
                     statement.setTimestamp(index, (Timestamp) parameter);
                 } else if (parameter instanceof String) {
                     statement.setString(index, (String) parameter);
+                } else if (parameter instanceof Float) {
+                    statement.setFloat(index, (Float) parameter);
                 }
             }
         } catch (SQLException e)
@@ -101,6 +103,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
+            System.out.println(e + sql);
         } finally {
             try {
                 if (connection != null) {
@@ -139,6 +142,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
+            System.out.println(e + sql);
         } finally {
             try {
                 if (connection != null) {

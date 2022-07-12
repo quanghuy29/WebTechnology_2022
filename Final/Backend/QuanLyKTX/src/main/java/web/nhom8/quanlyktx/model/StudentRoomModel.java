@@ -1,64 +1,50 @@
 package web.nhom8.quanlyktx.model;
 
 public class StudentRoomModel {
-    private int StudentRoomId;
-    private int StudentId;
-    private int RoomId;
-    private float PayMoneyRemain;
-    private int PaymentState;
+    private Long Id;
+    private Long StudentId;
+    private Long RoomId;
+    private Float PayMoneyRemain;
+    private Integer PaymentState;
 
-    public StudentRoomModel(int studentRoomId, int studentId, int roomId, float payMoneyRemain, int paymentState) {
-        StudentRoomId = studentRoomId;
-        StudentId = studentId;
-        RoomId = roomId;
-        PayMoneyRemain = payMoneyRemain;
-        PaymentState = paymentState;
+    public void setId(Long id) {
+        Id = id;
     }
 
-    public int getStudentRoomId() {
-        return StudentRoomId;
+    public Long getId() {
+        return Id;
     }
 
-    public int getStudentId() {
+    public Long getStudentId() {
         return StudentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(Long studentId) {
         StudentId = studentId;
     }
 
-    public int getRoomId() {
+    public Long getRoomId() {
         return RoomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Long roomId) {
         RoomId = roomId;
     }
 
-    public float getPayMoneyRemain() {
+    public Float getPayMoneyRemain() {
         return PayMoneyRemain;
     }
 
-    public void setPayMoneyRemain(float payMoneyRemain) {
+    public void setPayMoneyRemain(Float payMoneyRemain) {
         PayMoneyRemain = payMoneyRemain;
     }
 
-    public int getPaymentState() {
+    public Integer getPaymentState() {
         return PaymentState;
     }
 
-    public void setPaymentState(int paymentState) {
+    public void setPaymentState(Integer paymentState) {
         PaymentState = paymentState;
     }
 
-    @Override
-    public String toString() {
-        return "StudentRoom{" +
-                "StudentRoomId=" + StudentRoomId +
-                ", StudentId=" + StudentId +
-                ", RoomId=" + RoomId +
-                ", PayMoneyRemain=" + PayMoneyRemain +
-                ", PaymentState=" + PaymentState +
-                '}';
-    }
 }
