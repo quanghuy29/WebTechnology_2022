@@ -39,7 +39,7 @@ const StudentRoom = forwardRef((props, ref) => {
         fetch(urlGet + roomID)
             .then(res => res.json())
             .then(data => setStudents(data))
-    }, [change]);
+    }, [change, roomID]);
 
     useImperativeHandle(ref, () => ({
         update(roomId) {

@@ -28,7 +28,15 @@ public class StudentRoomAPI extends HttpServlet {
         response.setContentType("application/json");
         StudentRoomModel model = HttpUtil.of(request.getReader()).toModel(StudentRoomModel.class);
         model = studentRoomService.save(model);
-        mapper.writeValue(response.getOutputStream(), model);
+        if (model == null){
+            ResponseObject responseFail = new ResponseObject();
+            responseFail.setStatus(0);
+            responseFail.setMessage("add student to room failed!!");
+            mapper.writeValue(response.getOutputStream(), responseFail);
+        } else {
+            System.out.println(model.getId());
+            mapper.writeValue(response.getOutputStream(), model);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -75,7 +83,7 @@ public class StudentRoomAPI extends HttpServlet {
             if (model == null){
                 ResponseObject responseFail = new ResponseObject();
                 responseFail.setStatus(0);
-                responseFail.setMessage("add student to room failed!!");
+                responseFail.setMessage("update student room failed!!");
                 mapper.writeValue(response.getOutputStream(), responseFail);
             } else {
                 mapper.writeValue(response.getOutputStream(), model);

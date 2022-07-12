@@ -24,26 +24,39 @@ const ShowRoom = forwardRef((props, ref) => {
     }
 
     const addFunction = () => {
+        if (room.roomState === 2) {
+            alert("Phòng bị khoá, không thể thêm sinh viên!!");
+            return;
+        }
+
+        if (room.availableSlots <= 0) {
+            alert("Phòng đã đầy!!");
+            return;
+        }
+
         if (addStudent.current.postStudentRoom() === true) {
             setIsAddStudent(!isAddStudent);
         }
         props.reloadStudents();
+        setTimeout(() => props.reloadRoom(), 100);
+        setTimeout(() => setChange(!change), 100);
+    }
+
+    const showData = (data) => {
+        if (!isFirstTime) setRoom(data);
+        setIsFirstTime(false);
     }
 
     useEffect(() => {
         fetch(urlGet + roomID)
             .then(res => res.json())
-            .then(data => {
-                if (!isFirstTime) setRoom(data);
-                setIsFirstTime(false);
-            })
-
-    }, [change]);
+            .then(data => showData(data))
+    }, [change, roomID]);
 
     useImperativeHandle(ref, () => ({
         update(roomId) {
             setRoomID(roomId);
-            setChange(!change);
+            setTimeout(() => setChange(!change), 100);
         }
     }))
 
@@ -73,15 +86,17 @@ const ShowRoom = forwardRef((props, ref) => {
                     </tr>
                     <tr>
                         <td>
-                            <i class="fas fa-user-plus" onClick={() => {
-                                if (room.roomCode != '')
-                                    setIsAddStudent(!isAddStudent)
-                            }}> Thêm sinh viên vào phòng</i>
+                            {room.roomCode !== '' &&
+                                <i class="fas fa-user-plus" onClick={() => {
+                                    if (room.roomCode !== '')
+                                        setIsAddStudent(!isAddStudent)
+                                }}> Thêm sinh viên vào phòng</i>
+                            }
                         </td>
                     </tr>
                 </tbody>
             </table>
-            {isAddStudent && room.roomCode != '' && <Popup
+            {isAddStudent && room.roomCode !== '' && <Popup
                 content={
                     <AddStudentRoom
                         roomId={roomID}

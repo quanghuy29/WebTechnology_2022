@@ -11,7 +11,7 @@ const AddRoom = forwardRef((props, ref) => {
     const urlPost = 'http://localhost:8080/QuanLyKTX_war_exploded/room';
 
     useImperativeHandle(ref, () => ({
-        postRoom() {
+        postRoom(rooms) {
             let isValid = true;
             const postData = {
                 roomCode: roomCode,
@@ -26,6 +26,12 @@ const AddRoom = forwardRef((props, ref) => {
                 isValid = false;
             }    
 
+            rooms.forEach(element => {
+                if (roomCode === element.roomCode){
+                    alert("Phòng đã tồn tại!!!");
+                    isValid = false;
+                }
+            });
             /*const data = {
                 "roomCode": "B02",
                 "maxSlots": 1

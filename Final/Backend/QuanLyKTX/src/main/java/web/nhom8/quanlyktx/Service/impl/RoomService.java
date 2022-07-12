@@ -36,6 +36,8 @@ public class RoomService implements IRoomService {
     @Override
     public RoomModel update(RoomModel room) {
         if (room.getAvailableSlots() > room.getMaxSlots() || room.getMaxSlots() < 0 || room.getAvailableSlots() < 0) return null;
+        List<StudentRoomModel> list = studentRoomDAO.findAllStudentByRoom(room.getRoomId());
+        room.setAvailableSlots(room.getMaxSlots() - list.size());
         return roomDAO.update(room);
     }
 
@@ -44,6 +46,7 @@ public class RoomService implements IRoomService {
         List<StudentRoomModel> listModel = studentRoomDAO.findAllStudentByRoom(id);
         for (StudentRoomModel model: listModel) {
             studentRoomDAO.delete(model.getStudentId());
+            studentRoomDAO.resetAI();
         }
         roomDAO.delete(id);
         roomDAO.resetAI();
