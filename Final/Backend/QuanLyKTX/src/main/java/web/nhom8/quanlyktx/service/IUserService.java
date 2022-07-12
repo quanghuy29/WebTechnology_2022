@@ -1,4 +1,4 @@
-package web.nhom8.quanlyktx.Service;
+package web.nhom8.quanlyktx.service;
 
 import web.nhom8.quanlyktx.model.UserModel;
 
