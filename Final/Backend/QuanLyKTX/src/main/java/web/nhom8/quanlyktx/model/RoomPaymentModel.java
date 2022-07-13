@@ -9,6 +9,9 @@ public class RoomPaymentModel {
     private Date PaymentDate;
     private int State;
 
+    public RoomPaymentModel() {
+
+    }
     public RoomPaymentModel(int paymentId, int studentRoomId, float paymentMoney, Date paymentDate, int state) {
         PaymentId = paymentId;
         StudentRoomId = studentRoomId;
@@ -19,6 +22,10 @@ public class RoomPaymentModel {
 
     public int getPaymentId() {
         return PaymentId;
+    }
+
+    public void setPaymentId(int paymentId) {
+        PaymentId = paymentId;
     }
 
     public int getStudentRoomId() {

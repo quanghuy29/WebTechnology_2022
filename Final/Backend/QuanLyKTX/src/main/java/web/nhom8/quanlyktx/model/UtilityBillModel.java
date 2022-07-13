@@ -9,6 +9,9 @@ public class UtilityBillModel {
     private Date PaymentDate;
     private int State;
 
+    public UtilityBillModel() {
+
+    }
     public UtilityBillModel(int billId, int roomId, float money, Date paymentDate, int state) {
         BillId = billId;
         RoomId = roomId;
@@ -21,6 +24,9 @@ public class UtilityBillModel {
         return BillId;
     }
 
+    public void setBillId(int billId) {
+        BillId = billId;
+    }
     public int getRoomId() {
         return RoomId;
     }
