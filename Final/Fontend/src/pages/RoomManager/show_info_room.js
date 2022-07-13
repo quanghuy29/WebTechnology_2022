@@ -2,17 +2,21 @@ import { forwardRef, useEffect, useImperativeHandle, useState, useRef } from "re
 import React from "react";
 import Popup from "../../component/popup/popup";
 import AddStudentRoom from "./add_student_room";
+import axios from "axios";
+import SearchStudent from "../../component/searchStudent/searchstudent";
 import "./room.css";
 
 const ShowRoom = forwardRef((props, ref) => {
     const [change, setChange] = useState(false);
     const [roomID, setRoomID] = useState(0);
     const [room, setRoom] = useState(props);
+    const [students, setStudents] = useState('');
+    const [studentCode, setStudentCode] = useState('');
     const [isFirstTime, setIsFirstTime] = useState(true);
     const [isAddStudent, setIsAddStudent] = useState(false);
     const addStudent = useRef()
     const urlGet = 'http://localhost:8080/QuanLyKTX_war_exploded/room?idRoom=';
-
+    const urlGetStudent = 'http://localhost:8080/QuanLyKTX_war_exploded/api-student_manager';
     const checkPaymentRoomState = (item) => {
         if (item === 1) return "Đã trả đủ tiền điện nước"
         else if (item === 2) return "Còn thiếu tiền điện nước"
@@ -34,12 +38,12 @@ const ShowRoom = forwardRef((props, ref) => {
             return;
         }
 
-        if (addStudent.current.postStudentRoom() === true) {
+        if (addStudent.current.postStudentRoom(studentCode) === true) {
             setIsAddStudent(!isAddStudent);
         }
         props.reloadStudents();
-        setTimeout(() => props.reloadRoom(), 100);
-        setTimeout(() => setChange(!change), 100);
+        setTimeout(() => props.reloadRoom(), 500);
+        setTimeout(() => setChange(!change), 500);
     }
 
     const showData = (data) => {
@@ -50,16 +54,20 @@ const ShowRoom = forwardRef((props, ref) => {
     useEffect(() => {
         fetch(urlGet + roomID)
             .then(res => res.json())
-            .then(data => showData(data))
+            .then(data => showData(data));
+        axios.get(urlGetStudent, { params: { action: "findAll" } })
+            .then(res => { setStudents(res.data) });
     }, [change, roomID]);
 
     useImperativeHandle(ref, () => ({
         update(roomId) {
             setRoomID(roomId);
-            setTimeout(() => setChange(!change), 100);
+            setTimeout(() => setChange(!change), 500);
         }
     }))
-
+    const clickItem = (item) => {
+        setStudentCode(item.studentCode);
+    }
     return (
         <div>
             <table>
@@ -106,6 +114,11 @@ const ShowRoom = forwardRef((props, ref) => {
                 handleClose={() => setIsAddStudent(!isAddStudent)}
                 handleConfirm={() => addFunction()}
             />}
+            {isAddStudent && room.roomCode !== '' && <SearchStudent
+                data={students}
+                showItem={clickItem}
+            ></SearchStudent>}
+
         </div>
     )
 })

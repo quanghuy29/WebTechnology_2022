@@ -25,9 +25,9 @@ public class StudentRoomDAO extends AbstractDAO<StudentRoomModel> implements ISt
     @Override
     public StudentRoomModel save(StudentRoomModel model) {
         String sql = "INSERT INTO StudentRoom (StudentId, RoomId, PayMoneyRemain, " +
-                "PaymentState) VALUES(?, ? ,? ,?)";
+                "PaymentState, StudentCode, StudentName) VALUES(?, ? ,? ,?, ?, ?)";
         Long id = insert(sql, model.getStudentId(), model.getRoomId(),
-                model.getPayMoneyRemain(), model.getPaymentState());
+                model.getPayMoneyRemain(), model.getPaymentState(), model.getStudentCode(), model.getStudentName());
         if (id == null) return null;
         return findOne(id);
     }

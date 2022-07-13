@@ -15,6 +15,8 @@ public class StudentRoomMapper implements RowMapper<StudentRoomModel> {
             model.setRoomId(rs.getLong("RoomId"));
             model.setPayMoneyRemain(rs.getFloat("PayMoneyRemain"));
             model.setPaymentState(rs.getInt("PaymentState"));
+            model.setStudentCode(rs.getString("StudentCode"));
+            model.setStudentName(rs.getString("StudentName"));
             return model;
         } catch (SQLException e){
             return null;

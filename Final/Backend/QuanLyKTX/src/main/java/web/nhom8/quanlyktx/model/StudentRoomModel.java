@@ -6,6 +6,24 @@ public class StudentRoomModel {
     private Long RoomId;
     private Float PayMoneyRemain;
     private Integer PaymentState;
+    private String StudentCode;
+    private String StudentName;
+
+    public String getStudentCode() {
+        return StudentCode;
+    }
+
+    public void setStudentCode(String studentCode) {
+        StudentCode = studentCode;
+    }
+
+    public String getStudentName() {
+        return StudentName;
+    }
+
+    public void setStudentName(String studentName) {
+        StudentName = studentName;
+    }
 
     public void setId(Long id) {
         Id = id;

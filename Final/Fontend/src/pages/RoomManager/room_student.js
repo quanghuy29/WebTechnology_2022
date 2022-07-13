@@ -20,6 +20,7 @@ const StudentRoom = forwardRef((props, ref) => {
     const deleteFunction = () => {
         deleteChildRef.current.deleteStudent();
         setIsDelete(!isDelete);
+        setTimeout(() => props.reloadRoom(), 500);
         setTimeout(() => setChange(!change), 500);
     }
 
@@ -44,7 +45,7 @@ const StudentRoom = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         update(roomId) {
             setRoomID(roomId);
-            setTimeout(() => setChange(!change), 100);
+            setTimeout(() => setChange(!change), 500);
         }
     }))
 
@@ -58,8 +59,8 @@ const StudentRoom = forwardRef((props, ref) => {
 
     const renderBody = (item, index) => (
         <tr key={index}>
-            <td>{item.studentId}</td>
-            <td>Huy</td>
+            <td>{item.studentCode}</td>
+            <td>{item.studentName}</td>
             <td>{item.payMoneyRemain}</td>
             <td>{checkPaymentState(item.paymentState)}</td>
             <td><i class="fas fa-edit" onClick={() => {
