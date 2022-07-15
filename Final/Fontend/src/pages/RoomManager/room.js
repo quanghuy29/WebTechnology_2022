@@ -36,13 +36,13 @@ const Room = () => {
     const deleteFunction = () => {
         deleteChildRef.current.deleteRoom();
         setIsDelete(!isDelete);
-        setTimeout(() => setChange(!change), 100);
+        setTimeout(() => setChange(!change), 500);
     }
 
     const addFunction = () => {
         if (addChildRef.current.postRoom(rooms) === true) {
             setIsOpenPopup(!isOpenPopup)
-            setTimeout(() => setChange(!change), 100);
+            setTimeout(() => setChange(!change), 500);
         }
     }
 
@@ -50,7 +50,7 @@ const Room = () => {
         if (updateChildRef.current.putRoom() === true) {
             setIsUpdate(!isUpdate)
             getRoom.current.update(room.roomId);
-            setTimeout(() => setChange(!change), 100);
+            setTimeout(() => setChange(!change), 500);
         }
     }
 
@@ -133,7 +133,7 @@ const Room = () => {
                                             ref={updateChildRef}
                                         ></UpdateRoom>}
                                     handleClose={() => setIsUpdate(!isUpdate)}
-                                    handleConfirm={() => updateFunction()}
+                                    handleConfirm={() => updateFunction()}               
                                 />}
                                 {isDelete && <Popup
                                     content={
@@ -172,6 +172,7 @@ const Room = () => {
                         <StudentRoom
                             roomId={room.roomId}
                             ref={getStudent}
+                            reloadRoom={() => {setChange(!change); getRoom.current.update(room.roomId);}}
                         ></StudentRoom>
                     </div>
                     <footer className="sticky-footer">

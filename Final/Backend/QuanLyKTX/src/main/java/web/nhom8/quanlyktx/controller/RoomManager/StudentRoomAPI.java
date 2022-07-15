@@ -34,7 +34,6 @@ public class StudentRoomAPI extends HttpServlet {
             responseFail.setMessage("add student to room failed!!");
             mapper.writeValue(response.getOutputStream(), responseFail);
         } else {
-            System.out.println(model.getId());
             mapper.writeValue(response.getOutputStream(), model);
         }
     }
