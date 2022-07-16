@@ -12,8 +12,8 @@ public class RoomPaymentMapper implements RowMapper<RoomPaymentModel> {
     public RoomPaymentModel mapRow(ResultSet rs) {
         RoomPaymentModel roomPaymentModel = new RoomPaymentModel();
         try {
-            roomPaymentModel.setPaymentId(rs.getInt("PaymentId"));
-            roomPaymentModel.setStudentRoomId(rs.getInt("StudentRoomId"));
+            roomPaymentModel.setPaymentId(rs.getLong("PaymentId"));
+            roomPaymentModel.setStudentRoomId(rs.getLong("StudentRoomId"));
             roomPaymentModel.setPaymentMoney(rs.getFloat("PaymentMoney"));
             roomPaymentModel.setPaymentDate(rs.getDate("PaymentDate"));
             roomPaymentModel.setState(rs.getInt("State"));

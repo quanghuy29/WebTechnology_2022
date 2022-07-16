@@ -11,8 +11,8 @@ public class UtilityBillMapper implements RowMapper<UtilityBillModel> {
     public UtilityBillModel mapRow(ResultSet rs) {
         UtilityBillModel utilityBillModel = new UtilityBillModel();
         try {
-            utilityBillModel.setBillId(rs.getInt("BillId"));
-            utilityBillModel.setRoomId(rs.getInt("RoomId"));
+            utilityBillModel.setBillId(rs.getLong("BillId"));
+            utilityBillModel.setRoomId(rs.getLong("RoomId"));
             utilityBillModel.setMoney(rs.getFloat("Money"));
             utilityBillModel.setPaymentDate(rs.getDate("PaymentDate"));
             utilityBillModel.setState(rs.getInt("State"));
