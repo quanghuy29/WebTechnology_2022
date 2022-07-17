@@ -29,8 +29,8 @@ public class RoomPaymentDAO extends AbstractDAO<RoomPaymentModel> implements IRo
 
     @Override
     public RoomPaymentModel save(RoomPaymentModel model) {
-        String sql = "INSERT INTO RoomPayment (PaymentId, StudentRoomId, PaymentMoney, PaymentDate, State) VALUES(?, ?, ?, ?, ?)";
-        Long id = insert(sql, model.getPaymentId(), model.getStudentRoomId(), model.getPaymentMoney(),
+        String sql = "INSERT INTO RoomPayment (StudentRoomId, PaymentMoney, PaymentDate, State) VALUES(?, ?, ?, ?)";
+        Long id = insert(sql, model.getStudentRoomId(), model.getPaymentMoney(),
                 model.getPaymentDate(), model.getState());
         if (id == null) return null;
         return findOne(id);

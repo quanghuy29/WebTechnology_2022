@@ -1,9 +1,10 @@
-package web.nhom8.quanlyktx.dao;
+package web.nhom8.quanlyktx.service;
 
 import web.nhom8.quanlyktx.model.UtilityBillModel;
 
 import java.util.List;
-public interface IUtilityBillDAO extends GenericDAO<UtilityBillModel> {
+
+public interface IUtilityBillService {
     List<UtilityBillModel> findBillByRoom(Long roomId);
     List<UtilityBillModel> findBillByState(Long roomId, int state);
     UtilityBillModel findOne(Long billId);

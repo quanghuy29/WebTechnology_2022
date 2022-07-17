@@ -64,6 +64,7 @@ public class RoomPaymentAPI extends HttpServlet{
         model.setPaymentId(paymentId);
         model.setStudentRoomId(roomPaymentService.findOne(paymentId).getStudentRoomId());
         model = roomPaymentService.update(model);
+
         if (model == null){
             ResponseObject responseFail = new ResponseObject();
             responseFail.setStatus(0);

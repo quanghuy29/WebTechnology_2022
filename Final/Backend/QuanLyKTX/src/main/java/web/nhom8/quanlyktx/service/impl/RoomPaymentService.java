@@ -3,7 +3,6 @@ package web.nhom8.quanlyktx.service.impl;
 import web.nhom8.quanlyktx.model.RoomPaymentModel;
 
 import web.nhom8.quanlyktx.service.IRoomPaymentService;
-import web.nhom8.quanlyktx.service.IStudentRoomService;
 import web.nhom8.quanlyktx.dao.IRoomPaymentDAO;
 
 import javax.inject.Inject;
@@ -12,9 +11,6 @@ import java.util.List;
 public class RoomPaymentService implements IRoomPaymentService {
     @Inject
     private IRoomPaymentDAO roomPaymentDAO;
-
-    @Inject
-    private IStudentRoomService studentRoomService;
 
     @Override
     public List<RoomPaymentModel> findPaymentByStudent(Long studentRoomId) {
@@ -34,10 +30,8 @@ public class RoomPaymentService implements IRoomPaymentService {
     @Override
     public RoomPaymentModel save(RoomPaymentModel model) {
         model.setState(2);
-        if (roomPaymentDAO.save(model) != null) {
-            return findOne(model.getPaymentId());
-        }
-        return null;
+        model = roomPaymentDAO.save(model);
+        return model;
     }
 
     @Override
