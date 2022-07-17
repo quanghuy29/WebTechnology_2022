@@ -1,7 +1,6 @@
 package web.nhom8.quanlyktx.service.impl;
 
 import web.nhom8.quanlyktx.model.RoomPaymentModel;
-import web.nhom8.quanlyktx.model.StudentRoomModel;
 
 import web.nhom8.quanlyktx.service.IRoomPaymentService;
 import web.nhom8.quanlyktx.service.IStudentRoomService;
@@ -34,8 +33,6 @@ public class RoomPaymentService implements IRoomPaymentService {
 
     @Override
     public RoomPaymentModel save(RoomPaymentModel model) {
-        StudentRoomModel studentRoomModel = studentRoomService.findOne(model.getStudentRoomId());
-        model.setStudentRoomId(studentRoomModel.getId());
         model.setState(2);
         if (roomPaymentDAO.save(model) != null) {
             return findOne(model.getPaymentId());

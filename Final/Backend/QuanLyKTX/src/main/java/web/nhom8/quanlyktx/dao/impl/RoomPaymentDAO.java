@@ -6,7 +6,7 @@ import web.nhom8.quanlyktx.model.RoomPaymentModel;
 
 import java.util.List;
 
-public class RoomPaymentDAO extends AbstractDAO<RoomPaymentDAO> implements IRoomPaymentDAO {
+public class RoomPaymentDAO extends AbstractDAO<RoomPaymentModel> implements IRoomPaymentDAO {
 
     @Override
     public List<RoomPaymentModel> findPaymentByStudent(Long studentRoomId) {
@@ -29,19 +29,18 @@ public class RoomPaymentDAO extends AbstractDAO<RoomPaymentDAO> implements IRoom
 
     @Override
     public RoomPaymentModel save(RoomPaymentModel model) {
-        String sql = "INSERT INTO RoomPayment (PaymentId, StudentRoomId, PaymentMoney, " +
-                "PaymentDate, State) VALUES(?, ? ,? ,?, ?)";
-        Long id = insert(sql, model.getPaymentId(), model.getStudentRoomId(),
-                model.getPaymentMoney(), model.getPaymentDate(), model.getState());
+        String sql = "INSERT INTO RoomPayment (PaymentId, StudentRoomId, PaymentMoney, PaymentDate, State) VALUES(?, ?, ?, ?, ?)";
+        Long id = insert(sql, model.getPaymentId(), model.getStudentRoomId(), model.getPaymentMoney(),
+                model.getPaymentDate(), model.getState());
         if (id == null) return null;
         return findOne(id);
     }
 
     @Override
     public RoomPaymentModel update(RoomPaymentModel model) {
-        String sql = "UPDATE RoomPayment SET PaymentMoney = ?, PaymentDate = ?, State = ? " +
-                "WHERE PaymentId = ?";
-        update(sql, model.getPaymentMoney(), model.getPaymentDate(), model.getState(), model.getPaymentId());
+        String sql = "UPDATE RoomPayment SET PaymentMoney = ?, State = ? WHERE PaymentId = ?";
+        update(sql, model.getPaymentMoney(), model.getState(), model.getPaymentId());
+        //return model;
         return findOne(model.getPaymentId());
     }
 
