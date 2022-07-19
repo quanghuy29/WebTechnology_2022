@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IStudentDAO extends GenericDAO<StudentModel>{
     List<StudentModel> findAll();
+    StudentModel findByStudentId(int studentId);
 
     StudentModel findByStudentCode(String studentCode);
 

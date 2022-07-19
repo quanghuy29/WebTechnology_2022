@@ -16,6 +16,13 @@ public class StudentDAO extends AbstractDAO<StudentModel> implements IStudentDAO
     }
 
     @Override
+    public StudentModel findByStudentId(int studentId) {
+        String sql = "SELECT * FROM Student WHERE StudentId = ?";
+        List<StudentModel> models = query(sql, new StudentMapper(), studentId);
+        return models.isEmpty() ? null : models.get(0);
+    }
+
+    @Override
     public StudentModel findByStudentCode(java.lang.String studentCode) {
         java.lang.String sql = "SELECT * FROM Student WHERE StudentCode = ?";
         List<StudentModel> studentModels = query(sql, new StudentMapper(), studentCode);
