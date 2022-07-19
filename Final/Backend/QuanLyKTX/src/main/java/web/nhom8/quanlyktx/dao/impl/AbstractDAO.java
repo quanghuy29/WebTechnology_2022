@@ -20,6 +20,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
             String password = resourceBundle.getString("password");
             return DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }
