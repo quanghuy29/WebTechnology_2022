@@ -115,6 +115,13 @@
             <version>1.9.13</version>
         </dependency>
         <!--end json -->
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

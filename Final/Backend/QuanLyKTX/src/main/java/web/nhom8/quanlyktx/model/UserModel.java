@@ -5,14 +5,33 @@ public class UserModel {
     private Long RoleId;
     private String Username;
     private String Password;
-    private int State;
+    private RoleModel roleModel;
+
+    public RoleModel getRoleModel() {
+        return roleModel;
+    }
+
+    public void setRoleModel(RoleModel roleModel) {
+        this.roleModel = roleModel;
+    }
+
+    public ManagerModel getManagerModel() {
+        return managerModel;
+    }
+
+    public void setManagerModel(ManagerModel managerModel) {
+        this.managerModel = managerModel;
+    }
+
+    private ManagerModel managerModel;
+    private int UserState;
 
     public UserModel(Integer userId, Long roleId, String username, String password, int state) {
         UserId = userId;
         RoleId = roleId;
         Username = username;
         Password = password;
-        State = state;
+        UserState = state;
     }
 
     public UserModel() {
@@ -50,12 +69,12 @@ public class UserModel {
         Password = password;
     }
 
-    public int getState() {
-        return State;
+    public int getUserState() {
+        return UserState;
     }
 
-    public void setState(int state) {
-        State = state;
+    public void setUserState(int userState) {
+        UserState = userState;
     }
 
     @Override
@@ -65,7 +84,7 @@ public class UserModel {
                 ", RoleId:" + RoleId +
                 ", Username:'" + Username + '\'' +
                 ", Password:'" + Password + '\'' +
-                ", State=" + State +
+                ", State=" + UserState +
                 '}';
     }
 }

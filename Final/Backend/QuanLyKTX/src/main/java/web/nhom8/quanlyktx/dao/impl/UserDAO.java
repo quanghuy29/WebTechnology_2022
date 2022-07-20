@@ -29,8 +29,27 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
 
     @Override
     public UserModel findByUsernameAndPasswordAndState(String userName, String password, int state) {
-        String sql = "SELECT * FROM `User` WHERE `Username` = ? AND `Password` = ? AND `State` = ?";
-        List<UserModel> userModels = query(sql, new UserMapper(), userName, password, state);
+        StringBuilder stringBuilder = new StringBuilder("SELECT User.Username, User.Password, Role.RoleCode, ");
+        stringBuilder.append("Role.RoleName, User.State AS UserState, Manager.Fullname, Manager.Email, Manager.Address, ");
+        stringBuilder.append("Manager.DateOfBirth, Manager.Phone, Manager.YearOfService FROM User ");
+        stringBuilder.append("INNER JOIN Manager ON User.UserId = Manager.UserId ");
+        stringBuilder.append("INNER JOIN Role ON User.RoleId = Role.RoleId ");
+        stringBuilder.append("WHERE `Username` = ? AND `Password` = ? AND User.State = ?");
+
+        List<UserModel> userModels = query(stringBuilder.toString(), new UserMapper(), userName, password, state);
+        return userModels.isEmpty() ? null : userModels.get(0);
+    }
+
+    @Override
+    public UserModel findByEmailAndPasswordAndState(String email, String password, int state) {
+        StringBuilder stringBuilder = new StringBuilder("SELECT User.Username, User.Password, Role.RoleCode, ");
+        stringBuilder.append("Role.RoleName, User.State AS UserState, Manager.Fullname, Manager.Email, Manager.Address, ");
+        stringBuilder.append("Manager.DateOfBirth, Manager.Phone, Manager.YearOfService FROM User ");
+        stringBuilder.append("INNER JOIN Manager ON User.UserId = Manager.UserId ");
+        stringBuilder.append("INNER JOIN Role ON User.RoleId = Role.RoleId ");
+        stringBuilder.append("WHERE Manager.Email = ? AND `Password` = ? AND User.State = ?");
+
+        List<UserModel> userModels = query(stringBuilder.toString(), new UserMapper(), email, password, state);
         return userModels.isEmpty() ? null : userModels.get(0);
     }
 
@@ -38,7 +57,7 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
     public Long addNewUser(UserModel newUserModel) {
         String sql = "INSERT INTO User (UserId, RoleId, Username, Password, State) VALUES (NULL, ?, ?, ?, ?)";
         Long result = insert(sql, newUserModel.getRoleId(), newUserModel.getUsername(),
-                newUserModel.getPassword(), newUserModel.getState());
+                newUserModel.getPassword(), newUserModel.getUserState());
         if(result == null) result = Long.valueOf(-1);
         return result;
     }
