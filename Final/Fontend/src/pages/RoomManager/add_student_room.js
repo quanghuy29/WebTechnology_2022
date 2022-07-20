@@ -18,7 +18,12 @@ const AddStudentRoom = forwardRef((props, ref) => {
 
             if (isValid === true) {
                 axios.post(urlPost, postData)
-                    .then(res => console.log(res));
+                    .then(res => {
+                        console.log(res);
+                        if (res.data.status != null && res.data.status === 0) {
+                            alert("Thêm sinh viên vào phòng thất bại do dữ liệu không hợp lệ hoặc sinh viên đã được thêm vào phòng rồi!!");
+                        }
+                    });
             }
             return isValid;
         }

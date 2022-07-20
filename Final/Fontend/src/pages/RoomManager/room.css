@@ -13,7 +13,12 @@ form {
     display: grid;
     grid-gap: 1rem;
 }
-
+.done {
+    color: green;
+}
+.notdone {
+    color: red;
+}
 label {
     display: grid;
     grid-gap: 4rem;
