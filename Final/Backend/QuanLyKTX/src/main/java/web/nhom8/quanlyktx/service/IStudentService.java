@@ -11,4 +11,11 @@ public interface IStudentService {
 
     List<StudentModel> findByStudentClass(String studentClass);
 
+    // add new student
+    Long addNewStudent(StudentModel newStudentModel);
+    // update student info
+    StudentModel updateStudentInfo(StudentModel newStudentModel);
+
+    void deleteStudent(List<Long> studentIds);
+
 }
