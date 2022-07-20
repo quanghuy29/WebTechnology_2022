@@ -1,11 +1,13 @@
 package web.nhom8.quanlyktx.controller.guest;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import web.nhom8.quanlyktx.model.LoginModel;
 import web.nhom8.quanlyktx.model.ResponseObject;
 import web.nhom8.quanlyktx.model.UserModel;
 import web.nhom8.quanlyktx.service.IUserService;
 import web.nhom8.quanlyktx.utils.HttpUtil;
 import web.nhom8.quanlyktx.utils.SessionUtil;
+import web.nhom8.quanlyktx.utils.TokenJWTUtils;
 
 import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
@@ -35,18 +37,30 @@ public class LoginAPI extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         // read json body mapping model
-        UserModel userModel = HttpUtil.of(req.getReader()).toModel(UserModel.class);
-        userModel = userService.findByUsernameAndPasswordAndState(userModel.getUsername(), userModel.getPassword(), 1);
+        LoginModel loginModel = HttpUtil.of(req.getReader()).toModel(LoginModel.class);
+        UserModel userModel = new UserModel();
+        if (loginModel.getEmail().contains("@"))
+        {
+            userModel = userService.findByEmailAndPasswordAndState(loginModel.getEmail(), loginModel.getPassword(), 1);
+        } else
+        {
+            userModel = userService.findByUsernameAndPasswordAndState(loginModel.getEmail(), loginModel.getPassword(), 1);
+        }
         String msg;
         int status;
         if(userModel == null)
         {
+//            resp.setStatus(400);
             msg = "Username or password failed!";
             status = 400;
             System.out.println(msg);
         } else {
-            SessionUtil.getInstance().putValue(req, "USERMODEL", userModel);
-            msg = "Login successfull!";
+            //SessionUtil.getInstance().putValue(req, "USERMODEL", userModel);
+            String token = TokenJWTUtils.generateToken(userModel.getUsername(), userModel.getRoleModel().getRoleCode());
+            resp.setHeader("Authentication", token);
+//            msg = "Login successfull!";
+            msg = token;
+            resp.setStatus(200);
             status = 200;
             System.out.println(msg);
         }

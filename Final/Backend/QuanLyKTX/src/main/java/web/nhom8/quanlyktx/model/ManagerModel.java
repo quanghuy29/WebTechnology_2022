@@ -26,6 +26,10 @@ public class ManagerModel {
         State = state;
     }
 
+    public ManagerModel() {
+
+    }
+
     public int getManagerId() {
         return ManagerId;
     }

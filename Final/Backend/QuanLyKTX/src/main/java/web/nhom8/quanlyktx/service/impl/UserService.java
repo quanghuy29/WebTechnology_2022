@@ -32,8 +32,13 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserModel findByEmailAndPasswordAndState(String email, String password, int state) {
+        return userDAO.findByEmailAndPasswordAndState(email, password, state);
+    }
+
+    @Override
     public Long addNewUser(UserModel newUserModel) {
-        newUserModel.setState(0);
+        newUserModel.setUserState(1);
         return userDAO.addNewUser(newUserModel);
     }
 }
