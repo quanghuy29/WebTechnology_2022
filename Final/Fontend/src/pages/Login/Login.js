@@ -53,7 +53,7 @@ function Login() {
         optionToast = "success";
 
         const token = res?.data?.message;
-        localStorage.setItem("toke", token)
+        localStorage.setItem("token-auth", token)
         const roles = res?.data?.status;
         setAuth({ username, password, roles, token });
         setUsername("");

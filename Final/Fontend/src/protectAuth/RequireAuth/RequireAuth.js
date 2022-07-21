@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 const RequireAuth = ({ allowedRoles }) => {
     const { auth } = useAuth();
     const location = useLocation();
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token-auth')
 
     // auth?.roles?.find(role => allowedRoles?.includes(role))
 

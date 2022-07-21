@@ -27,18 +27,23 @@ function AccountManager() {
   const [accounts, setAccounts] = useState([]);
   const [isInvalid, setIsInvalid] = useState("");
   const [checked, setChecked] = useState(true);
-  const [mode, setMode] = useState("create")
+  const [mode, setMode] = useState("create");
 
   // ----------- FORM FIELD ---------------------
-  const [userId, setUserId] = useState(1)
+  const [userId, setUserId] = useState(1);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(1);
   const [state, setState] = useState(0);
 
+  const token = localStorage.getItem("token-auth");
+  console.log(token);
+
   useEffect(() => {
     axios
-      .get(URL_ACCOUNT_MANAGER)
+      .get(URL_ACCOUNT_MANAGER, {
+        Authorization: token,
+      })
       .then((res) => {
         setAccounts([...res.data]);
       })
@@ -75,8 +80,8 @@ function AccountManager() {
   };
 
   const handleEdit = async (data) => {
-    console.log("edit")
-    setUserId(data.userId)
+    console.log("edit");
+    setUserId(data.userId);
     setMode("edit");
     setUsername(data.username);
     setPassword(data.password);
@@ -85,18 +90,24 @@ function AccountManager() {
   };
 
   const handleSubmit = async () => {
-    if(mode === "create") {
+    if (mode === "create") {
       const reqData = {
         username,
         password,
         roleId: role,
         state,
       };
-  
-      const res = await axios.post(URL_ACCOUNT_MANAGER, JSON.stringify(reqData));
+
+      const res = await axios.post(
+        URL_ACCOUNT_MANAGER,
+        JSON.stringify(reqData),
+        {
+          Authorization: token,
+        }
+      );
       console.log(res);
     } else if (mode === "edit") {
-      console.log("edit")
+      console.log("edit");
       const reqData = {
         userId,
         username,
@@ -104,8 +115,14 @@ function AccountManager() {
         roleId: role,
         state,
       };
-  
-      const res = await axios.put(URL_ACCOUNT_MANAGER, JSON.stringify(reqData));
+
+      const res = await axios.put(
+        URL_ACCOUNT_MANAGER,
+        JSON.stringify(reqData),
+        {
+          Authorization: token,
+        }
+      );
       console.log(res);
     }
   };
@@ -190,9 +207,7 @@ function AccountManager() {
                 <div className={cx("modal")}>
                   <div id="wrap" className={cx("input")}>
                     <section className={cx("input-content")}>
-                      <h2 style={{textTransform: 'uppercase'}}>
-                        {mode}
-                      </h2>
+                      <h2 style={{ textTransform: "uppercase" }}>{mode}</h2>
                       <div className={cx("input-content-wrap")}>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>

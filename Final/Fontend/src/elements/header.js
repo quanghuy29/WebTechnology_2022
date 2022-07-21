@@ -26,14 +26,14 @@ export default class Header extends Component {
         return (
             <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
 
-                <Link to={'/'} className="navbar-brand mr-1">Start Bootstrap</Link>
+                <Link to={'/'} className="navbar-brand mr-1" style={{display: 'none'}}>Start Bootstrap</Link>
 
                 <button className="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle">
                     <i className="fas fa-bars"></i>
                 </button>
 
 
-                <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" style={{display: 'none'}} >
                     <div className="input-group">
                         <input type="text" className="form-control" placeholder="Search for..." aria-label="Search"
                                aria-describedby="basic-addon2" />
