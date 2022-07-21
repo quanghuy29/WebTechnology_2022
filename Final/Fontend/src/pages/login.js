@@ -82,12 +82,7 @@ export default class Login extends Component {
                 <div className="card card-login mx-auto mt-5">
                     <div className="card-header text-center">Login</div>
                     <div className="text-center">
-                        {/* <span>IP : <b>{this.state.location.ip}</b></span>, &nbsp;
-                        <span>Country : <b>{this.state.location.country_name}</b></span>, &nbsp;
-                        <span>Region : <b>{this.state.location.region_name}</b></span>, &nbsp;
-                        <span>City : <b>{this.state.location.city}</b></span>, &nbsp;
-                        <span>PIN : <b>{this.state.location.zip_code}</b></span>, &nbsp;
-                        <span>Zone : <b>{this.state.location.time_zone}</b></span> */}
+                        <br></br>
                     </div>
                     <div className="card-body">
                         <form onSubmit={this.handleSubmit}>
@@ -112,7 +107,7 @@ export default class Login extends Component {
                             <div className="form-group">
                                 <div className="checkbox">
                                     <label>
-                                        <input type="checkbox" value="remember-me"/> <span> Remember Password</span>
+                                        <input type="checkbox" value="remember-me"/>Remember Password
                                     </label>
                                 </div>
                             </div>

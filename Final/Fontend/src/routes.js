@@ -15,6 +15,7 @@ import Register from "./pages/register";
 import NotFound from "./pages/notfound";
 import FileUploadPage from "./pages/fileupload";
 import Room from "./pages/RoomManager/room";
+import Bill from "./pages/Bill/bill";
 
 function Routes() {
     return (
@@ -28,6 +29,7 @@ function Routes() {
                 <RouteGuard path='/edit/' component={EditPage} />
                 <RouteGuard path='/fileupload/' component={FileUploadPage} />
                 <RouteGuard path='/room' component={Room} />
+                <RouteGuard path='/bill' component={Bill} />
                 <RouteGuard path='*' component={NotFound} />
 
                 
