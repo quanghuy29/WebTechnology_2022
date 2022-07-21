@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {Link, Redirect} from "react-router-dom";
-import TitleComponent from "../pages/title";
+import {Link, Navigate} from "react-router-dom";
 
 
 export default class Header extends Component {
@@ -22,11 +21,10 @@ export default class Header extends Component {
 
     render() {
         if (this.state.toDashboard === true) {
-            return <Redirect to='/' />
+            return <Navigate to='/' />
         }
         return (
             <nav className="navbar navbar-expand navbar-dark bg-dark static-top">
-                <TitleComponent title="React CRUD Login "></TitleComponent>
 
                 <Link to={'/'} className="navbar-brand mr-1">Start Bootstrap</Link>
 

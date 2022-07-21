@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
 import React from "react";
-import "./room.css";
+import "./room.module.css";
 import axios from "axios";
 
 const UpdateRoom = forwardRef((props, ref) => {

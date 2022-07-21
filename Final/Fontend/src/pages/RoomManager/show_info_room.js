@@ -4,7 +4,7 @@ import Popup from "../../component/popup/popup";
 import AddStudentRoom from "./add_student_room";
 import axios from "axios";
 import SearchStudent from "../../component/searchStudent/searchstudent";
-import "./room.css";
+import "./room.module.css";
 
 const ShowRoom = forwardRef((props, ref) => {
     const [change, setChange] = useState(false);

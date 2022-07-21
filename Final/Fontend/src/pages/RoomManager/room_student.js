@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useState, useRef } from "react";
 import Table from "../../component/table/table";
 import React from "react";
-import "./room.css";
+import "./room.module.css";
 import DeleteStudentRoom from "./delete_student_room";
 import Popup from "../../component/popup/popup";
 import UpdateStudentRoom from "./update_student_room";

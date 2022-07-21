@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 import {Link, Redirect} from 'react-router-dom';
 import TitleComponent from "./title";
 import { setAuthToken } from '../helpers/setAuthToken';
+=======
+import {Link, Navigate} from 'react-router-dom';
+>>>>>>> WEB_HUY
 
 export default class Login extends Component {
 
@@ -70,7 +74,7 @@ export default class Login extends Component {
 
     renderRedirect = () => {
         if (this.state.redirect) {
-            return <Redirect to='/dashboard'/>
+            return <Navigate to='/dashboard'/>
         }
     };
 
@@ -78,7 +82,6 @@ export default class Login extends Component {
         const isLoading = this.state.isLoading;
         return (
             <div className="container">
-                <TitleComponent title="React CRUD Login "></TitleComponent>
                 <div className="card card-login mx-auto mt-5">
                     <div className="card-header text-center">Login</div>
                     <div className="text-center">
