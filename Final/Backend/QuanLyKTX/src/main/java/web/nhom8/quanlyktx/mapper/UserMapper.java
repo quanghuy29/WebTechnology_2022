@@ -14,12 +14,15 @@ public class UserMapper implements RowMapper<UserModel> {
         RoleModel roleModel = new RoleModel();
         ManagerModel managerModel = new ManagerModel();
         try {
+            user.setUserId(rs.getInt("UserId"));
             user.setUsername(rs.getString("Username"));
             user.setPassword(rs.getString("Password"));
             roleModel.setRoleCode(rs.getString("RoleCode"));
             roleModel.setRoleName(rs.getString("RoleName"));
             user.setRoleModel(roleModel);
-//            user.setRoleId(rs.getLong("RoleId"));
+            user.setRoleId(rs.getLong("RoleId"));
+            roleModel.setRoleId(user.getRoleId());
+            managerModel.setManagerId(rs.getInt("ManagerId"));
             managerModel.setFullname(rs.getString("Fullname"));
             managerModel.setAddress(rs.getString("Address"));
             managerModel.setEmail(rs.getString("Email"));

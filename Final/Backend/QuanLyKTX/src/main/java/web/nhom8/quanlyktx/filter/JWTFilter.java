@@ -47,7 +47,9 @@ public class JWTFilter implements Filter {
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
-        if (url.startsWith("/QuanLyKTX_war_exploded/api-student_manager") || url.startsWith("/QuanLyKTX_war_exploded/room")) {
+        if (    url.startsWith("/QuanLyKTX_war_exploded/api-student_manager") ||
+                url.startsWith("/QuanLyKTX_war_exploded/api-account_manager")
+            ) {
             if (rolecode.equalsIgnoreCase("QLSV"))
             {
                 filterChain.doFilter(servletRequest, servletResponse);

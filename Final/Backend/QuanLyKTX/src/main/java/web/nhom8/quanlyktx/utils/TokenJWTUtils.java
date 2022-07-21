@@ -46,6 +46,8 @@ public class TokenJWTUtils {
             System.out.println("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
             System.out.println("JWT claims string is empty");
+        } catch (NullPointerException e) {
+            System.out.println("Authorization is NULL");
         }
         return false;
     }

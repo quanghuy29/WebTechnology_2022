@@ -16,8 +16,12 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
 
     @Override
     public List<UserModel> findAll() {
-        String sql = "SELECT * FROM User";
-        return query(sql, new UserMapper());
+        StringBuilder stringBuilder = new StringBuilder("SELECT User.UserId, User.RoleId, Manager.ManagerId, User.Username, User.Password, Role.RoleCode, ");
+        stringBuilder.append("Role.RoleName, User.State AS UserState, Manager.Fullname, Manager.Email, Manager.Address, ");
+        stringBuilder.append("Manager.DateOfBirth, Manager.Phone, Manager.YearOfService FROM User ");
+        stringBuilder.append("INNER JOIN Manager ON User.UserId = Manager.UserId ");
+        stringBuilder.append("INNER JOIN Role ON User.RoleId = Role.RoleId ");
+        return query(stringBuilder.toString(), new UserMapper());
     }
 
     @Override
@@ -29,7 +33,7 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
 
     @Override
     public UserModel findByUsernameAndPasswordAndState(String userName, String password, int state) {
-        StringBuilder stringBuilder = new StringBuilder("SELECT User.Username, User.Password, Role.RoleCode, ");
+        StringBuilder stringBuilder = new StringBuilder("SELECT User.UserId, User.RoleId, Manager.ManagerId, User.Username, User.Password, Role.RoleCode, ");
         stringBuilder.append("Role.RoleName, User.State AS UserState, Manager.Fullname, Manager.Email, Manager.Address, ");
         stringBuilder.append("Manager.DateOfBirth, Manager.Phone, Manager.YearOfService FROM User ");
         stringBuilder.append("INNER JOIN Manager ON User.UserId = Manager.UserId ");
