@@ -30,23 +30,24 @@ public class StudentManagerAPI extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
-        RequestObject requestObject = HttpUtil.of(req.getReader()).toModel(RequestObject.class);
-
+        //RequestObject requestObject = HttpUtil.of(req.getReader()).toModel(RequestObject.class);
+        String action = req.getParameter("action");
+        String message = req.getParameter("message");
         ObjectMapper mapper = new ObjectMapper();
 
-        if(requestObject.getAction().equalsIgnoreCase("findAll"))
+        if(action.equalsIgnoreCase("findAll"))
         {
             List<StudentModel> studentModels = studentService.findAll();
             mapper.writeValue(resp.getOutputStream(), studentModels);
 
-        } else if (requestObject.getAction().equalsIgnoreCase("findByStudentCode"))
+        } else if (action.equalsIgnoreCase("findByStudentCode"))
         {
-            StudentModel studentModel = studentService.findByStudentCode(requestObject.getMessage());
+            StudentModel studentModel = studentService.findByStudentCode(message);
             mapper.writeValue(resp.getOutputStream(), studentModel);
 
-        } else if (requestObject.getAction().equalsIgnoreCase("findByClassRoom"))
+        } else if (action.equalsIgnoreCase("findByClassRoom"))
         {
-            List<StudentModel> studentModels = studentService.findByStudentClass(requestObject.getMessage());
+            List<StudentModel> studentModels = studentService.findByStudentClass(message);
             mapper.writeValue(resp.getOutputStream(), studentModels);
         }
     }
