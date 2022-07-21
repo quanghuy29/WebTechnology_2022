@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link, Redirect} from 'react-router-dom';
 import TitleComponent from "./title";
+import { setAuthToken } from '../helpers/setAuthToken';
 
 export default class Login extends Component {
 
@@ -24,18 +25,28 @@ export default class Login extends Component {
     handleSubmit = event => {
         event.preventDefault();
         this.setState({isLoading: true});
-        const url = 'https://gowtham-rest-api-crud.herokuapp.com/login';
+        const url = 'http://localhost:8080/QuanLyKTX_war_exploded/api-login';
         const email = this.state.email;
         const password = this.state.password;
-        let bodyFormData = new FormData();
-        bodyFormData.set('email', email);
-        bodyFormData.set('password', password);
-        axios.post(url, bodyFormData)
+        
+
+        const loginform = JSON.stringify({
+            email: email,
+            password: password
+        });
+
+        axios.post(url, loginform)
             .then(result => {
-                if (result.data.status) {
-                    localStorage.setItem('token', result.data.token);
+                console.log(result.data.message);
+                if (result.data.status == 200) {
+                    const token = result.data.message;
+                    localStorage.setItem('token', token);
+                    setAuthToken(token);
                     this.setState({redirect: true, isLoading: false});
                     localStorage.setItem('isLoggedIn', true);
+                } else if (result.data.status == 400) {
+                    alert(result.data.message);
+                    this.setState({authError: true, isLoading: false});
                 }
             })
             .catch(error => {
@@ -69,20 +80,20 @@ export default class Login extends Component {
             <div className="container">
                 <TitleComponent title="React CRUD Login "></TitleComponent>
                 <div className="card card-login mx-auto mt-5">
-                    <div className="card-header">Login</div>
+                    <div className="card-header text-center">Login</div>
                     <div className="text-center">
-                        <span>IP : <b>{this.state.location.ip}</b></span>, &nbsp;
+                        {/* <span>IP : <b>{this.state.location.ip}</b></span>, &nbsp;
                         <span>Country : <b>{this.state.location.country_name}</b></span>, &nbsp;
                         <span>Region : <b>{this.state.location.region_name}</b></span>, &nbsp;
                         <span>City : <b>{this.state.location.city}</b></span>, &nbsp;
                         <span>PIN : <b>{this.state.location.zip_code}</b></span>, &nbsp;
-                        <span>Zone : <b>{this.state.location.time_zone}</b></span>
+                        <span>Zone : <b>{this.state.location.time_zone}</b></span> */}
                     </div>
                     <div className="card-body">
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group">
                                 <div className="form-label-group">
-                                    <input className={"form-control " + (this.state.authError ? 'is-invalid' : '')} id="inputEmail" placeholder="Email address" type="text" name="email" onChange={this.handleEmailChange} autoFocus required/>
+                                    <input className={"form-control " + (this.state.authError ? 'is-invalid' : '')} id="inputEmail" placeholder="Email address/Username" type="text" name="email" onChange={this.handleEmailChange} autoFocus required/>
                                     <label htmlFor="inputEmail">Email address</label>
                                     <div className="invalid-feedback">
                                         Please provide a valid Email.
@@ -101,7 +112,7 @@ export default class Login extends Component {
                             <div className="form-group">
                                 <div className="checkbox">
                                     <label>
-                                        <input type="checkbox" value="remember-me"/>Remember Password
+                                        <input type="checkbox" value="remember-me"/> <span> Remember Password</span>
                                     </label>
                                 </div>
                             </div>
@@ -114,17 +125,17 @@ export default class Login extends Component {
                                     )}
                                 </button>
                             </div>
-                            <div className="form-group">
+                            {/* <div className="form-group">
                                 <div className="form-group">
                                     <b>email:</b> gowthaman.nkl1@gmail.com
                                 </div>
                                 <div className="form-group">
                                     <b>password :</b> password
                                 </div>
-                            </div>
+                            </div> */}
                         </form>
                         <div className="text-center">
-                            <Link className="d-block small mt-3" to={'register'}>Register an Account</Link>
+                            {/* <Link className="d-block small mt-3" to={'register'}>Register an Account</Link> */}
                             <a className="d-block small" href="forgot-password.html">Forgot Password?</a>
                         </div>
                     </div>

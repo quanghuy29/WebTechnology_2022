@@ -1,38 +1,23 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Login from "./pages/login";
-import Dashboard from "./pages/dashboard";
-import Index from "./pages/index";
-import AddPage from "./pages/add";
-import EditPage from "./pages/edit";
-import Register from "./pages/register";
-import NotFound from "./pages/notfound";
-import FileUploadPage from "./pages/fileupload";
-import Room from "./pages/RoomManager/room";
-import Bill from "./pages/Bill/bill"
+import Routers from './routes';
 
-class App extends Component {
+//import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-    render() {
-        return (
-            <div className="App">
-                <Router>
-                    <Switch>
-                        <Route exact path='/' component={Login} />
-                        <Route path='/dashboard' component={Dashboard} />
-                        <Route path='/index' component={Index}/>
-                        <Route path='/register' component={Register} />
-                        <Route path='/add' component={AddPage} />
-                        <Route path='/edit/' component={EditPage} />
-                        <Route path='/fileupload/' component={FileUploadPage} />
-                        <Route path='/room' component={Room} />
-                        <Route path='/bill' component={Bill} />
-                        <Route path='*' component={NotFound} />
-                    </Switch>
-                </Router>
-            </div>
-        );
+import {setAuthToken} from './helpers/setAuthToken'
+
+function App() {
+
+    // check jwt token
+    const token = localStorage.getItem("token");
+    if(token) {
+        setAuthToken(token);
     }
+    
+    return (
+        <div className="App">
+            <Routers/>
+        </div>
+    );
 }
 
 export default App;
