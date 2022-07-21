@@ -42,17 +42,20 @@ function Login() {
 
     console.log("login")
 
-    const dataLogin = JSON.stringify({ username, password });
+    const dataLogin = JSON.stringify({ email: username, password });
 
     try {
       const res = await axios.post(LOGIN_URL, dataLogin);
+
+      console.log(res)
       let optionToast;
       if (res.data?.status === 200) {
         optionToast = "success";
 
-        const accessCookies = res?.data?.message;
+        const token = res?.data?.message;
+        localStorage.setItem("toke", token)
         const roles = res?.data?.status;
-        setAuth({ username, password, roles, accessCookies });
+        setAuth({ username, password, roles, token });
         setUsername("");
         setPassword("");
 

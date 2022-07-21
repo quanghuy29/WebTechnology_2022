@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
-import {Link, Redirect} from 'react-router-dom';
-import TitleComponent from "./title";
-import { setAuthToken } from '../helpers/setAuthToken';
-=======
 import {Link, Navigate} from 'react-router-dom';
->>>>>>> WEB_HUY
+import { setAuthToken } from '../helpers/setAuthToken';
 
 export default class Login extends Component {
 

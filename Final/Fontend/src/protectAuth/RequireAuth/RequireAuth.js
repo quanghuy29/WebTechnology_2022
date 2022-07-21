@@ -5,10 +5,11 @@ import useAuth from "../../hooks/useAuth";
 const RequireAuth = ({ allowedRoles }) => {
     const { auth } = useAuth();
     const location = useLocation();
+    const token = localStorage.getItem('token')
 
     // auth?.roles?.find(role => allowedRoles?.includes(role))
 
-    if (auth.roles === allowedRoles) {
+    if (auth.roles === allowedRoles || auth.token === token) {
         return <Outlet />
     } else {
         if (auth?.accessCookies) {
