@@ -8,11 +8,13 @@ const RequireAuth = ({ allowedRoles }) => {
     const token = localStorage.getItem('token-auth')
 
     // auth?.roles?.find(role => allowedRoles?.includes(role))
+    console.log(auth.roles === allowedRoles || auth.token === token)
+    console.log(auth, allowedRoles)
 
     if (auth.roles === allowedRoles || auth.token === token) {
         return <Outlet />
     } else {
-        if (auth?.accessCookies) {
+        if (auth?.token) {
             return <Navigate to="/oops" state={{ from: location }} replace />
         } else {
             return <Navigate to="/login" state={{ from: location }} replace />

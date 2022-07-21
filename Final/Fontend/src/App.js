@@ -7,7 +7,6 @@ import RequireAuth from "./protectAuth/RequireAuth/RequireAuth";
 import Login from "./pages/login";
 import Room from "./pages/RoomManager/room";
 import Bill from "./pages/Bill/bill.js"
-import Students from "./pages/Students/Students";
 import SignIn from "./pages/Login/Login";
 import AccountManager from "./pages/AccountManager/AccountManager";
 import Student from "./pages/Student/Student";
