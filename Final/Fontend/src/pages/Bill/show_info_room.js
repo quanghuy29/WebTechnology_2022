@@ -2,25 +2,17 @@ import { forwardRef, useEffect, useImperativeHandle, useState, useRef } from "re
 import React from "react";
 import Popup from "../../component/popup/popup";
 import AddBill from "./add_bill";
-import axios from "axios";
-import SearchStudent from "../../component/searchStudent/searchstudent";
 import "./room.css";
 
 const ShowRoom = forwardRef((props, ref) => {
     const [change, setChange] = useState(false);
     const [roomID, setRoomID] = useState(0);
     const [room, setRoom] = useState(props);
-    const [students, setStudents] = useState('');
-    const [studentCode, setStudentCode] = useState('');
     const [isFirstTime, setIsFirstTime] = useState(true);
-    const [isAddStudent, setIsAddStudent] = useState(false);
-    const [money, setMoney] = useState(0);
-    const [paymentDate, setPaymentDate] = useState('');
+    const [isAddBill, setIsAddBill] = useState(false);
 
     const addBill = useRef()
     const urlGet = 'http://localhost:8080/QuanLyKTX_war_exploded/room?idRoom=';
-    const urlGetStudent = 'http://localhost:8080/QuanLyKTX_war_exploded/api-student_manager';
-    const urlGetBill = 'http://localhost:8080/QuanLyKTX_war_exploded/room/utility?roomId=';
     const checkPaymentRoomState = (item) => {
         if (item === 1) return "Đã trả đủ tiền điện nước"
         else if (item === 2) return "Còn thiếu tiền điện nước"
@@ -37,10 +29,10 @@ const ShowRoom = forwardRef((props, ref) => {
             return;
         }
 
-        if (addBill.current.postStudentRoom(studentCode) === true) {
-            setIsAddStudent(!isAddStudent);
+        if (addBill.current.postBill() === true) {
+            setIsAddBill(!isAddBill);
         }
-        props.reloadStudents();
+        props.reloadBills();
         setTimeout(() => props.reloadRoom(), 500);
         setTimeout(() => setChange(!change), 500);
     }
@@ -54,8 +46,6 @@ const ShowRoom = forwardRef((props, ref) => {
         fetch(urlGet + roomID)
             .then(res => res.json())
             .then(data => showData(data));
-        axios.get(urlGetStudent, { params: { action: "findAll" } })
-            .then(res => { setStudents(res.data) });
     }, [change, roomID]);
 
     useImperativeHandle(ref, () => ({
@@ -64,9 +54,6 @@ const ShowRoom = forwardRef((props, ref) => {
             setTimeout(() => setChange(!change), 500);
         }
     }))
-    const clickItem = (item) => {
-        setStudentCode(item.studentCode);
-    }
     return (
         <div>
             <table>
@@ -84,32 +71,20 @@ const ShowRoom = forwardRef((props, ref) => {
                             {room.roomCode !== '' &&
                                 <i class="fas fa-user-plus" onClick={() => {
                                     if (room.roomCode !== '')
-                                        setIsAddStudent(!isAddStudent)
+                                        setIsAddBill(!isAddBill)
                                 }}> Thêm hoá đơn</i>
                             }
                         </td>
                     </tr>
                 </tbody>
             </table>
-            {/* {isAddStudent && room.roomCode !== '' && <Popup
+            {isAddBill && <Popup
                 content={
                     <AddBill
                         roomId={roomID}
-                        money={money}
-                        paymentDate={paymentDate}
-                        ref={addStudent}
-                    ></AddBill>
-                }
-                handleClose={() => setIsAddStudent(!isAddStudent)}
-                handleConfirm={() => addFunction()}
-            />} */}
-            {isAddStudent && <Popup
-                content={
-                    <AddBill
-                        roomId = {roomID}
                         ref={addBill}
                     ></AddBill>}
-                handleClose={() => setIsAddStudent(!isAddStudent)}
+                handleClose={() => setIsAddBill(!isAddBill)}
                 handleConfirm={() => addFunction()}
             />}
 

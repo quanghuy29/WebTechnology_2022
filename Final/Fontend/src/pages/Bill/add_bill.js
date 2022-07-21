@@ -5,14 +5,12 @@ import axios from "axios";
 
 const AddBill = forwardRef((props, ref) => {
 
-    const [roomId, setRoomId] = useState(0);
     const [money, setMoney] = useState(0);
-
-    const urlPost = 'http://localhost:8080/QuanLyKTX_war_exploded/room/student';
+    const [paymentDate, setPaymentDate] = useState('');
     const urlPostBill = 'http://localhost:8080/QuanLyKTX_war_exploded/room/utility';
-    
+
     useImperativeHandle(ref, () => ({
-        urlPostBill(money, paymentDate) {
+        postBill() {
             let isValid = true;
             const postData = {
                 roomId: props.roomId,
@@ -37,6 +35,9 @@ const AddBill = forwardRef((props, ref) => {
                 <form className="form">
                     <label>
                         <span>Số tiền</span><input type="number" onChange={(event) => setMoney(event.target.value)} placeholder="10"></input>
+                    </label>
+                    <label>
+                        <span>Ngày</span><input type="text" onChange={(event) => setPaymentDate(event.target.value)} placeholder="YYYY-MM-DD"></input>
                     </label>
                 </form>
             </section>
