@@ -15,14 +15,10 @@ const Bill = () => {
     const urlGet = 'http://localhost:8080/QuanLyKTX_war_exploded/room';
     const [rooms, setRooms] = useState('');
     const [room, setRoom] = useState('');
-    const [isOpenPopup, setIsOpenPopup] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
-    const [isDelete, setIsDelete] = useState(false);
     const [change, setChange] = useState(false);
-    const deleteChildRef = useRef()
-    const addChildRef = useRef()
     const updateChildRef = useRef()
-    const getStudent = useRef()
+    const getBill = useRef()
     const getRoom = useRef()
 
     useEffect(() => {
@@ -30,19 +26,6 @@ const Bill = () => {
             .then(res => res.json())
             .then(data => { setRooms(data); console.log(data); })
     }, [change]);
-
-    const deleteFunction = () => {
-        deleteChildRef.current.deleteRoom();
-        setIsDelete(!isDelete);
-        setTimeout(() => setChange(!change), 500);
-    }
-
-    const addFunction = () => {
-        if (addChildRef.current.postRoom(rooms) === true) {
-            setIsOpenPopup(!isOpenPopup)
-            setTimeout(() => setChange(!change), 500);
-        }
-    }
 
     const updateFunction = () => {
         if (updateChildRef.current.putRoom() === true) {
@@ -59,7 +42,7 @@ const Bill = () => {
 
     const clickItem = (item) => {
         setRoom(item);
-        getStudent.current.update(item.roomId);
+        getBill.current.update(item.roomId);
         getRoom.current.update(item.roomId)
     }
 
@@ -97,7 +80,6 @@ const Bill = () => {
                             <div className="container-fluid">
                                 <ol className="breadcrumb">
                                     <li className="breadcrumb-item active">Bill</li>
-                                    {/* <button className="btn-add" onClick={() => setIsOpenPopup(!isOpenPopup)}>Thêm phòng</button> */}
                                 </ol>
                             </div>
                             <div className="card-body">
@@ -134,7 +116,7 @@ const Bill = () => {
                             roomPaymentState={1}
                             roomState={1}
                             ref={getRoom}
-                            reloadStudents={() => getStudent.current.update(room.roomId)}
+                            reloadBills={() => getBill.current.update(room.roomId)}
                             reloadRoom={() => setChange(!change)}
                         ></ShowRoom>
                     </div>
@@ -142,7 +124,7 @@ const Bill = () => {
                     <div className="container-fluid-half-r">
                         <RoomBill
                             roomId={room.roomId}
-                            ref={getStudent}
+                            ref={getBill}
                             reloadRoom={() => { setChange(!change); getRoom.current.update(room.roomId); }}
                         ></RoomBill>
                     </div>
