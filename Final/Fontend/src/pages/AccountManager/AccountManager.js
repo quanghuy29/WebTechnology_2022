@@ -17,8 +17,8 @@ const ROLE = {
 };
 
 const STATE = {
-  block: 0,
-  active: 1,
+  block: 1,
+  active: 0,
 };
 
 const cx = classNames.bind(styles);
@@ -60,9 +60,9 @@ function AccountManager() {
 
   const renderStateName = (state) => {
     if (state) {
-      return <b>Active</b>;
-    } else {
       return <b>Block</b>;
+    } else {
+      return <b>Active</b>;
     }
   };
 
