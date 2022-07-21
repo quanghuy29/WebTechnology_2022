@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useState, useRef } from "react";
 import React from "react";
 import Popup from "../../component/popup/popup";
-import AddStudentRoom from "./add_student_room";
+import AddBill from "./add_bill";
 import axios from "axios";
 import SearchStudent from "../../component/searchStudent/searchstudent";
 import "./room.css";
@@ -14,7 +14,10 @@ const ShowRoom = forwardRef((props, ref) => {
     const [studentCode, setStudentCode] = useState('');
     const [isFirstTime, setIsFirstTime] = useState(true);
     const [isAddStudent, setIsAddStudent] = useState(false);
-    const addStudent = useRef()
+    const [money, setMoney] = useState(0);
+    const [paymentDate, setPaymentDate] = useState('');
+
+    const addBill = useRef()
     const urlGet = 'http://localhost:8080/QuanLyKTX_war_exploded/room?idRoom=';
     const urlGetStudent = 'http://localhost:8080/QuanLyKTX_war_exploded/api-student_manager';
     const urlGetBill = 'http://localhost:8080/QuanLyKTX_war_exploded/room/utility?roomId=';
@@ -34,12 +37,7 @@ const ShowRoom = forwardRef((props, ref) => {
             return;
         }
 
-        // if (room.availableSlots <= 0) {
-        //     alert("Phòng đã đầy!!");
-        //     return;
-        // }
-
-        if (addStudent.current.postStudentRoom(studentCode) === true) {
+        if (addBill.current.postStudentRoom(studentCode) === true) {
             setIsAddStudent(!isAddStudent);
         }
         props.reloadStudents();
@@ -93,20 +91,27 @@ const ShowRoom = forwardRef((props, ref) => {
                     </tr>
                 </tbody>
             </table>
-            {isAddStudent && room.roomCode !== '' && <Popup
+            {/* {isAddStudent && room.roomCode !== '' && <Popup
                 content={
-                    <AddStudentRoom
+                    <AddBill
                         roomId={roomID}
+                        money={money}
+                        paymentDate={paymentDate}
                         ref={addStudent}
-                    ></AddStudentRoom>
+                    ></AddBill>
                 }
                 handleClose={() => setIsAddStudent(!isAddStudent)}
                 handleConfirm={() => addFunction()}
+            />} */}
+            {isAddStudent && <Popup
+                content={
+                    <AddBill
+                        roomId = {roomID}
+                        ref={addBill}
+                    ></AddBill>}
+                handleClose={() => setIsAddStudent(!isAddStudent)}
+                handleConfirm={() => addFunction()}
             />}
-            {isAddStudent && room.roomCode !== '' && <SearchStudent
-                data={students}
-                showItem={clickItem}
-            ></SearchStudent>}
 
         </div>
     )
