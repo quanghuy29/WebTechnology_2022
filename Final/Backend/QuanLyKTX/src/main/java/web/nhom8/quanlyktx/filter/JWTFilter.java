@@ -50,7 +50,7 @@ public class JWTFilter implements Filter {
         if (    url.startsWith("/QuanLyKTX_war_exploded/api-student_manager") ||
                 url.startsWith("/QuanLyKTX_war_exploded/api-account_manager")
             ) {
-            if (rolecode.equalsIgnoreCase("QLSV"))
+            if (rolecode.equalsIgnoreCase("QLSV") || rolecode.equalsIgnoreCase("QLT"))
             {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
@@ -62,7 +62,7 @@ public class JWTFilter implements Filter {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.writeValue(response.getOutputStream(), responseObject);
             }
-        } else if (url.startsWith("/QuanLyKTX_war_exploded/")) {
+        } else if (url.startsWith("/QuanLyKTX_war_exploded/*")) {
             if (rolecode.equalsIgnoreCase("QLT"))
             {
                 filterChain.doFilter(servletRequest, servletResponse);
