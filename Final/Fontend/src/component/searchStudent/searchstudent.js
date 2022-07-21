@@ -11,7 +11,7 @@ const SearchStudent = ({ data, showItem }) => {
         const searchWord = event.target.value;
         setWordEntered(searchWord);
         const newFilter = data.filter((value) => {
-            return value.studentCode.toLowerCase().includes(searchWord.toLowerCase());
+            return value.studentCode.includes(searchWord);
         });
 
         if (searchWord === "") {

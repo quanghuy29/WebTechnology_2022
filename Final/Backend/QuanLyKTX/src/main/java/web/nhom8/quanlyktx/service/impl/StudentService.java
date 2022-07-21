@@ -17,6 +17,11 @@ public class StudentService implements IStudentService {
     }
 
     @Override
+    public StudentModel findByStudentId(int studentId) {
+        return studentDAO.findByStudentId(studentId);
+    }
+
+    @Override
     public StudentModel findByStudentCode(String studentCode) {
         return studentDAO.findByStudentCode(studentCode);
     }

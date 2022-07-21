@@ -3,13 +3,16 @@ package web.nhom8.quanlyktx.model;
 import java.sql.Date;
 
 public class RoomPaymentModel {
-    private int PaymentId;
-    private int StudentRoomId;
+    private Long PaymentId;
+    private Long StudentRoomId;
     private float PaymentMoney;
     private Date PaymentDate;
     private int State;
 
-    public RoomPaymentModel(int paymentId, int studentRoomId, float paymentMoney, Date paymentDate, int state) {
+    public RoomPaymentModel() {
+
+    }
+    public RoomPaymentModel(Long paymentId, Long studentRoomId, float paymentMoney, Date paymentDate, int state) {
         PaymentId = paymentId;
         StudentRoomId = studentRoomId;
         PaymentMoney = paymentMoney;
@@ -17,15 +20,19 @@ public class RoomPaymentModel {
         State = state;
     }
 
-    public int getPaymentId() {
+    public Long getPaymentId() {
         return PaymentId;
     }
 
-    public int getStudentRoomId() {
+    public void setPaymentId(Long paymentId) {
+        PaymentId = paymentId;
+    }
+
+    public Long getStudentRoomId() {
         return StudentRoomId;
     }
 
-    public void setStudentRoomId(int studentRoomId) {
+    public void setStudentRoomId(Long studentRoomId) {
         StudentRoomId = studentRoomId;
     }
 

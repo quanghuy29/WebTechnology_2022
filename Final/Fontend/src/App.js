@@ -8,7 +8,8 @@ import EditPage from "./pages/edit";
 import Register from "./pages/register";
 import NotFound from "./pages/notfound";
 import FileUploadPage from "./pages/fileupload";
-import Room from "./pages/RoomManager/room"
+import Room from "./pages/RoomManager/room";
+import Bill from "./pages/Bill/bill"
 
 class App extends Component {
 
@@ -25,6 +26,7 @@ class App extends Component {
                         <Route path='/edit/' component={EditPage} />
                         <Route path='/fileupload/' component={FileUploadPage} />
                         <Route path='/room' component={Room} />
+                        <Route path='/bill' component={Bill} />
                         <Route path='*' component={NotFound} />
                     </Switch>
                 </Router>

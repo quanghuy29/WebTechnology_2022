@@ -32,10 +32,6 @@ const AddRoom = forwardRef((props, ref) => {
                     isValid = false;
                 }
             });
-            /*const data = {
-                "roomCode": "B02",
-                "maxSlots": 1
-            }*/
 
             if (isValid === true) {
                 axios.post(urlPost, postData)

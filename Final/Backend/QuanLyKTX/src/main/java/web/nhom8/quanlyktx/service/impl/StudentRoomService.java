@@ -31,9 +31,9 @@ public class StudentRoomService implements IStudentRoomService {
 
     @Override
     public StudentRoomModel save(StudentRoomModel model) {
-        if (model.getPayMoneyRemain() == null) model.setPayMoneyRemain(0f);
+        if (model.getPayMoneyRemain() == null) model.setPayMoneyRemain(0.0F);
         if (model.getPaymentState() == null) model.setPaymentState(1);
-        StudentModel student = studentService.findByStudentCode(model.getStudentId().toString());
+        StudentModel student = studentService.findByStudentId(Math.toIntExact(model.getStudentId()));
         model.setStudentId((long)student.getStudentId());
         model.setStudentCode(student.getStudentCode());
         model.setStudentName(student.getFullname());

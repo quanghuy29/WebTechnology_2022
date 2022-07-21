@@ -3,13 +3,16 @@ package web.nhom8.quanlyktx.model;
 import java.sql.Date;
 
 public class UtilityBillModel {
-    private int BillId;
-    private int RoomId;
+    private Long BillId;
+    private Long RoomId;
     private float Money;
     private Date PaymentDate;
     private int State;
 
-    public UtilityBillModel(int billId, int roomId, float money, Date paymentDate, int state) {
+    public UtilityBillModel() {
+
+    }
+    public UtilityBillModel(Long billId, Long roomId, float money, Date paymentDate, int state) {
         BillId = billId;
         RoomId = roomId;
         Money = money;
@@ -17,15 +20,18 @@ public class UtilityBillModel {
         State = state;
     }
 
-    public int getBillId() {
+    public Long getBillId() {
         return BillId;
     }
 
-    public int getRoomId() {
+    public void setBillId(Long billId) {
+        BillId = billId;
+    }
+    public Long getRoomId() {
         return RoomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Long roomId) {
         RoomId = roomId;
     }
 
