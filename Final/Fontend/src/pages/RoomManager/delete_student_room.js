@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle } from "react";
-import "./room.css";
+import "./room.module.css";
 import axios from "axios";
 
 const DeleteStudentRoom = forwardRef((props, ref) => {

@@ -40,6 +40,10 @@ export default class Sidebar extends Component {
                             <span>&nbsp;Room</span></Link>
                     </li>
                     <li className="nav-item">
+                        <Link to={'/account-manager'} className="nav-link"><i className="fas fa-fw fa-chart-area"></i>
+                            <span>&nbsp;Account Manager</span></Link>
+                    </li>
+                    <li className="nav-item">
                         <a className="nav-link" href="tables.html">
                             <i className="fas fa-fw fa-table"></i>
                             <span>&nbsp;Tables</span></a>

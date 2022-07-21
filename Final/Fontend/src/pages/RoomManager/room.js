@@ -9,7 +9,7 @@ import UpdateRoom from "./update_room";
 import DeleteRoom from "./delete_room";
 import StudentRoom from "./room_student";
 import ShowRoom from "./show_info_room";
-import "./room.css";
+import "./room.module.css";
 import SearchBar from "../../component/searchbar/searchbar";
 
 

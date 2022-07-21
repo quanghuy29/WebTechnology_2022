@@ -1,36 +1,49 @@
-import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import Layout from "./component/Layout";
+import NotFound from "./pages/NotFound/NotFound";
+import RequireAuth from './protectAuth/RequireAuth/RequireAuth';
 import Login from "./pages/login";
-import Dashboard from "./pages/dashboard";
-import Index from "./pages/index";
-import AddPage from "./pages/add";
-import EditPage from "./pages/edit";
-import Register from "./pages/register";
-import NotFound from "./pages/notfound";
-import FileUploadPage from "./pages/fileupload";
-import Room from "./pages/RoomManager/room"
+import Room from "./pages/RoomManager/room";
+import Students from "./pages/Students/Students";
+import SignIn from "./pages/Login/Login";
+import AccountManager from "./pages/AccountManager/AccountManager";
+
+const ROLES = {
+  status: 200,
+  manager: 2,
+  accountant: 3,
+  user: 4,
+};
 
 class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="login" element={<SignIn />} />
 
-    render() {
-        return (
-            <div className="App">
-                <Router>
-                    <Switch>
-                        <Route exact path='/' component={Login} />
-                        <Route path='/dashboard' component={Dashboard} />
-                        <Route path='/index' component={Index}/>
-                        <Route path='/register' component={Register} />
-                        <Route path='/add' component={AddPage} />
-                        <Route path='/edit/' component={EditPage} />
-                        <Route path='/fileupload/' component={FileUploadPage} />
-                        <Route path='/room' component={Room} />
-                        <Route path='*' component={NotFound} />
-                    </Switch>
-                </Router>
-            </div>
-        );
-    }
+            <Route element={<RequireAuth allowedRoles={ROLES.status} />}>
+          <Route path="/" element={<AccountManager />} />
+        </Route>
+
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+        {/* <Router>
+          <Routes>
+            <Route exact path="/" component={Login} />
+            <Route path="/room" component={Room} />
+            <Route path="/students" component={Students} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="/account-manager" component={AccountManager} />
+          </Routes>
+        </Router> */}
+      </div>
+    );
+  }
 }
 
 export default App;

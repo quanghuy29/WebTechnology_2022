@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import React from "react";
-import "./room.css";
+import "./room.module.css";
 import axios from "axios";
 
 const AddStudentRoom = forwardRef((props, ref) => {

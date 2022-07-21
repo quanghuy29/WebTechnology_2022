@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from "../elements/header";
 import Sidebar from "../elements/sidebar";
-import {Link, Redirect} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import axios from 'axios';
 
 export default class Index extends Component {
@@ -43,7 +43,7 @@ export default class Index extends Component {
 
     render() {
         if (this.state.toDashboard === true) {
-            return <Redirect to='/' />
+            return <Navigate to='/' />
         }
         return (
             <div>
