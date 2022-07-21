@@ -21,7 +21,7 @@ function Routes() {
     return (
         <Router history={history}>
             <Switch>
-                <Route exact path="/" component={LoginPage} />
+                <Route exact path="/login" component={LoginPage} />
                 <RouteGuard path="/dashboard" component={Dashboard} />
                 <RouteGuard path="/index" component={Index} />
                 <RouteGuard path="/register" component={Register} />
@@ -31,8 +31,7 @@ function Routes() {
                 <RouteGuard path='/room' component={Room} />
                 <RouteGuard path='/bill' component={Bill} />
                 <RouteGuard path='*' component={NotFound} />
-
-                
+    
             </Switch>
         </Router>
     );

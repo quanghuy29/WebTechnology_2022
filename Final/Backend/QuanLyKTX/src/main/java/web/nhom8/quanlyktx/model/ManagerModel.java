@@ -30,6 +30,10 @@ public class ManagerModel {
 
     }
 
+    public void setManagerId(int managerId) {
+        ManagerId = managerId;
+    }
+
     public int getManagerId() {
         return ManagerId;
     }
