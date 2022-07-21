@@ -6,14 +6,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Login.module.scss";
 
-import AuthContext from "../../context/AuthProvider";
-
 const cx = classNames.bind(styles);
 const LOGIN_URL = "http://localhost:8080/QuanLyKTX_war_exploded/api-login";
 
 function Login() {
-  const { setAuth } = useContext(AuthContext);
-
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -55,7 +51,6 @@ function Login() {
         const token = res?.data?.message;
         localStorage.setItem("token-auth", token)
         const roles = res?.data?.status;
-        setAuth({ username, password, roles, token });
         setUsername("");
         setPassword("");
 
