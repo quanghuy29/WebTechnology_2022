@@ -32,8 +32,8 @@ const StudentRoom = forwardRef((props, ref) => {
     }
 
     const checkPaymentState = (item) => {
-        if (item === 1) return "Đã trả đủ tiền phòng"
-        else if (item === 2) return "Còn thiếu tiền phòng"
+        if (item === 1) return <td className = "done">Đã trả đủ tiền phòng</td>
+        else if (item === 2) return <td className = "notdone">Còn thiếu tiền phòng</td>
     }
 
     useEffect(() => {
@@ -62,7 +62,7 @@ const StudentRoom = forwardRef((props, ref) => {
             <td>{item.studentCode}</td>
             <td>{item.studentName}</td>
             <td>{item.payMoneyRemain}</td>
-            <td>{checkPaymentState(item.paymentState)}</td>
+            {checkPaymentState(item.paymentState)}
             <td><i class="fas fa-edit" onClick={() => {
                 setStudent(item);
                 setIsUpdate(!isUpdate);

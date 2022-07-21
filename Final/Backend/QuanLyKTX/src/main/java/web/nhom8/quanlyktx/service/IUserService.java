@@ -11,4 +11,6 @@ public interface IUserService {
     UserModel findByUserName(String userName);
 
     UserModel findByUsernameAndPasswordAndState(String userName, String password, int state);
+
+    Long addNewUser(UserModel newUserModel);
 }

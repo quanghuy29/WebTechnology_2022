@@ -18,13 +18,13 @@ const ShowRoom = forwardRef((props, ref) => {
     const urlGet = 'http://localhost:8080/QuanLyKTX_war_exploded/room?idRoom=';
     const urlGetStudent = 'http://localhost:8080/QuanLyKTX_war_exploded/api-student_manager';
     const checkPaymentRoomState = (item) => {
-        if (item === 1) return "Đã trả đủ tiền điện nước"
-        else if (item === 2) return "Còn thiếu tiền điện nước"
+        if (item === 1) return <td className = "done">Đã trả đủ tiền điện nước</td>
+        else if (item === 2) return <td className = "notdone">Còn thiếu tiền điện nước</td>
     }
 
     const checkRoomState = (item) => {
-        if (item === 1) return "Đang ở"
-        else if (item === 2) return "Đang khoá"
+        if (item === 1) return <td className = "done">Đang ở</td>
+        else if (item === 2) return <td className = "notdone">Đang khoá</td>
     }
 
     const addFunction = () => {
@@ -86,11 +86,11 @@ const ShowRoom = forwardRef((props, ref) => {
                     </tr>
                     <tr>
                         <td>Trạng thái thanh toán</td>
-                        <td>{checkPaymentRoomState(room.roomPaymentState)}</td>
+                        {checkPaymentRoomState(room.roomPaymentState)}
                     </tr>
                     <tr>
                         <td>Trạng thái phòng</td>
-                        <td>{checkRoomState(room.roomState)}</td>
+                        {checkRoomState(room.roomState)}
                     </tr>
                     <tr>
                         <td>

@@ -30,4 +30,10 @@ public class UserService implements IUserService {
     public UserModel findByUsernameAndPasswordAndState(String userName, String password, int state) {
         return userDAO.findByUsernameAndPasswordAndState(userName, password, state);
     }
+
+    @Override
+    public Long addNewUser(UserModel newUserModel) {
+        newUserModel.setState(0);
+        return userDAO.addNewUser(newUserModel);
+    }
 }

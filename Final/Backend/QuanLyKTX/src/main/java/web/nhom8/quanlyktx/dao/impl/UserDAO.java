@@ -33,4 +33,13 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
         List<UserModel> userModels = query(sql, new UserMapper(), userName, password, state);
         return userModels.isEmpty() ? null : userModels.get(0);
     }
+
+    @Override
+    public Long addNewUser(UserModel newUserModel) {
+        String sql = "INSERT INTO User (UserId, RoleId, Username, Password, State) VALUES (NULL, ?, ?, ?, ?)";
+        Long result = insert(sql, newUserModel.getRoleId(), newUserModel.getUsername(),
+                newUserModel.getPassword(), newUserModel.getState());
+        if(result == null) result = Long.valueOf(-1);
+        return result;
+    }
 }
