@@ -9,8 +9,14 @@ import java.util.List;
 public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
     @Override
     public UserModel findOne(Integer userId) {
-        String sql = "SELECT * FROM User WHERE UserId = ?";
-        List<UserModel> userModels = query(sql, new UserMapper(), userId);
+        StringBuilder stringBuilder = new StringBuilder("SELECT User.UserId, User.RoleId, Manager.ManagerId, User.Username, User.Password, Role.RoleCode, ");
+        stringBuilder.append("Role.RoleName, User.State AS UserState, Manager.Fullname, Manager.Email, Manager.Address, ");
+        stringBuilder.append("Manager.DateOfBirth, Manager.Phone, Manager.YearOfService FROM User ");
+        stringBuilder.append("INNER JOIN Manager ON User.UserId = Manager.UserId ");
+        stringBuilder.append("INNER JOIN Role ON User.RoleId = Role.RoleId ");
+        stringBuilder.append("WHERE User.UserId = ?");
+
+        List<UserModel> userModels = query(stringBuilder.toString(), new UserMapper(), userId);
         return userModels.isEmpty() ? null : userModels.get(0);
     }
 
@@ -46,7 +52,7 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
 
     @Override
     public UserModel findByEmailAndPasswordAndState(String email, String password, int state) {
-        StringBuilder stringBuilder = new StringBuilder("SELECT User.Username, User.Password, Role.RoleCode, ");
+        StringBuilder stringBuilder = new StringBuilder("SELECT User.UserId, User.RoleId, Manager.ManagerId, User.Username, User.Password, Role.RoleCode, ");
         stringBuilder.append("Role.RoleName, User.State AS UserState, Manager.Fullname, Manager.Email, Manager.Address, ");
         stringBuilder.append("Manager.DateOfBirth, Manager.Phone, Manager.YearOfService FROM User ");
         stringBuilder.append("INNER JOIN Manager ON User.UserId = Manager.UserId ");

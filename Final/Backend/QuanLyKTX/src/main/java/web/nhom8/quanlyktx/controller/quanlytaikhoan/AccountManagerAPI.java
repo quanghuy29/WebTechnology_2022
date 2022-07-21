@@ -41,10 +41,10 @@ public class AccountManagerAPI extends HttpServlet {
             List<UserModel> userModels = userService.findAll();
             mapper.writeValue(resp.getOutputStream(), userModels);
 
-        } else if (action.equalsIgnoreCase("findByStudentCode"))
+        } else if (action.equalsIgnoreCase("findByUserId"))
         {
-//            StudentModel studentModel = userService.findByStudentCode(message);
-//            mapper.writeValue(resp.getOutputStream(), studentModel);
+            UserModel userModel = userService.findOne(Integer.parseInt(message));
+            mapper.writeValue(resp.getOutputStream(), userModel);
 
         } else if (action.equalsIgnoreCase("findByClassRoom"))
         {
