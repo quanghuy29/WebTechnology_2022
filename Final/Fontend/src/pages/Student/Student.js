@@ -42,6 +42,7 @@ function Student() {
     axios
       .get(URL_STUDENT_MANAGER)
       .then((res) => {
+        console.log(res);
         setStudents([...res.data]);
       })
       .catch((e) => console.log(e));

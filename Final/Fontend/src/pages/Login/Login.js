@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Login.module.scss";
+import { setAuthToken } from '../../helpers/setAuthToken';
 
 const cx = classNames.bind(styles);
 const LOGIN_URL = "http://localhost:8080/QuanLyKTX_war_exploded/api-login";
@@ -50,6 +51,8 @@ function Login() {
 
         const token = res?.data?.message;
         localStorage.setItem("token-auth", token)
+        localStorage.setItem('isLoggedIn', true);
+        setAuthToken(token);
         const roles = res?.data?.status;
         setUsername("");
         setPassword("");

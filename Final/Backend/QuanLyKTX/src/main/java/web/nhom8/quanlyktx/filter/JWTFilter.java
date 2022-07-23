@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @WebFilter(asyncSupported = true, urlPatterns = {"/*"})
 public class JWTFilter implements Filter {
@@ -32,6 +33,17 @@ public class JWTFilter implements Filter {
         int status;
         if (!url.startsWith("/QuanLyKTX_war_exploded/api-login"))
         {
+            String method = request.getHeader("Access-Control-Request-Headers");
+            if (Objects.equals(method, "authorization") || Objects.equals(method, "authorization,content-type") ){
+                response.addHeader("Access-Control-Allow-Origin", "*");
+                response.addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST, DELETE");
+                response.addHeader("Access-Control-Allow-Credentials","true");
+                response.addHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, Access-Control-Request-Headers");
+
+                response.setStatus(HttpServletResponse.SC_ACCEPTED);
+                return;
+            }
+
             String jwtToken = request.getHeader("Authorization");
             if(TokenJWTUtils.validateToken(jwtToken)) {
                 System.out.println(jwtToken);
@@ -54,6 +66,11 @@ public class JWTFilter implements Filter {
             {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else {
+                response.addHeader("Access-Control-Allow-Origin", "*");
+                response.addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST, DELETE");
+                response.addHeader("Access-Control-Allow-Credentials","true");
+                response.addHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, Access-Control-Request-Headers");
+
                 msg = "Unauthorize!";
                 status = 300;
                 ResponseObject responseObject = new ResponseObject();
@@ -75,7 +92,7 @@ public class JWTFilter implements Filter {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.writeValue(response.getOutputStream(), responseObject);
             }
-        } else if (url.startsWith("/QuanLyKTX_war_exploded/")) {
+        } else if (url.startsWith("/QuanLyKTX_war_exploded/room") || url.startsWith("/QuanLyKTX_war_exploded/room/student")) {
             if (rolecode.equalsIgnoreCase("QLPO"))
             {
                 filterChain.doFilter(servletRequest, servletResponse);

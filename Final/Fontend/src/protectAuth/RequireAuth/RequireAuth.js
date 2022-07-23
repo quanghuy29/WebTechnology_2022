@@ -6,7 +6,7 @@ const RequireAuth = ({ allowedRoles }) => {
     const token = localStorage.getItem('token-auth')
     const isLogin = localStorage.getItem('isLoggedIn')
 
-    if (isLogin === true || token != null) {
+    if (isLogin === 'true' && token != null) {
         return <Outlet />
     } else {
         //if (auth?.token) {

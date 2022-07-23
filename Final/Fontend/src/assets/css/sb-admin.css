@@ -10688,10 +10688,7 @@ body {
   width: 90px;
 }
 
-.sidebar .nav-item .nav-link span {
-  font-size: 0.65rem;
-  display: block;
-}
+
 
 .sidebar .nav-item .dropdown-menu {
   position: absolute !important;
@@ -10735,7 +10732,7 @@ body {
     width: 225px;
   }
   .sidebar .nav-item .nav-link span {
-    font-size: 1rem;
+    font-size: 1.5rem;
     display: inline;
   }
   .sidebar .nav-item .dropdown-menu {
