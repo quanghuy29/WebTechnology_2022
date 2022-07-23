@@ -4,11 +4,11 @@ import "./popup.css"
 const Popup = props => {
     return (
         <div className="popup-box">
-            <div className="background" onClick={props.handleClose}></div>
-            <div className="box">
+            <div className="background-popup" onClick={props.handleClose}></div>
+            <div className="box-popup">
                 <div className="close-icon" onClick={props.handleClose}></div>
                 {props.content}
-                <button className="submit" onClick={props.handleConfirm}>Xác nhận</button>
+                <button className="submit-popup" onClick={props.handleConfirm}>Xác nhận</button>
             </div>
         </div>
     );

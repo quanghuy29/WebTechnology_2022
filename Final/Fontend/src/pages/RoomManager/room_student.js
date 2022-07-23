@@ -37,7 +37,12 @@ const StudentRoom = forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-        fetch(urlGet + roomID)
+        const token = localStorage.getItem("token-auth");
+        fetch(urlGet + roomID, {
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => setStudents(data))
     }, [change, roomID]);

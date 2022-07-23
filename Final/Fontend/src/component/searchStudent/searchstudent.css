@@ -1,6 +1,6 @@
 .searchstudent{
     position: fixed;
-    width: 90%;
+    width: 95%;
     height: 20vh;
     top: 0;
     right: 0;
@@ -10,10 +10,10 @@
     display: flex;
     border: 1px solid;
     border-color: rgb(227, 212, 212);
-    width: 300px;
+    width: 200px;
     position: relative;
     margin: auto;
-    margin-top: calc(100vh - 80vh + 140px);
+    margin-top: calc(100vh - 80vh + 90px);
     border-radius: 10px;
 }
 
