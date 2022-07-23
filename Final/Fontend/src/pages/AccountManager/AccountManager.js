@@ -8,7 +8,7 @@ import Sidebar from "../../elements/sidebar";
 import { Link, Redirect } from "react-router-dom";
 
 const URL_ACCOUNT_MANAGER =
-  "http://localhost:8080/QuanLyKTX_war_exploded/api-user-mananger";
+  "http://localhost:8080/QuanLyKTX_war_exploded/api-user_mananger";
 
 const ROLE = {
   admin: 1,
@@ -40,10 +40,10 @@ function AccountManager() {
   console.log(token);
 
   useEffect(() => {
+    const params = { action: "findAll"}
+    const headers = { 'Authorization': token }
     axios
-      .get(URL_ACCOUNT_MANAGER, {
-        Authorization: token,
-      })
+      .get(URL_ACCOUNT_MANAGER, params, headers)
       .then((res) => {
         setAccounts([...res.data]);
       })
