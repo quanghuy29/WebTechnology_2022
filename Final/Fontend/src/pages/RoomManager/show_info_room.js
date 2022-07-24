@@ -60,9 +60,9 @@ const ShowRoom = forwardRef((props, ref) => {
         })
             .then(res => res.json())
             .then(data => showData(data));
-        axios.get(urlGetStudent, { params: { action: "findAll" }, headers:{
+        axios.get(urlGetStudent, { params: { action: "findAll" },headers:{
             'Authorization': `Bearer ${token}`
-        } })
+        }})
             .then(res => { setStudents(res.data) });
     }, [change, roomID]);
 
