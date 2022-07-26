@@ -37,15 +37,6 @@ class App extends Component {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
-        {/* <Router>
-          <Routes>
-            <Route exact path="/" component={Login} />
-            <Route path="/room" component={Room} />
-            <Route path="/students" component={Students} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="/account-manager" component={AccountManager} />
-          </Routes>
-        </Router> */}
       </div>
     );
   }
