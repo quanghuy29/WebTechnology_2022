@@ -10,37 +10,52 @@ import { Link, Redirect } from "react-router-dom";
 const URL_STUDENT_MANAGER =
   "http://localhost:8080/QuanLyKTX_war_exploded/api-student_manager";
 
-const ROLE = {
-  admin: 1,
-  manager: 2,
-  accountant: 3,
-};
-
 const STATE = {
-  block: 1,
-  active: 0,
+  block: 0,
+  active: 1,
 };
 
 const cx = classNames.bind(styles);
 
 function Student() {
   const [students, setStudents] = useState([]);
+  const [student, setStudent] = useState({
+    studentId: "",
+    studentCode: "",
+    fullname: "",
+    dateOfBirth: "",
+    email: "",
+    address: "",
+    phone: "",
+    yearSchoole: 1,
+    studentClass: "",
+    state: 1
+  })
   const [checked, setChecked] = useState(true);
   const [mode, setMode] = useState("create")
 
   // ----------- FORM FIELD ---------------------
 
 
-    const [id, setId] = useState('')
-    const [code, setCode] = useState('')
-    const [fullname, setFullname] = useState('')
-    const [dob, setDob] = useState('')
-    const [email, setEmail] = useState('')
-    const [address, setAddress] = useState('')
+  const [id, setId] = useState('')
+  const [code, setCode] = useState('')
+  const [fullname, setFullname] = useState('')
+  const [dob, setDob] = useState('')
+  const [email, setEmail] = useState('')
+  const [address, setAddress] = useState('')
+
+  const token = localStorage.getItem("token-auth");
 
   useEffect(() => {
     axios
-      .get(URL_STUDENT_MANAGER)
+      .get(URL_STUDENT_MANAGER, {
+        params: {
+          'action': 'findAll'
+        },
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      })
       .then((res) => {
         console.log(res);
         setStudents([...res.data]);
@@ -48,21 +63,8 @@ function Student() {
       .catch((e) => console.log(e));
   }, []);
 
-  const renderRoleName = (roleId) => {
-    switch (roleId) {
-      case ROLE.admin:
-        return <b>Admin</b>;
-      case ROLE.manager:
-        return <b>manager</b>;
-      case ROLE.accountant:
-        return <b>accountant</b>;
-      default:
-        break;
-    }
-  };
-
   const renderStateName = (state) => {
-    if (state) {
+    if (!state) {
       return <b>Block</b>;
     } else {
       return <b>Active</b>;
@@ -91,7 +93,7 @@ function Student() {
   };
 
   const handleSubmit = async () => {
-    if(mode === "create") {
+    if (mode === "create") {
       const reqData = {
         id,
         code,
@@ -100,9 +102,9 @@ function Student() {
         email,
         address,
       };
-      
+
       console.log(reqData)
-      return 
+      return
       const res = await axios.post(URL_STUDENT_MANAGER, JSON.stringify(reqData));
       console.log(res);
     } else if (mode === "edit") {
@@ -115,7 +117,7 @@ function Student() {
         email,
         address,
       };
-  
+
       const res = await axios.put(URL_STUDENT_MANAGER, JSON.stringify(reqData));
       console.log(res);
     }
@@ -162,15 +164,26 @@ function Student() {
                     <th>Dob</th>
                     <th>Email</th>
                     <th>Address</th>
+                    <th>Phone</th>
+                    <th>Year School</th>
+                    <th>class</th>
+                    <th>state</th>
+
                     <th className="text-center">action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {students.map((student) => (
-                    <tr key={student.userId}>
-                      <td>{student.userId}</td>
-                      <td>{student.username}</td>
-                      <td>{renderRoleName(student.roleId)}</td>
+                    <tr key={student.studentId}>
+                      <td>{student.studentId}</td>
+                      <td>{student.studentId}</td>
+                      <td>{student.fullname}</td>
+                      <td>{student.dateOfBirth}</td>
+                      <td>{student.email}</td>
+                      <td>{student.address}</td>
+                      <td>{student.phone}</td>
+                      <td>{student.yearSchool}</td>
+                      <td>{student.studentClass}</td>
                       <td>{renderStateName(student.state)}</td>
                       <td className="text-center">
                         <button
@@ -204,7 +217,7 @@ function Student() {
                 <div className={cx("modal")}>
                   <div id="wrap" className={cx("input")}>
                     <section className={cx("input-content")}>
-                      <h2 style={{textTransform: 'uppercase'}}>
+                      <h2 style={{ textTransform: 'uppercase' }}>
                         {mode}
                       </h2>
                       <div className={cx("input-content-wrap")}>

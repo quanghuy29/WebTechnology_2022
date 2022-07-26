@@ -8,7 +8,7 @@ import Sidebar from "../../elements/sidebar";
 import { Link, Redirect } from "react-router-dom";
 
 const URL_ACCOUNT_MANAGER =
-  "http://localhost:8080/QuanLyKTX_war_exploded/api-user-mananger";
+  "http://localhost:8080/QuanLyKTX_war_exploded/api-account_manager";
 
 const ROLE = {
   admin: 1,
@@ -17,14 +17,21 @@ const ROLE = {
 };
 
 const STATE = {
-  block: 1,
-  active: 0,
+  block: '0',
+  active: '1',
 };
 
 const cx = classNames.bind(styles);
 
 function AccountManager() {
   const [accounts, setAccounts] = useState([]);
+  const [account, setAccount] = useState({
+    userId: 1,
+    username: "",
+    password: "",
+    role: "",
+    state: 1
+  })
   const [isInvalid, setIsInvalid] = useState("");
   const [checked, setChecked] = useState(true);
   const [mode, setMode] = useState("create");
@@ -37,65 +44,71 @@ function AccountManager() {
   const [state, setState] = useState(0);
 
   const token = localStorage.getItem("token-auth");
-  console.log(token);
 
   useEffect(() => {
     axios
       .get(URL_ACCOUNT_MANAGER, {
-        Authorization: token,
+        params: {
+          'action': 'findAll'
+        },
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
       })
       .then((res) => {
-        setAccounts([...res.data]);
+        const newAccountList = res.data.map(account => {
+          return {
+            userId: account.userId,
+            username: account.username,
+            password: account.password,
+            role: account.roleModel.roleName,
+            state: account.userState.toString()
+          }
+        })
+        setAccounts([...newAccountList]);
       })
       .catch((e) => console.log(e));
-  }, []);
-
-  const renderRoleName = (roleId) => {
-    switch (roleId) {
-      case ROLE.admin:
-        return <b>Admin</b>;
-      case ROLE.manager:
-        return <b>manager</b>;
-      case ROLE.accountant:
-        return <b>accountant</b>;
-      default:
-        break;
-    }
-  };
+  }, [account]);
 
   const renderStateName = (state) => {
     if (state) {
-      return <b>Block</b>;
-    } else {
       return <b>Active</b>;
+    } else {
+      return <b>Block</b>;
     }
   };
 
   const handleAddAccount = () => {
     setMode("create");
-    setUsername("");
-    setPassword("");
-    setRole(1);
-    setState(0);
+    setAccount({
+      username: "",
+      password: "",
+      role: "",
+    })
   };
 
+  const handelChange = e => {
+    const value = e.target.value;
+    console.log(value)
+    setAccount({
+      ...account,
+      [e.target.name]: value
+    });
+  }
+
   const handleEdit = async (data) => {
-    console.log("edit");
-    setUserId(data.userId);
-    setMode("edit");
-    setUsername(data.username);
-    setPassword(data.password);
-    setRole(data.roleId);
-    setState(data.state);
+    setMode("edit")
+    setAccount({
+      ...account,
+      ...data
+    })
   };
 
   const handleSubmit = async () => {
     if (mode === "create") {
       const reqData = {
-        username,
-        password,
-        roleId: role,
-        state,
+        ...account,
+        state: parseInt(account.state)
       };
 
       const res = await axios.post(
@@ -170,11 +183,11 @@ function AccountManager() {
                 </thead>
                 <tbody>
                   {accounts.map((account) => (
-                    <tr key={account.userId}>
-                      <td>{account.userId}</td>
-                      <td>{account.username}</td>
-                      <td>{renderRoleName(account.roleId)}</td>
-                      <td>{renderStateName(account.state)}</td>
+                    <tr key={account?.userId}>
+                      <td>{account?.userId}</td>
+                      <td>{account?.username}</td>
+                      <td>{account?.role}</td>
+                      <td>{renderStateName(account?.useState)}</td>
                       <td className="text-center">
                         <button
                           type="button"
@@ -217,13 +230,9 @@ function AccountManager() {
                             <input
                               id="input0"
                               type="text"
-                              value={username}
-                              onChange={(e) => setUsername(e.target.value)}
+                              value={account.username}
+                              onChange={handelChange}
                               autoComplete="off"
-                              readOnly
-                              onFocus={(e) =>
-                                e.target.removeAttribute("readonly")
-                              }
                               required
                             />
                             <label htmlFor="input0">Username</label>
@@ -239,12 +248,8 @@ function AccountManager() {
                               id="input1"
                               type="password"
                               autoComplete="off"
-                              readOnly
-                              onFocus={(e) =>
-                                e.target.removeAttribute("readonly")
-                              }
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
+                              value={account.password}
+                              onChange={handelChange}
                               required
                             />
                             <label htmlFor="input1">Password</label>
@@ -258,8 +263,8 @@ function AccountManager() {
                               <select
                                 name="role"
                                 id="role"
-                                onChange={(e) => setRole(e.target.value)}
-                                value={role}
+                                onChange={handelChange}
+                                value={account.role}
                               >
                                 <option value={ROLE.admin}>Admin</option>
                                 <option value={ROLE.manager}>Manager</option>
@@ -280,10 +285,8 @@ function AccountManager() {
                                   id="active"
                                   name="state"
                                   value={STATE.active}
-                                  checked={state}
-                                  onChange={(e) => {
-                                    setState(e.target.value);
-                                  }}
+                                  checked={account.state === STATE.active}
+                                  onChange={handelChange}
                                 />
                                 <label className={cx("label")} htmlFor="active">
                                   active
@@ -295,11 +298,9 @@ function AccountManager() {
                                   id="block"
                                   name="state"
                                   value={STATE.block}
-                                  checked={state}
+                                  checked={account.state === STATE.block}
                                   // checked={state === STATE.block}
-                                  onChange={(e) => {
-                                    setState(e.target.value);
-                                  }}
+                                  onChange={handelChange}
                                 />
                                 <label className={cx("label")} htmlFor="block">
                                   block

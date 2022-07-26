@@ -1,5 +1,6 @@
 package web.nhom8.quanlyktx.dao;
 
+import web.nhom8.quanlyktx.model.StudentModel;
 import web.nhom8.quanlyktx.model.UserModel;
 
 import java.util.List;

@@ -60,6 +60,19 @@ public class AccountManagerAPI extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
 
+        UserModel userModel = HttpUtil.of(req.getReader()).toModel(UserModel.class);
+        Long result = userService.addNewUser(userModel);
+        ResponseObject responseObject = new ResponseObject();
+        responseObject.setMessage(result.toString());
+        if(-1 == result.longValue()) {
+            responseObject.setStatus(400);
+            responseObject.setMessage("Failed to add new user");
+        } else {
+            responseObject.setStatus(200);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(resp.getOutputStream(), responseObject);
+//
 //        StudentModel studentModel = HttpUtil.of(req.getReader()).toModel(StudentModel.class);
 //        Long result = studentService.addNewStudent(studentModel);
 //        ResponseObject responseObject = new ResponseObject();
