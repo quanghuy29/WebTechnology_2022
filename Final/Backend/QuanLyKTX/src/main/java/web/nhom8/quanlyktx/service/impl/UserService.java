@@ -41,4 +41,9 @@ public class UserService implements IUserService {
         newUserModel.setUserState(1);
         return userDAO.addNewUser(newUserModel);
     }
+
+    @Override
+    public UserModel updateUser(UserModel userModel) {
+        return userDAO.updateUser(userModel);
+    }
 }

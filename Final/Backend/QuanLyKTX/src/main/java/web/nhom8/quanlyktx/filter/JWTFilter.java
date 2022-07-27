@@ -67,12 +67,16 @@ public class JWTFilter implements Filter {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else sendMessageError(response);
         } else if (url.startsWith("/QuanLyKTX_war_exploded/")) {
-            if (rolecode.equalsIgnoreCase("KT"))
+            if (rolecode.equalsIgnoreCase("KT") || rolecode.equalsIgnoreCase("QLT"))
+            {
+                filterChain.doFilter(servletRequest, servletResponse);
+            } else sendMessageError(response);
+        } else if (url.startsWith("/QuanLyKTX_war_exploded/api-manager")) {
+            if (rolecode.equalsIgnoreCase("QLT"))
             {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else sendMessageError(response);
         }
-
     }
 
     @Override
