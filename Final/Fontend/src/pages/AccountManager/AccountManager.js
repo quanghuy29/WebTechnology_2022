@@ -78,6 +78,16 @@ function AccountManager() {
     }
   };
 
+  const handleChange = e => {
+    const value = e.target.value;
+    console.log(value)
+    setAccount({
+      ...account,
+      [e.target.name]: value
+    });
+  }
+
+
   const handleAddAccount = () => {
     setMode("create");
     setAccount({
@@ -86,15 +96,6 @@ function AccountManager() {
       role: "",
     })
   };
-
-  const handelChange = e => {
-    const value = e.target.value;
-    console.log(value)
-    setAccount({
-      ...account,
-      [e.target.name]: value
-    });
-  }
 
   const handleEdit = async (data) => {
     setMode("edit")
@@ -231,7 +232,7 @@ function AccountManager() {
                               id="input0"
                               type="text"
                               value={account.username}
-                              onChange={handelChange}
+                              onChange={handleChange}
                               autoComplete="off"
                               required
                             />
@@ -249,7 +250,7 @@ function AccountManager() {
                               type="password"
                               autoComplete="off"
                               value={account.password}
-                              onChange={handelChange}
+                              onChange={handleChange}
                               required
                             />
                             <label htmlFor="input1">Password</label>
@@ -263,7 +264,7 @@ function AccountManager() {
                               <select
                                 name="role"
                                 id="role"
-                                onChange={handelChange}
+                                onChange={handleChange}
                                 value={account.role}
                               >
                                 <option value={ROLE.admin}>Admin</option>
@@ -286,7 +287,7 @@ function AccountManager() {
                                   name="state"
                                   value={STATE.active}
                                   checked={account.state === STATE.active}
-                                  onChange={handelChange}
+                                  onChange={handleChange}
                                 />
                                 <label className={cx("label")} htmlFor="active">
                                   active
@@ -300,7 +301,7 @@ function AccountManager() {
                                   value={STATE.block}
                                   checked={account.state === STATE.block}
                                   // checked={state === STATE.block}
-                                  onChange={handelChange}
+                                  onChange={handleChange}
                                 />
                                 <label className={cx("label")} htmlFor="block">
                                   block

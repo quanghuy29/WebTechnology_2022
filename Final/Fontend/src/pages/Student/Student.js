@@ -5,20 +5,21 @@ import styles from "./Student.module.scss";
 
 import Header from "../../elements/header";
 import Sidebar from "../../elements/sidebar";
-import { Link, Redirect } from "react-router-dom";
 
 const URL_STUDENT_MANAGER =
   "http://localhost:8080/QuanLyKTX_war_exploded/api-student_manager";
 
 const STATE = {
-  block: 0,
-  active: 1,
+  block: '0',
+  active: '1',
 };
 
 const cx = classNames.bind(styles);
 
 function Student() {
+  const [mode, setMode] = useState("create");
   const [students, setStudents] = useState([]);
+  // ----------- FORM FIELD ---------------------
   const [student, setStudent] = useState({
     studentId: "",
     studentCode: "",
@@ -27,22 +28,11 @@ function Student() {
     email: "",
     address: "",
     phone: "",
-    yearSchoole: 1,
+    yearSchool: 1,
     studentClass: "",
-    state: 1
-  })
-  const [checked, setChecked] = useState(true);
-  const [mode, setMode] = useState("create")
+    state: 1,
+  });
 
-  // ----------- FORM FIELD ---------------------
-
-
-  const [id, setId] = useState('')
-  const [code, setCode] = useState('')
-  const [fullname, setFullname] = useState('')
-  const [dob, setDob] = useState('')
-  const [email, setEmail] = useState('')
-  const [address, setAddress] = useState('')
 
   const token = localStorage.getItem("token-auth");
 
@@ -50,14 +40,13 @@ function Student() {
     axios
       .get(URL_STUDENT_MANAGER, {
         params: {
-          'action': 'findAll'
+          action: "findAll",
         },
         headers: {
-          'Authorization': `Bearer ${token}`,
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then((res) => {
-        console.log(res);
         setStudents([...res.data]);
       })
       .catch((e) => console.log(e));
@@ -71,65 +60,89 @@ function Student() {
     }
   };
 
+  const handleChange = e => {
+    const value = e.target.value;
+    setStudent({
+      ...student,
+      [e.target.name]: value,
+    });
+  };
+
   const handleAddAccount = () => {
     setMode("create");
-    setId("")
-    setCode("")
-    setFullname("")
-    setDob("")
-    setEmail("")
-    setAddress("")
+    setStudent({
+      studentId: "",
+      studentCode: "",
+      fullname: "",
+      dateOfBirth: "",
+      email: "",
+      address: "",
+      phone: "",
+      yearSchool: 1,
+      studentClass: "",
+      state: 1,
+    });
   };
 
   const handleEdit = async (data) => {
-    console.log("edit")
     setMode("edit");
-    setId(data.id)
-    setCode(data.code)
-    setFullname(data.fullname)
-    setDob(data.dob)
-    setEmail(data.email)
-    setAddress(data.address)
+    setStudent({
+      ...student,
+      ...data,
+    });
   };
 
   const handleSubmit = async () => {
     if (mode === "create") {
       const reqData = {
-        id,
-        code,
-        fullname,
-        dob,
-        email,
-        address,
+        ...student,
+        state: parseInt(student.state),
+        yearSchool: parseInt(student.yearSchool)
       };
 
-      console.log(reqData)
-      return
-      const res = await axios.post(URL_STUDENT_MANAGER, JSON.stringify(reqData));
+      const res = await axios.post(
+        URL_STUDENT_MANAGER,
+        JSON.stringify(reqData),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(res);
     } else if (mode === "edit") {
-      console.log("edit")
       const reqData = {
-        id,
-        code,
-        fullname,
-        dob,
-        email,
-        address,
+        ...student,
+        state: parseInt(student.state),
+        yearSchool: parseInt(student.yearSchool)
       };
 
-      const res = await axios.put(URL_STUDENT_MANAGER, JSON.stringify(reqData));
+      const res = await axios.put(
+        URL_STUDENT_MANAGER,
+        JSON.stringify(reqData),
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(res);
     }
   };
 
   const handleCancel = () => {
-    setId("")
-    setCode("")
-    setFullname("")
-    setDob("")
-    setEmail("")
-    setAddress("")
+    setStudent({
+      studentId: "",
+      studentCode: "",
+      fullname: "",
+      dateOfBirth: "",
+      email: "",
+      address: "",
+      phone: "",
+      yearSchool: 1,
+      studentClass: "",
+      state: 1,
+    });
   };
 
   return (
@@ -176,7 +189,7 @@ function Student() {
                   {students.map((student) => (
                     <tr key={student.studentId}>
                       <td>{student.studentId}</td>
-                      <td>{student.studentId}</td>
+                      <td>{student.studentCode}</td>
                       <td>{student.fullname}</td>
                       <td>{student.dateOfBirth}</td>
                       <td>{student.email}</td>
@@ -217,28 +230,21 @@ function Student() {
                 <div className={cx("modal")}>
                   <div id="wrap" className={cx("input")}>
                     <section className={cx("input-content")}>
-                      <h2 style={{ textTransform: 'uppercase' }}>
-                        {mode}
-                      </h2>
+                      <h2 style={{ textTransform: "uppercase" }}>{mode}</h2>
                       <div className={cx("input-content-wrap")}>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>
-                            Input Code
-                          </dt>
+                          <dt className={cx("inputbox-title")}>Input Student Code</dt>
                           <dd className={cx("inputbox-content")}>
                             <input
-                              id="input0"
+                              id="student-code"
                               type="text"
-                              value={code}
-                              onChange={(e) => setCode(e.target.value)}
+                              name="studentCode"
+                              value={student.studentCode}
+                              onChange={handleChange}
                               autoComplete="off"
-                              readOnly
-                              onFocus={(e) =>
-                                e.target.removeAttribute("readonly")
-                              }
                               required
                             />
-                            <label htmlFor="input0">Code</label>
+                            <label htmlFor="student-code">Student Code</label>
                             <span className={cx("underline")}></span>
                           </dd>
                         </dl>
@@ -248,60 +254,43 @@ function Student() {
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
-                              id="input1"
+                              id="fullname"
                               type="text"
-                              value={fullname}
-                              onChange={(e) => setFullname(e.target.value)}
+                              name="fullname"
+                              value={student.fullname}
+                              onChange={handleChange}
                               autoComplete="off"
-                              readOnly
-                              onFocus={(e) =>
-                                e.target.removeAttribute("readonly")
-                              }
                               required
                             />
-                            <label htmlFor="input1">Fullname</label>
+                            <label htmlFor="fullname">Fullname</label>
                             <span className={cx("underline")}></span>
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>
-                            Input Dob
-                          </dt>
+                          <dt className={cx("inputbox-title")}>Input Date of birth</dt>
                           <dd className={cx("inputbox-content")}>
-                            <input
-                              id="input2"
-                              type="text"
-                              value={dob}
-                              onChange={(e) => setDob(e.target.value)}
-                              autoComplete="off"
-                              readOnly
-                              onFocus={(e) =>
-                                e.target.removeAttribute("readonly")
-                              }
-                              required
-                            />
-                            <label htmlFor="input2">Date of birth</label>
-                            <span className={cx("underline")}></span>
+                          <input 
+                            type="date" 
+                            id="birthday" 
+                            name="dateOfBirth" 
+                            value={student.dateOfBirth}
+                            onChange={handleChange}
+                          />
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>
-                            Input Email
-                          </dt>
+                          <dt className={cx("inputbox-title")}>Input Email</dt>
                           <dd className={cx("inputbox-content")}>
                             <input
-                              id="input3"
+                              id="email"
                               type="email"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
+                              name="email"
+                              value={student.email}
+                              onChange={handleChange}
                               autoComplete="off"
-                              readOnly
-                              onFocus={(e) =>
-                                e.target.removeAttribute("readonly")
-                              }
                               required
                             />
-                            <label htmlFor="input3">Email</label>
+                            <label htmlFor="email">Email</label>
                             <span className={cx("underline")}></span>
                           </dd>
                         </dl>
@@ -310,30 +299,114 @@ function Student() {
                             Input Address
                           </dt>
                           <dd className={cx("inputbox-content")}>
-                            <input
-                              id="input4"
+                          <input
+                              id="address"
                               type="text"
-                              value={address}
-                              onChange={(e) => setAddress(e.target.value)}
+                              name="address"
+                              value={student.address}
+                              onChange={handleChange}
                               autoComplete="off"
-                              readOnly
-                              onFocus={(e) =>
-                                e.target.removeAttribute("readonly")
-                              }
                               required
                             />
-                            <label htmlFor="input4">Address</label>
+                            <label htmlFor="address">Address</label>
                             <span className={cx("underline")}></span>
                           </dd>
                         </dl>
+                        <dl className={cx("inputbox")}>
+                          <dt className={cx("inputbox-title")}>
+                            Input Phone
+                          </dt>
+                          <dd className={cx("inputbox-content")}>
+                          <input
+                              id="phone"
+                              type="text"
+                              name="phone"
+                              value={student.phone}
+                              onChange={handleChange}
+                              autoComplete="off"
+                              required
+                            />
+                            <label htmlFor="phone">Phone</label>
+                            <span className={cx("underline")}></span>
+                          </dd>
+                        </dl>
+                        <dl className={cx("inputbox")}>
+                          <dt className={cx("inputbox-title")}>
+                            Input Year School
+                          </dt>
+                          <dd className={cx("inputbox-content")}>
+                          <input
+                              id="year-school"
+                              type="text"
+                              name="yearSchool"
+                              value={student.yearSchool}
+                              onChange={handleChange}
+                              autoComplete="off"
+                              required
+                            />
+                            <label htmlFor="year-school">Year School</label>
+                            <span className={cx("underline")}></span>
+                          </dd>
+                        </dl>
+                        <dl className={cx("inputbox")}>
+                          <dt className={cx("inputbox-title")}>
+                            Input Student Class
+                          </dt>
+                          <dd className={cx("inputbox-content")}>
+                          <input
+                              id="student-class"
+                              type="text"
+                              name="studentClass"
+                              value={student.studentClass}
+                              onChange={handleChange}
+                              autoComplete="off"
+                              required
+                            />
+                            <label htmlFor="student-class">Student Class</label>
+                            <span className={cx("underline")}></span>
+                          </dd>
+                        </dl>
+                        {mode === "edit" && (<dl className={cx("inputbox")}>
+                          <dt className={cx("inputbox-title")}>Input state</dt>
+                          <dd className={cx("inputbox-content")}>
+                            <div className={cx("wrapper")}>
+                              <div>
+                                <input
+                                  type="radio"
+                                  id="active"
+                                  name="state"
+                                  value={STATE.active}
+                                  checked={student.state === STATE.active}
+                                  onChange={handleChange}
+                                />
+                                <label className={cx("label")} htmlFor="active">
+                                  active
+                                </label>
+                              </div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  id="block"
+                                  name="state"
+                                  value={STATE.block}
+                                  checked={student.state === STATE.block}
+                                  // checked={state === STATE.block}
+                                  onChange={handleChange}
+                                />
+                                <label className={cx("label")} htmlFor="block">
+                                  block
+                                </label>
+                              </div>
+                            </div>
+                          </dd>
+                        </dl>)}
 
                         <div className={cx("btns")}>
                           <button
                             className={cx("btn", { confirm: true })}
                             onClick={handleSubmit}
                           >
-                            {mode}
-                            {/* <a href="/account-manager">{mode}</a> */}
+                            <a href="/student">{mode}</a>
                           </button>
                           <button
                             className={cx("btn", { cancel: true })}
