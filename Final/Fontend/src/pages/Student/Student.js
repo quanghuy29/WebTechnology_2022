@@ -89,6 +89,7 @@ function Student() {
     setStudent({
       ...student,
       ...data,
+      state: data.state.toString(),
     });
   };
 
@@ -144,6 +145,7 @@ function Student() {
       state: 1,
     });
   };
+
 
   return (
     <div className="account-container">
