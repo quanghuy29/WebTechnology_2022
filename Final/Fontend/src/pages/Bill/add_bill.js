@@ -4,7 +4,7 @@ import "./room.css";
 import axios from "axios";
 
 const AddBill = forwardRef((props, ref) => {
-
+    const token = localStorage.getItem("token-auth");
     const [money, setMoney] = useState(0);
     const [paymentDate, setPaymentDate] = useState('');
     const urlPostBill = 'http://localhost:8080/QuanLyKTX_war_exploded/room/utility';
@@ -21,7 +21,11 @@ const AddBill = forwardRef((props, ref) => {
                 isValid = false;
 
             if (isValid === true) {
-                axios.post(urlPostBill, postData)
+                axios.post(urlPostBill, postData, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                     .then(res => console.log(res));
             }
             return isValid;

@@ -7,7 +7,7 @@ const UpdateBill = forwardRef((props, ref) => {
     const billId = props.billId;
     const [money, setMoney] = useState(props.money);
     const [state, setState] = useState(props.state);
-
+    const token = localStorage.getItem("token-auth");
     const urlPut = 'http://localhost:8080/QuanLyKTX_war_exploded/room/utility';
     useImperativeHandle(ref, () => ({
         putBill() {
@@ -21,7 +21,12 @@ const UpdateBill = forwardRef((props, ref) => {
                 isValid = false;
             }
             if (isValid === true) {
-                axios.put(urlPut, putData, { params: { billId: billId } })
+                axios.put(urlPut, putData, {
+                    params: { billId: billId },
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                     .then(res => console.log(res));
             }
             return isValid;

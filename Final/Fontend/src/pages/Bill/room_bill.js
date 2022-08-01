@@ -13,7 +13,7 @@ const RoomBill = forwardRef((props, ref) => {
     const [change, setChange] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const updateChildRef = useRef()
-
+    const token = localStorage.getItem("token-auth");
     const updateFunction = () => {
         if (updateChildRef.current.putBill() === true) {
             setIsUpdate(!isUpdate)
@@ -27,7 +27,12 @@ const RoomBill = forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-        fetch(urlGetBill + roomID)
+        fetch(urlGetBill + roomID,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
             .then(res => res.json())
             .then(data => setBills(data))
     }, [change, roomID]);

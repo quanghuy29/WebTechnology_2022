@@ -7,7 +7,7 @@ import axios from "axios";
 const AddRoom = forwardRef((props, ref) => {
     const [roomCode, setRoomCode] = useState('');
     const [maxSlots, setMaxSlots] = useState(0);
-
+    const token = localStorage.getItem("token-auth");
     const urlPost = 'http://localhost:8080/QuanLyKTX_war_exploded/room';
 
     useImperativeHandle(ref, () => ({
@@ -24,18 +24,21 @@ const AddRoom = forwardRef((props, ref) => {
             if (maxSlots < 0) {
                 alert("Số lượng chỗ ở không thể nhỏ hơn 0");
                 isValid = false;
-            }    
+            }
 
             rooms.forEach(element => {
-                if (roomCode === element.roomCode){
+                if (roomCode === element.roomCode) {
                     alert("Phòng đã tồn tại!!!");
                     isValid = false;
                 }
             });
 
             if (isValid === true) {
-                axios.post(urlPost, postData)
-                    .then(res => console.log(res));
+                axios.post(urlPost, postData, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }).then(res => console.log(res));
             }
 
             return isValid;

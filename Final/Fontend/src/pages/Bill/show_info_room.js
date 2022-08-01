@@ -10,7 +10,7 @@ const ShowRoom = forwardRef((props, ref) => {
     const [room, setRoom] = useState(props);
     const [isFirstTime, setIsFirstTime] = useState(true);
     const [isAddBill, setIsAddBill] = useState(false);
-
+    const token = localStorage.getItem("token-auth");
     const addBill = useRef()
     const urlGet = 'http://localhost:8080/QuanLyKTX_war_exploded/room?idRoom=';
     const checkPaymentRoomState = (item) => {
@@ -43,7 +43,12 @@ const ShowRoom = forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-        fetch(urlGet + roomID)
+        fetch(urlGet + roomID,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
             .then(res => res.json())
             .then(data => showData(data));
     }, [change, roomID]);

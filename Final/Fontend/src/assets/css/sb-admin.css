@@ -10913,3 +10913,18 @@ body.sidebar-toggled footer.sticky-footer {
     width: calc(100% - 90px);
   }
 }
+
+.logout {
+  margin: 3px;
+}
+
+.welcome {
+  font-size: 5rem;
+  color:#0c5460;
+  margin-top: 20rem;
+  margin-left: 20rem;
+}
+
+.role {
+  color: white;
+}

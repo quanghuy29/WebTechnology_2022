@@ -255,7 +255,7 @@ function AccountManager() {
           <div className="card">
             <div className="card-header">
               <i className="fas fa-table" />
-              &nbsp;&nbsp;Employees List
+              &nbsp;&nbsp;Accounts List
             </div>
             <div className="card-body">
               <div className={cx("row-table")}>

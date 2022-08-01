@@ -20,9 +20,14 @@ const Bill = () => {
     const updateChildRef = useRef()
     const getBill = useRef()
     const getRoom = useRef()
-
+    const token = localStorage.getItem("token-auth");
     useEffect(() => {
-        fetch(urlGet)
+        fetch(urlGet,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
             .then(res => res.json())
             .then(data => { setRooms(data); console.log(data); })
     }, [change]);

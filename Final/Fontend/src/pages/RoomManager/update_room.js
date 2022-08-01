@@ -9,7 +9,7 @@ const UpdateRoom = forwardRef((props, ref) => {
     const [maxSlots, setMaxSlots] = useState(props.maxSlots);
     const [paymentState, setPaymentState] = useState(props.roomPaymentState);
     const [roomState, setRoomState] = useState(props.roomState);
-
+    const token = localStorage.getItem("token-auth");
     const numberSlots = props.maxSlots - props.availableSlots;
     const urlPut = 'http://localhost:8080/QuanLyKTX_war_exploded/room';
 
@@ -32,7 +32,11 @@ const UpdateRoom = forwardRef((props, ref) => {
             }
 
             if (isValid === true) {
-                axios.put(urlPut, putData, { params: { idRoom: roomId } })
+                axios.put(urlPut, putData, { params: { idRoom: roomId },
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                     .then(res => console.log(res));
             }
             return isValid;

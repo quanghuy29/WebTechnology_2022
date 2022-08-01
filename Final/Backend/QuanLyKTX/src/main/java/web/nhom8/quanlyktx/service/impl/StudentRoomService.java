@@ -33,7 +33,7 @@ public class StudentRoomService implements IStudentRoomService {
     public StudentRoomModel save(StudentRoomModel model) {
         if (model.getPayMoneyRemain() == null) model.setPayMoneyRemain(0.0F);
         if (model.getPaymentState() == null) model.setPaymentState(1);
-        StudentModel student = studentService.findByStudentId(Math.toIntExact(model.getStudentId()));
+        StudentModel student = studentService.findByStudentCode(model.getStudentId().toString());
         model.setStudentId((long)student.getStudentId());
         model.setStudentCode(student.getStudentCode());
         model.setStudentName(student.getFullname());

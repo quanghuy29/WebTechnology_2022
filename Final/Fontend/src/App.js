@@ -10,6 +10,7 @@ import Bill from "./pages/Bill/bill.js"
 import SignIn from "./pages/Login/Login";
 import AccountManager from "./pages/AccountManager/AccountManager";
 import Student from "./pages/Student/Student";
+import Welcome from "./pages/NotFound/Welcome"
 
 const ROLES = {
   status: 200,
@@ -27,7 +28,7 @@ class App extends Component {
             <Route path="login" element={<SignIn />} />
 
             <Route element={<RequireAuth allowedRoles={ROLES.status} />}>
-              <Route path="/" element={<AccountManager />} />
+              <Route path="/" element={<Welcome />} />
               <Route path="/account-manager" element={<AccountManager />} />
               <Route path="room" element={<Room />} />
               <Route path="bill" element={<Bill />} />

@@ -62,7 +62,7 @@ public class JWTFilter implements Filter {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else sendMessageError(response);
         } else if (url.startsWith("/QuanLyKTX_war_exploded/room") || url.startsWith("/QuanLyKTX_war_exploded/room/student") ) {
-            if (rolecode.equalsIgnoreCase("QLPO"))
+            if (rolecode.equalsIgnoreCase("QLPO") || rolecode.equalsIgnoreCase("QLT") || rolecode.equalsIgnoreCase("KT"))
             {
                 filterChain.doFilter(servletRequest, servletResponse);
             } else sendMessageError(response);

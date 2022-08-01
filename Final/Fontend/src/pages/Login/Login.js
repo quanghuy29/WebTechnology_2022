@@ -52,14 +52,14 @@ function Login() {
         const token = res?.data?.message;
         localStorage.setItem("token-auth", token)
         localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('roleId', res?.data?.roleId);
         setAuthToken(token);
         const roles = res?.data?.status;
         setUsername("");
         setPassword("");
-
         navigate(from, { replace: true });
-
         toast[optionToast](res.data.message);
+        window.location.reload();
       } else if (res.data?.status === 400) {
         optionToast = "error";
         toast[optionToast](res.data.message);
