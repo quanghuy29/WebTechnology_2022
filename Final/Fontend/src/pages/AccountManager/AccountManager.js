@@ -93,6 +93,13 @@ function AccountManager() {
     }
   };
 
+  const renderRoleName = (role) => {
+    if (role === 1) return <b>Quản lý sinh viên</b>
+    if (role === 2) return <b>Quản lý trưởng</b>
+    if (role === 3) return <b>Quản lý phòng ở</b>
+    if (role === 4) return <b>Kế toán</b>
+  }
+
   // Two-way binding data in field form
   const handleChangeAccount = (e) => {
     const value = e.target.value;
@@ -253,17 +260,17 @@ function AccountManager() {
                   onClick={handleAddAccount}
                 >
                   <a href="#modal-opened" className="link-1" id="modal-closed">
-                    Add account
+                    Thêm tài khoản
                   </a>
                 </button>
               </div>
               <table className="table- table-bordered">
                 <thead>
                   <tr>
-                    <th>id</th>
-                    <th>username</th>
-                    <th>role</th>
-                    <th>state</th>
+                    <th>Mã tài khoản</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Chức vụ</th>
+                    <th>Trạng thái hoạt động</th>
                     <th className="text-center">action</th>
                   </tr>
                 </thead>
@@ -276,7 +283,7 @@ function AccountManager() {
                       <tr key={account?.userId}>
                         <td>{account?.userId}</td>
                         <td>{account?.username}</td>
-                        <td>{account?.roleId}</td>
+                        <td>{renderRoleName(account?.roleId)}</td>
                         <td>{renderStateName(account?.userState)}</td>
                         <td className="text-center">
                           
@@ -316,7 +323,7 @@ function AccountManager() {
                       <div className={cx("input-content-wrap")}>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Username
+                            Nhập tên đăng nhập:
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
@@ -334,7 +341,7 @@ function AccountManager() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Password
+                            Nhập mật khẩu:
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
@@ -351,7 +358,7 @@ function AccountManager() {
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input Role</dt>
+                          <dt className={cx("inputbox-title")}>Chọn chức vụ</dt>
                           <dd className={cx("inputbox-content")}>
                             <div className={cx("select")}>
                               <select
@@ -360,15 +367,15 @@ function AccountManager() {
                                 onChange={handleChangeAccount}
                                 value={account.roleId}
                               >
-                                <option value={ROLE.admin}>Admin</option>
+                                <option value={ROLE.admin}>Quản lý trưởng</option>
                                 <option value={ROLE.managerStudent}>
-                                  Manager Student
+                                  Quản lý sinh viên
                                 </option>
                                 <option value={ROLE.managerRoom}>
-                                  Manager Room
+                                  Quản lý phòng ở
                                 </option>
                                 <option value={ROLE.accountant}>
-                                  Accountant
+                                  Kế toán
                                 </option>
                               </select>
                             </div>
@@ -376,7 +383,7 @@ function AccountManager() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Fullname
+                            Nhập đầy đủ họ tên:
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
@@ -394,7 +401,7 @@ function AccountManager() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Date of birth
+                            Nhập ngày sinh:
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
@@ -407,7 +414,7 @@ function AccountManager() {
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input Email</dt>
+                          <dt className={cx("inputbox-title")}>Nhập Email:</dt>
                           <dd className={cx("inputbox-content")}>
                             <input
                               id="email"
@@ -424,7 +431,7 @@ function AccountManager() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Address
+                            Nhập nơi ở hiện tại:
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
@@ -441,7 +448,7 @@ function AccountManager() {
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input Phone</dt>
+                          <dt className={cx("inputbox-title")}>Nhập số điện thoại: </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
                               id="phone"
@@ -458,7 +465,7 @@ function AccountManager() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Year Of Service
+                            Nhập thời gian làm việc(năm): 
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
@@ -480,7 +487,7 @@ function AccountManager() {
                         {mode === "edit" && (
                           <dl className={cx("inputbox")}>
                             <dt className={cx("inputbox-title")}>
-                              Input state
+                              Trạng thái: 
                             </dt>
                             <dd className={cx("inputbox-content")}>
                               <div className={cx("wrapper")}>
@@ -497,7 +504,7 @@ function AccountManager() {
                                     className={cx("label")}
                                     htmlFor="active"
                                   >
-                                    active
+                                    Đang hoạt động
                                   </label>
                                 </div>
                                 <div>
@@ -514,7 +521,7 @@ function AccountManager() {
                                     className={cx("label")}
                                     htmlFor="block"
                                   >
-                                    block
+                                    Bị khoá
                                   </label>
                                 </div>
                               </div>
@@ -527,11 +534,11 @@ function AccountManager() {
                             className={cx("btn", { confirm: true })}
                             onClick={handleSubmit}
                           >
-                            <a href="/account-manager">{mode}</a>
+                            <a href="#">{mode}</a>
                           </button>
                           <button
                             className={cx("btn", { cancel: true })}
-                            onClick={handleCancel}
+                            //onClick={handleCancel}
                           >
                             <a href="#">cancel</a>
                           </button>
