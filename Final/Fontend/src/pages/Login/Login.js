@@ -22,22 +22,12 @@ function Login() {
 
   const classes = cx("input", "form-control", isInvalid);
 
-  // useEffect(() => {
-  //     if (username.trim().length === 0 || password.trim().length === 0) {
-  //         setIsInvalid("is-invalid")
-  //     } else {
-  //         setIsInvalid('')
-  //     }
-  // }, [blur])
-
   const handleValidate = () => {
     setBlur(!blur);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("login")
 
     const dataLogin = JSON.stringify({ email: username, password });
 

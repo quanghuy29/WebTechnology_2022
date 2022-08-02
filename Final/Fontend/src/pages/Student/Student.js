@@ -110,7 +110,6 @@ function Student() {
           },
         }
       );
-      console.log(res);
     } else if (mode === "edit") {
       const reqData = {
         ...student,
@@ -127,7 +126,6 @@ function Student() {
           },
         }
       );
-      console.log(res);
     }
   };
 

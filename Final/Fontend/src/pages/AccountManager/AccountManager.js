@@ -142,7 +142,7 @@ function AccountManager() {
     });
   };
 
-  const handelPromiseSubmit = async () => {
+  const handelPromiseSubmitPost = async () => {
     const reqAccountData = {
       ...account,
       userState: parseInt(account.userState),
@@ -159,25 +159,26 @@ function AccountManager() {
     return resAccount;
   };
 
+  const handelPromiseSubmitPut = async () => {
+    const reqAccountData = {
+      ...account,
+      userState: parseInt(account.userState),
+    };
+    const resAccount = await axios.put(
+      `${URL_ACCOUNT_MANAGER}?userId=${account.userId}`,
+      JSON.stringify(reqAccountData),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    return resAccount
+  }
+
   const handleSubmit = async () => {
     if (mode === "create") {
-      // const reqAccountData = {
-      //   ...account,
-      //   userState: parseInt(account.userState),
-      // }
-
-      // // Call API
-      // const resAccount = await axios.post(
-      //   URL_ACCOUNT_MANAGER,
-      //   JSON.stringify(reqAccountData),
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
-
-      handelPromiseSubmit().then(async (res) => {
+      handelPromiseSubmitPost().then(async (res) => {
         const reqManagerData = {
           ...manager,
           userId: parseInt(res.data.message),
@@ -192,31 +193,23 @@ function AccountManager() {
         });
       });
     } else if (mode === "edit") {
-      const reqAccountData = {
-        ...account,
-        userState: parseInt(account.userState),
-      };
-      const reqManagerData = {
-        ...manager,
-        state: parseInt(account.userState),
-        yearOfService: parseInt(manager.yearOfService),
-      };
-      console.log(reqAccountData, reqManagerData);
-      // const reqData = {
-      //   userId,
-      //   username,
-      //   password,
-      //   roleId: role,
-      //   state,
-      // };
+      handelPromiseSubmitPut().then(async () => {
+        const resManagerData = {
+          ...manager,
+          state: parseInt(account.userState),
+          yearOfService: parseInt(manager.yearOfService),
+        }
 
-      // const res = await axios.put(
-      //   URL_ACCOUNT_MANAGER,
-      //   JSON.stringify(reqData),
-      //   {
-      //     Authorization: token,
-      //   }
-      // );
+        await axios.put(
+          `${URL_MANAGER}?managerId=${manager.managerId}`,
+          JSON.stringify(resManagerData),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+      })
     }
   };
 
