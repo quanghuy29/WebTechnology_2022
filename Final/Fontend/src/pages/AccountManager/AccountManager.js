@@ -116,7 +116,7 @@ function AccountManager() {
       username: "",
       password: "",
       roleId: 1,
-      userState: 1
+      userState: 1,
     });
     setManager({
       fullname: "",
@@ -134,19 +134,19 @@ function AccountManager() {
     setAccount({
       ...account,
       ...accountData,
-      userState: accountData.userState.toString()
+      userState: accountData.userState.toString(),
     });
     setManager({
       ...manager,
-      ...managerData
-    })
+      ...managerData,
+    });
   };
 
   const handelPromiseSubmit = async () => {
     const reqAccountData = {
       ...account,
       userState: parseInt(account.userState),
-    }
+    };
     const resAccount = await axios.post(
       URL_ACCOUNT_MANAGER,
       JSON.stringify(reqAccountData),
@@ -156,8 +156,8 @@ function AccountManager() {
         },
       }
     );
-    return resAccount
-  }
+    return resAccount;
+  };
 
   const handleSubmit = async () => {
     if (mode === "create") {
@@ -177,36 +177,31 @@ function AccountManager() {
       //   }
       // );
 
-      handelPromiseSubmit()
-        .then(async (res) => {
-          const reqManagerData = {
-            ...manager,
-            userId: parseInt(res.data.message),
-            state: parseInt(account.userState),
-            yearOfService: parseInt(manager.yearOfService),
-            managerId: ""
-          };
-          await axios.post(
-            URL_MANAGER,
-            JSON.stringify(reqManagerData),
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-        })
+      handelPromiseSubmit().then(async (res) => {
+        const reqManagerData = {
+          ...manager,
+          userId: parseInt(res.data.message),
+          state: parseInt(account.userState),
+          yearOfService: parseInt(manager.yearOfService),
+          managerId: "",
+        };
+        await axios.post(URL_MANAGER, JSON.stringify(reqManagerData), {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      });
     } else if (mode === "edit") {
       const reqAccountData = {
         ...account,
         userState: parseInt(account.userState),
-      }
+      };
       const reqManagerData = {
         ...manager,
         state: parseInt(account.userState),
-        yearOfService: parseInt(manager.yearOfService)
+        yearOfService: parseInt(manager.yearOfService),
       };
-      console.log(reqAccountData, reqManagerData)
+      console.log(reqAccountData, reqManagerData);
       // const reqData = {
       //   userId,
       //   username,
@@ -281,17 +276,21 @@ function AccountManager() {
                 </thead>
                 <tbody>
                   {accounts.map((account) => {
-                    const renderManager = managers.map((manager) => (
+                    const index = managers.findIndex(manager => {
+                      return manager.userId === account.userId
+                    })
+                    return (
                       <tr key={account?.userId}>
                         <td>{account?.userId}</td>
                         <td>{account?.username}</td>
                         <td>{account?.roleId}</td>
                         <td>{renderStateName(account?.userState)}</td>
                         <td className="text-center">
+                          
                           <button
                             type="button"
                             className="btn btn-sm btn-info"
-                            onClick={(e) => handleEdit(account, manager)}
+                            onClick={(e) => handleEdit(account, managers[index])}
                           >
                             <span className={cx("text")}>
                               <a
@@ -304,13 +303,12 @@ function AccountManager() {
                             </span>
                           </button>
                           {/* &nbsp; | &nbsp;
-                          <button type="button" className="btn btn-sm btn-danger" onClick={handleDelete}>
-                            <span className={cx("text")}>Delete</span>
-                          </button> */}
+                      <button type="button" className="btn btn-sm btn-danger" onClick={handleDelete}>
+                        <span className={cx("text")}>Delete</span>
+                      </button> */}
                         </td>
                       </tr>
-                    ));
-                    return renderManager;
+                    );
                   })}
                 </tbody>
               </table>
@@ -370,8 +368,12 @@ function AccountManager() {
                                 value={account.roleId}
                               >
                                 <option value={ROLE.admin}>Admin</option>
-                                <option value={ROLE.managerStudent}>Manager Student</option>
-                                <option value={ROLE.managerRoom}>Manager Room</option>
+                                <option value={ROLE.managerStudent}>
+                                  Manager Student
+                                </option>
+                                <option value={ROLE.managerRoom}>
+                                  Manager Room
+                                </option>
                                 <option value={ROLE.accountant}>
                                   Accountant
                                 </option>
@@ -398,15 +400,17 @@ function AccountManager() {
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input Date of birth</dt>
+                          <dt className={cx("inputbox-title")}>
+                            Input Date of birth
+                          </dt>
                           <dd className={cx("inputbox-content")}>
-                          <input 
-                            type="date" 
-                            id="birthday" 
-                            name="dateOfBirth" 
-                            value={manager.dateOfBirth}
-                            onChange={handleChangeManager}
-                          />
+                            <input
+                              type="date"
+                              id="birthday"
+                              name="dateOfBirth"
+                              value={manager.dateOfBirth}
+                              onChange={handleChangeManager}
+                            />
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
@@ -430,7 +434,7 @@ function AccountManager() {
                             Input Address
                           </dt>
                           <dd className={cx("inputbox-content")}>
-                          <input
+                            <input
                               id="address"
                               type="text"
                               name="address"
@@ -444,11 +448,9 @@ function AccountManager() {
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>
-                            Input Phone
-                          </dt>
+                          <dt className={cx("inputbox-title")}>Input Phone</dt>
                           <dd className={cx("inputbox-content")}>
-                          <input
+                            <input
                               id="phone"
                               type="text"
                               name="phone"
@@ -466,7 +468,7 @@ function AccountManager() {
                             Input Year Of Service
                           </dt>
                           <dd className={cx("inputbox-content")}>
-                          <input
+                            <input
                               id="year-of-service"
                               type="text"
                               name="yearOfService"
@@ -475,7 +477,9 @@ function AccountManager() {
                               autoComplete="off"
                               required
                             />
-                            <label htmlFor="year-of-service">Year of Service</label>
+                            <label htmlFor="year-of-service">
+                              Year of Service
+                            </label>
                             <span className={cx("underline")}></span>
                           </dd>
                         </dl>
