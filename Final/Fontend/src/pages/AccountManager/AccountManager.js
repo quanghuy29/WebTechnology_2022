@@ -541,13 +541,13 @@ function AccountManager() {
                             className={cx("btn", { confirm: true })}
                             onClick={handleSubmit}
                           >
-                            <div>{mode}</div>
+                            <a href="#">{mode}</a>
                           </button>
                           <button
                             className={cx("btn", { cancel: true })}
-                            onClick={handleCancel}
+                            //onClick={handleCancel}
                           >
-                            <div>Cancel</div>
+                            <a href="#">cancel</a>
                           </button>
                         </div>
                       </div>

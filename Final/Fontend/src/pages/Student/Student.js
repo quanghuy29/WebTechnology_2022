@@ -2,9 +2,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./Student.module.scss";
-
 import Header from "../../elements/header";
 import Sidebar from "../../elements/sidebar";
+
 
 const URL_STUDENT_MANAGER =
   "http://localhost:8080/QuanLyKTX_war_exploded/api-student_manager";
@@ -54,9 +54,9 @@ function Student() {
 
   const renderStateName = (state) => {
     if (!state) {
-      return <b>Block</b>;
+      return <b>Đang không ở</b>;
     } else {
-      return <b>Active</b>;
+      return <b>Đang ở</b>;
     }
   };
 
@@ -129,6 +129,8 @@ function Student() {
       );
       console.log(res);
     }
+
+    window.location.reload();
   };
 
   const handleCancel = () => {
@@ -144,6 +146,8 @@ function Student() {
       studentClass: "",
       state: 1,
     });
+
+    window.location.reload();
   };
 
 
@@ -156,7 +160,7 @@ function Student() {
           <div className="card">
             <div className="card-header">
               <i className="fas fa-table" />
-              &nbsp;&nbsp;Employees List
+              &nbsp;&nbsp;Danh sách sinh viên
             </div>
             <div className="card-body">
               <div className={cx("row-table")}>
@@ -173,16 +177,16 @@ function Student() {
               <table className="table- table-bordered">
                 <thead>
                   <tr>
-                    <th>id</th>
-                    <th>code</th>
-                    <th>full name</th>
-                    <th>Dob</th>
+                    <th>STT</th>
+                    <th>Mã sinh viên</th>
+                    <th>Họ tên</th>
+                    <th>Ngày sinh</th>
                     <th>Email</th>
-                    <th>Address</th>
+                    <th>Địa chỉ</th>
                     <th>Phone</th>
-                    <th>Year School</th>
-                    <th>class</th>
-                    <th>state</th>
+                    <th>Năm</th>
+                    <th>Lớp</th>
+                    <th>Trạng thái</th>
 
                     <th className="text-center">action</th>
                   </tr>
@@ -235,7 +239,7 @@ function Student() {
                       <h2 style={{ textTransform: "uppercase" }}>{mode}</h2>
                       <div className={cx("input-content-wrap")}>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input Student Code</dt>
+                          <dt className={cx("inputbox-title")}>Nhập mã sinh viên</dt>
                           <dd className={cx("inputbox-content")}>
                             <input
                               id="student-code"
@@ -252,7 +256,7 @@ function Student() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Fullname
+                            Nhập họ tên
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
@@ -269,7 +273,7 @@ function Student() {
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input Date of birth</dt>
+                          <dt className={cx("inputbox-title")}>Nhập ngày sinh</dt>
                           <dd className={cx("inputbox-content")}>
                           <input 
                             type="date" 
@@ -281,7 +285,7 @@ function Student() {
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input Email</dt>
+                          <dt className={cx("inputbox-title")}>Nhập Email</dt>
                           <dd className={cx("inputbox-content")}>
                             <input
                               id="email"
@@ -298,7 +302,7 @@ function Student() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Address
+                            Nhập địa chỉ hiện tại
                           </dt>
                           <dd className={cx("inputbox-content")}>
                           <input
@@ -316,7 +320,7 @@ function Student() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Phone
+                            Nhập số điện thoại
                           </dt>
                           <dd className={cx("inputbox-content")}>
                           <input
@@ -334,7 +338,7 @@ function Student() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Year School
+                            Nhập số năm học
                           </dt>
                           <dd className={cx("inputbox-content")}>
                           <input
@@ -352,7 +356,7 @@ function Student() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Student Class
+                            Nhập tên lớp
                           </dt>
                           <dd className={cx("inputbox-content")}>
                           <input
@@ -369,7 +373,7 @@ function Student() {
                           </dd>
                         </dl>
                         {mode === "edit" && (<dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input state</dt>
+                          <dt className={cx("inputbox-title")}>Trạng thái</dt>
                           <dd className={cx("inputbox-content")}>
                             <div className={cx("wrapper")}>
                               <div>
@@ -382,7 +386,7 @@ function Student() {
                                   onChange={handleChange}
                                 />
                                 <label className={cx("label")} htmlFor="active">
-                                  active
+                                  Đang ở
                                 </label>
                               </div>
                               <div>
@@ -396,7 +400,7 @@ function Student() {
                                   onChange={handleChange}
                                 />
                                 <label className={cx("label")} htmlFor="block">
-                                  block
+                                  Đang không ở
                                 </label>
                               </div>
                             </div>
@@ -408,7 +412,7 @@ function Student() {
                             className={cx("btn", { confirm: true })}
                             onClick={handleSubmit}
                           >
-                            <a href="/student">{mode}</a>
+                            <a href="#">{mode}</a>
                           </button>
                           <button
                             className={cx("btn", { cancel: true })}
