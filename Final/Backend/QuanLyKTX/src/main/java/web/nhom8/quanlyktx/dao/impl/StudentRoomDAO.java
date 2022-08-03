@@ -47,6 +47,14 @@ public class StudentRoomDAO extends AbstractDAO<StudentRoomModel> implements ISt
     }
 
     @Override
+    public StudentRoomModel updateName(StudentRoomModel model) {
+        String sql = "UPDATE StudentRoom SET StudentCode = ?, StudentName = ? " +
+                "WHERE StudentId = ?";
+        update(sql, model.getStudentCode(), model.getStudentName(), model.getStudentId());
+        return findByStudentId(model.getStudentId());
+    }
+
+    @Override
     public StudentRoomModel findOne(Long id) {
         String sql = "SELECT * FROM StudentRoom WHERE StudentRoomId = ?";
         List<StudentRoomModel> models = query(sql, new StudentRoomMapper(), id);

@@ -10,6 +10,7 @@ public interface IStudentRoomDAO {
     StudentRoomModel save(StudentRoomModel model);
     void delete(Long idStudent);
     StudentRoomModel update(StudentRoomModel model);
+    StudentRoomModel updateName(StudentRoomModel model);
     StudentRoomModel findOne(Long id);
     StudentRoomModel findByStudentId(Long idStudent);
     int getIdMax();
