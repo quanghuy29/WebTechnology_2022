@@ -1,24 +1,19 @@
 import React from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 
 const RequireAuth = ({ allowedRoles }) => {
-    const { auth } = useAuth();
     const location = useLocation();
     const token = localStorage.getItem('token-auth')
+    const isLogin = localStorage.getItem('isLoggedIn')
 
-    // auth?.roles?.find(role => allowedRoles?.includes(role))
-    console.log(auth.roles === allowedRoles || auth.token === token)
-    console.log(auth, allowedRoles)
-
-    if (auth.roles === allowedRoles || auth.token === token) {
+    if (isLogin === 'true' && token != null) {
         return <Outlet />
     } else {
-        if (auth?.token) {
-            return <Navigate to="/oops" state={{ from: location }} replace />
-        } else {
+        //if (auth?.token) {
+        //    return <Navigate to="/oops" state={{ from: location }} replace />
+        //} else {
             return <Navigate to="/login" state={{ from: location }} replace />
-        }
+        //}
     }
 
     // return (

@@ -52,10 +52,17 @@ const ShowRoom = forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-        fetch(urlGet + roomID)
+        const token = localStorage.getItem("token-auth");
+        fetch(urlGet + roomID, {
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => showData(data));
-        axios.get(urlGetStudent, { params: { action: "findAll" } })
+        axios.get(urlGetStudent, { params: { action: "findAll" },headers:{
+            'Authorization': `Bearer ${token}`
+        }})
             .then(res => { setStudents(res.data) });
     }, [change, roomID]);
 

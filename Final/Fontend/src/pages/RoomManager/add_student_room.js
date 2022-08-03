@@ -4,6 +4,7 @@ import "./room.module.css";
 import axios from "axios";
 
 const AddStudentRoom = forwardRef((props, ref) => {
+    const token = localStorage.getItem("token-auth");
     const urlPost = 'http://localhost:8080/QuanLyKTX_war_exploded/room/student';
     
     useImperativeHandle(ref, () => ({
@@ -17,7 +18,11 @@ const AddStudentRoom = forwardRef((props, ref) => {
                 isValid = false;
 
             if (isValid === true) {
-                axios.post(urlPost, postData)
+                axios.post(urlPost, postData, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
                     .then(res => {
                         console.log(res);
                         if (res.data.status != null && res.data.status === 0) {

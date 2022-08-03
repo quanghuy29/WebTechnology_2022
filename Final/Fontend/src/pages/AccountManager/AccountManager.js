@@ -8,131 +8,237 @@ import Sidebar from "../../elements/sidebar";
 import { Link, Redirect } from "react-router-dom";
 
 const URL_ACCOUNT_MANAGER =
-  "http://localhost:8080/QuanLyKTX_war_exploded/api-user_mananger";
+  "http://localhost:8080/QuanLyKTX_war_exploded/api-account_manager";
+const URL_MANAGER = "http://localhost:8080/QuanLyKTX_war_exploded/api-manager";
 
 const ROLE = {
-  admin: 1,
-  manager: 2,
-  accountant: 3,
+  admin: 2,
+  managerStudent: 1,
+  managerRoom: 3,
+  accountant: 4,
 };
 
 const STATE = {
-  block: 1,
-  active: 0,
+  block: "0",
+  active: "1",
 };
 
 const cx = classNames.bind(styles);
 
 function AccountManager() {
-  const [accounts, setAccounts] = useState([]);
-  const [isInvalid, setIsInvalid] = useState("");
-  const [checked, setChecked] = useState(true);
   const [mode, setMode] = useState("create");
-
+  const [accounts, setAccounts] = useState([]);
+  const [managers, setManagers] = useState([]);
   // ----------- FORM FIELD ---------------------
-  const [userId, setUserId] = useState(1);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState(1);
-  const [state, setState] = useState(0);
+  const [account, setAccount] = useState({
+    userId: "",
+    username: "",
+    password: "",
+    roleId: 1,
+    userState: 1,
+  });
+  const [manager, setManager] = useState({
+    managerId: "",
+    userId: "",
+    fullname: "",
+    dateOfBirth: "",
+    email: "",
+    address: "",
+    phone: "",
+    yearOfService: 1,
+    state: 1,
+  });
 
+  // Get token form local Storage
   const token = localStorage.getItem("token-auth");
-  console.log(token);
 
+  // Fetch manager data from server
+  const getManager = async () => {
+    const managerFetched = await axios.get(URL_MANAGER, {
+      params: {
+        action: "findAll",
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return managerFetched;
+  };
+
+  // Fetch account data from server
   useEffect(() => {
-    const params = { action: "findAll"}
-    const headers = { 'Authorization': token }
     axios
-      .get(URL_ACCOUNT_MANAGER, params, headers)
-      .then((res) => {
+      .get(URL_ACCOUNT_MANAGER, {
+        params: {
+          action: "findAll",
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(async (res) => {
+        const managerList = await getManager();
+        setManagers([...managerList.data]);
         setAccounts([...res.data]);
       })
       .catch((e) => console.log(e));
   }, []);
 
-  const renderRoleName = (roleId) => {
-    switch (roleId) {
-      case ROLE.admin:
-        return <b>Admin</b>;
-      case ROLE.manager:
-        return <b>manager</b>;
-      case ROLE.accountant:
-        return <b>accountant</b>;
-      default:
-        break;
-    }
-  };
-
   const renderStateName = (state) => {
     if (state) {
-      return <b>Block</b>;
-    } else {
       return <b>Active</b>;
+    } else {
+      return <b>Block</b>;
     }
   };
 
-  const handleAddAccount = () => {
-    setMode("create");
-    setUsername("");
-    setPassword("");
-    setRole(1);
-    setState(0);
+  const renderRoleName = (role) => {
+    if (role === 1) return <b>Quản lý sinh viên</b>
+    if (role === 2) return <b>Quản lý trưởng</b>
+    if (role === 3) return <b>Quản lý phòng ở</b>
+    if (role === 4) return <b>Kế toán</b>
+  }
+
+  // Two-way binding data in field form
+  const handleChangeAccount = (e) => {
+    const value = e.target.value;
+    setAccount({
+      ...account,
+      [e.target.name]: value,
+    });
+  };
+  const handleChangeManager = (e) => {
+    const value = e.target.value;
+    setManager({
+      ...manager,
+      [e.target.name]: value,
+    });
   };
 
-  const handleEdit = async (data) => {
-    console.log("edit");
-    setUserId(data.userId);
-    setMode("edit");
-    setUsername(data.username);
-    setPassword(data.password);
-    setRole(data.roleId);
-    setState(data.state);
+  // Handle Event Button: Add, Edit, Submit, Cancel
+  const handleAddAccount = () => {
+    setMode("create");
+    setAccount({
+      username: "",
+      password: "",
+      roleId: 1,
+      userState: 1,
+    });
+    setManager({
+      fullname: "",
+      dateOfBirth: "",
+      email: "",
+      address: "",
+      phone: "",
+      yearOfService: 1,
+      userId: "",
+    });
   };
+
+  const handleEdit = async (accountData, managerData) => {
+    setMode("edit");
+    setAccount({
+      ...account,
+      ...accountData,
+      userState: accountData.userState.toString(),
+    });
+    setManager({
+      ...manager,
+      ...managerData,
+    });
+  };
+
+  const handelPromiseSubmitPost = async () => {
+    const reqAccountData = {
+      ...account,
+      userState: parseInt(account.userState),
+    };
+    const resAccount = await axios.post(
+      URL_ACCOUNT_MANAGER,
+      JSON.stringify(reqAccountData),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return resAccount;
+  };
+
+  const handelPromiseSubmitPut = async () => {
+    const reqAccountData = {
+      ...account,
+      userState: parseInt(account.userState),
+    };
+    const resAccount = await axios.put(
+      `${URL_ACCOUNT_MANAGER}?userId=${account.userId}`,
+      JSON.stringify(reqAccountData),
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    return resAccount
+  }
 
   const handleSubmit = async () => {
     if (mode === "create") {
-      const reqData = {
-        username,
-        password,
-        roleId: role,
-        state,
-      };
-
-      const res = await axios.post(
-        URL_ACCOUNT_MANAGER,
-        JSON.stringify(reqData),
-        {
-          Authorization: token,
-        }
-      );
-      console.log(res);
+      handelPromiseSubmitPost().then(async (res) => {
+        const reqManagerData = {
+          ...manager,
+          userId: parseInt(res.data.message),
+          state: parseInt(account.userState),
+          yearOfService: parseInt(manager.yearOfService),
+          managerId: "",
+        };
+        await axios.post(URL_MANAGER, JSON.stringify(reqManagerData), {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      });
     } else if (mode === "edit") {
-      console.log("edit");
-      const reqData = {
-        userId,
-        username,
-        password,
-        roleId: role,
-        state,
-      };
-
-      const res = await axios.put(
-        URL_ACCOUNT_MANAGER,
-        JSON.stringify(reqData),
-        {
-          Authorization: token,
+      handelPromiseSubmitPut().then(async () => {
+        const resManagerData = {
+          ...manager,
+          state: parseInt(account.userState),
+          yearOfService: parseInt(manager.yearOfService),
         }
-      );
-      console.log(res);
+
+        await axios.put(
+          `${URL_MANAGER}?managerId=${manager.managerId}`,
+          JSON.stringify(resManagerData),
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+      })
     }
   };
 
   const handleCancel = () => {
-    console.log("cancle");
-    setUsername("");
-    setPassword("");
-    setRole(1);
-    setState(0);
+    setAccount({
+      userId: 1,
+      username: "",
+      password: "",
+      roleId: 1,
+      userState: 1,
+    });
+    setManager({
+      managerId: 1,
+      userId: 1,
+      fullname: "",
+      dateOfBirth: "",
+      email: "",
+      address: "",
+      phone: "",
+      yearOfService: 1,
+      state: 1,
+    });
   };
 
   return (
@@ -144,7 +250,7 @@ function AccountManager() {
           <div className="card">
             <div className="card-header">
               <i className="fas fa-table" />
-              &nbsp;&nbsp;Employees List
+              &nbsp;&nbsp;Accounts List
             </div>
             <div className="card-body">
               <div className={cx("row-table")}>
@@ -154,50 +260,56 @@ function AccountManager() {
                   onClick={handleAddAccount}
                 >
                   <a href="#modal-opened" className="link-1" id="modal-closed">
-                    Add account
+                    Thêm tài khoản
                   </a>
                 </button>
               </div>
               <table className="table- table-bordered">
                 <thead>
                   <tr>
-                    <th>id</th>
-                    <th>username</th>
-                    <th>role</th>
-                    <th>state</th>
+                    <th>Mã tài khoản</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Chức vụ</th>
+                    <th>Trạng thái hoạt động</th>
                     <th className="text-center">action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {accounts.map((account) => (
-                    <tr key={account.userId}>
-                      <td>{account.userId}</td>
-                      <td>{account.username}</td>
-                      <td>{renderRoleName(account.roleId)}</td>
-                      <td>{renderStateName(account.state)}</td>
-                      <td className="text-center">
-                        <button
-                          type="button"
-                          className="btn btn-sm btn-info"
-                          onClick={(e) => handleEdit(account)}
-                        >
-                          <span className={cx("text")}>
-                            <a
-                              href="#modal-opened"
-                              className="link-1"
-                              id="modal-closed"
-                            >
-                              Edit
-                            </a>
-                          </span>
-                        </button>
-                        {/* &nbsp; | &nbsp;
-                        <button type="button" className="btn btn-sm btn-danger" onClick={handleDelete}>
-                          <span className={cx("text")}>Delete</span>
-                        </button> */}
-                      </td>
-                    </tr>
-                  ))}
+                  {accounts.map((account) => {
+                    const index = managers.findIndex(manager => {
+                      return manager.userId === account.userId
+                    })
+                    return (
+                      <tr key={account?.userId}>
+                        <td>{account?.userId}</td>
+                        <td>{account?.username}</td>
+                        <td>{renderRoleName(account?.roleId)}</td>
+                        <td>{renderStateName(account?.userState)}</td>
+                        <td className="text-center">
+                          
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-info"
+                            onClick={(e) => handleEdit(account, managers[index])}
+                          >
+                            <span className={cx("text")}>
+                              <a
+                                href="#modal-opened"
+                                className="link-1"
+                                id="modal-closed"
+                              >
+                                Edit
+                              </a>
+                            </span>
+                          </button>
+                          {/* &nbsp; | &nbsp;
+                      <button type="button" className="btn btn-sm btn-danger" onClick={handleDelete}>
+                        <span className={cx("text")}>Delete</span>
+                      </button> */}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -211,19 +323,16 @@ function AccountManager() {
                       <div className={cx("input-content-wrap")}>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Username
+                            Nhập tên đăng nhập:
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
                               id="input0"
                               type="text"
-                              value={username}
-                              onChange={(e) => setUsername(e.target.value)}
+                              name="username"
+                              value={account.username}
+                              onChange={handleChangeAccount}
                               autoComplete="off"
-                              readOnly
-                              onFocus={(e) =>
-                                e.target.removeAttribute("readonly")
-                              }
                               required
                             />
                             <label htmlFor="input0">Username</label>
@@ -232,19 +341,16 @@ function AccountManager() {
                         </dl>
                         <dl className={cx("inputbox")}>
                           <dt className={cx("inputbox-title")}>
-                            Input Password
+                            Nhập mật khẩu:
                           </dt>
                           <dd className={cx("inputbox-content")}>
                             <input
                               id="input1"
                               type="password"
+                              name="password"
                               autoComplete="off"
-                              readOnly
-                              onFocus={(e) =>
-                                e.target.removeAttribute("readonly")
-                              }
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
+                              value={account.password}
+                              onChange={handleChangeAccount}
                               required
                             />
                             <label htmlFor="input1">Password</label>
@@ -252,73 +358,187 @@ function AccountManager() {
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input Role</dt>
+                          <dt className={cx("inputbox-title")}>Chọn chức vụ</dt>
                           <dd className={cx("inputbox-content")}>
                             <div className={cx("select")}>
                               <select
-                                name="role"
+                                name="roleId"
                                 id="role"
-                                onChange={(e) => setRole(e.target.value)}
-                                value={role}
+                                onChange={handleChangeAccount}
+                                value={account.roleId}
                               >
-                                <option value={ROLE.admin}>Admin</option>
-                                <option value={ROLE.manager}>Manager</option>
+                                <option value={ROLE.admin}>Quản lý trưởng</option>
+                                <option value={ROLE.managerStudent}>
+                                  Quản lý sinh viên
+                                </option>
+                                <option value={ROLE.managerRoom}>
+                                  Quản lý phòng ở
+                                </option>
                                 <option value={ROLE.accountant}>
-                                  Accountant
+                                  Kế toán
                                 </option>
                               </select>
                             </div>
                           </dd>
                         </dl>
                         <dl className={cx("inputbox")}>
-                          <dt className={cx("inputbox-title")}>Input state</dt>
+                          <dt className={cx("inputbox-title")}>
+                            Nhập đầy đủ họ tên:
+                          </dt>
                           <dd className={cx("inputbox-content")}>
-                            <div className={cx("wrapper")}>
-                              <div>
-                                <input
-                                  type="radio"
-                                  id="active"
-                                  name="state"
-                                  value={STATE.active}
-                                  checked={state}
-                                  onChange={(e) => {
-                                    setState(e.target.value);
-                                  }}
-                                />
-                                <label className={cx("label")} htmlFor="active">
-                                  active
-                                </label>
-                              </div>
-                              <div>
-                                <input
-                                  type="radio"
-                                  id="block"
-                                  name="state"
-                                  value={STATE.block}
-                                  checked={state}
-                                  // checked={state === STATE.block}
-                                  onChange={(e) => {
-                                    setState(e.target.value);
-                                  }}
-                                />
-                                <label className={cx("label")} htmlFor="block">
-                                  block
-                                </label>
-                              </div>
-                            </div>
+                            <input
+                              id="fullname"
+                              type="text"
+                              name="fullname"
+                              value={manager.fullname}
+                              onChange={handleChangeManager}
+                              autoComplete="off"
+                              required
+                            />
+                            <label htmlFor="fullname">Fullname</label>
+                            <span className={cx("underline")}></span>
                           </dd>
                         </dl>
+                        <dl className={cx("inputbox")}>
+                          <dt className={cx("inputbox-title")}>
+                            Nhập ngày sinh:
+                          </dt>
+                          <dd className={cx("inputbox-content")}>
+                            <input
+                              type="date"
+                              id="birthday"
+                              name="dateOfBirth"
+                              value={manager.dateOfBirth}
+                              onChange={handleChangeManager}
+                            />
+                          </dd>
+                        </dl>
+                        <dl className={cx("inputbox")}>
+                          <dt className={cx("inputbox-title")}>Nhập Email:</dt>
+                          <dd className={cx("inputbox-content")}>
+                            <input
+                              id="email"
+                              type="email"
+                              name="email"
+                              value={manager.email}
+                              onChange={handleChangeManager}
+                              autoComplete="off"
+                              required
+                            />
+                            <label htmlFor="email">Email</label>
+                            <span className={cx("underline")}></span>
+                          </dd>
+                        </dl>
+                        <dl className={cx("inputbox")}>
+                          <dt className={cx("inputbox-title")}>
+                            Nhập nơi ở hiện tại:
+                          </dt>
+                          <dd className={cx("inputbox-content")}>
+                            <input
+                              id="address"
+                              type="text"
+                              name="address"
+                              value={manager.address}
+                              onChange={handleChangeManager}
+                              autoComplete="off"
+                              required
+                            />
+                            <label htmlFor="address">Address</label>
+                            <span className={cx("underline")}></span>
+                          </dd>
+                        </dl>
+                        <dl className={cx("inputbox")}>
+                          <dt className={cx("inputbox-title")}>Nhập số điện thoại: </dt>
+                          <dd className={cx("inputbox-content")}>
+                            <input
+                              id="phone"
+                              type="text"
+                              name="phone"
+                              value={manager.phone}
+                              onChange={handleChangeManager}
+                              autoComplete="off"
+                              required
+                            />
+                            <label htmlFor="phone">Phone</label>
+                            <span className={cx("underline")}></span>
+                          </dd>
+                        </dl>
+                        <dl className={cx("inputbox")}>
+                          <dt className={cx("inputbox-title")}>
+                            Nhập thời gian làm việc(năm): 
+                          </dt>
+                          <dd className={cx("inputbox-content")}>
+                            <input
+                              id="year-of-service"
+                              type="text"
+                              name="yearOfService"
+                              value={manager.yearOfService}
+                              onChange={handleChangeManager}
+                              autoComplete="off"
+                              required
+                            />
+                            <label htmlFor="year-of-service">
+                              Year of Service
+                            </label>
+                            <span className={cx("underline")}></span>
+                          </dd>
+                        </dl>
+
+                        {mode === "edit" && (
+                          <dl className={cx("inputbox")}>
+                            <dt className={cx("inputbox-title")}>
+                              Trạng thái: 
+                            </dt>
+                            <dd className={cx("inputbox-content")}>
+                              <div className={cx("wrapper")}>
+                                <div>
+                                  <input
+                                    type="radio"
+                                    id="active"
+                                    name="userState"
+                                    value={STATE.active}
+                                    checked={account.userState === STATE.active}
+                                    onChange={handleChangeAccount}
+                                  />
+                                  <label
+                                    className={cx("label")}
+                                    htmlFor="active"
+                                  >
+                                    Đang hoạt động
+                                  </label>
+                                </div>
+                                <div>
+                                  <input
+                                    type="radio"
+                                    id="block"
+                                    name="userState"
+                                    value={STATE.block}
+                                    checked={account.userState === STATE.block}
+                                    // checked={state === STATE.block}
+                                    onChange={handleChangeAccount}
+                                  />
+                                  <label
+                                    className={cx("label")}
+                                    htmlFor="block"
+                                  >
+                                    Bị khoá
+                                  </label>
+                                </div>
+                              </div>
+                            </dd>
+                          </dl>
+                        )}
 
                         <div className={cx("btns")}>
                           <button
                             className={cx("btn", { confirm: true })}
                             onClick={handleSubmit}
                           >
-                            <a href="/account-manager">{mode}</a>
+                            <a href="#">{mode}</a>
                           </button>
                           <button
                             className={cx("btn", { cancel: true })}
-                            onClick={handleCancel}
+                            //onClick={handleCancel}
                           >
                             <a href="#">cancel</a>
                           </button>

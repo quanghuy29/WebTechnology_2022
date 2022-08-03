@@ -32,7 +32,7 @@ $sub-yellow: #ffca00;
     top: 0;
     left: 0;
     width: 100%;
-    height: 300px;
+    height: 100px;
     background: $dark-primary-color;
   }
   &-header {
@@ -106,7 +106,7 @@ $sub-yellow: #ffca00;
           //   outline: none;
         }
 
-        input[type="text"], input[type="password"] {
+        input[type="text"], input[type="password"], input[type="email"] {
           width: 100%;
           height: 30px;
           box-sizing: border-box;
@@ -272,6 +272,7 @@ $sub-yellow: #ffca00;
     top: 50%;
     transform: translate(-50%, -50%);
     width: 56.25em;
+    height: 67.2rem;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -280,6 +281,7 @@ $sub-yellow: #ffca00;
     border-radius: 5px;
     background: white;
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+    overflow: scroll;
   }
   .message {
     font-size: 1.1rem;

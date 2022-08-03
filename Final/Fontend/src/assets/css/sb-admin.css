@@ -10688,10 +10688,7 @@ body {
   width: 90px;
 }
 
-.sidebar .nav-item .nav-link span {
-  font-size: 0.65rem;
-  display: block;
-}
+
 
 .sidebar .nav-item .dropdown-menu {
   position: absolute !important;
@@ -10735,7 +10732,7 @@ body {
     width: 225px;
   }
   .sidebar .nav-item .nav-link span {
-    font-size: 1rem;
+    font-size: 1.5rem;
     display: inline;
   }
   .sidebar .nav-item .dropdown-menu {
@@ -10915,4 +10912,19 @@ body.sidebar-toggled footer.sticky-footer {
   body.sidebar-toggled footer.sticky-footer {
     width: calc(100% - 90px);
   }
+}
+
+.logout {
+  margin: 3px;
+}
+
+.welcome {
+  font-size: 5rem;
+  color:#0c5460;
+  margin-top: 20rem;
+  margin-left: 20rem;
+}
+
+.role {
+  color: white;
 }

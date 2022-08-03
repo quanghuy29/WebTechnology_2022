@@ -1,11 +1,9 @@
 package web.nhom8.quanlyktx.controller.quanlytaikhoan;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import web.nhom8.quanlyktx.model.RequestObject;
 import web.nhom8.quanlyktx.model.ResponseObject;
-import web.nhom8.quanlyktx.model.StudentModel;
+import web.nhom8.quanlyktx.model.RoomModel;
 import web.nhom8.quanlyktx.model.UserModel;
-import web.nhom8.quanlyktx.service.IStudentService;
 import web.nhom8.quanlyktx.service.IUserService;
 import web.nhom8.quanlyktx.utils.HttpUtil;
 
@@ -16,9 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @WebServlet(urlPatterns = {"/api-account_manager"})
 public class AccountManagerAPI extends HttpServlet {
@@ -27,7 +23,7 @@ public class AccountManagerAPI extends HttpServlet {
     private IUserService userService;
     // search student[s]
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
@@ -60,33 +56,49 @@ public class AccountManagerAPI extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
 
-//        StudentModel studentModel = HttpUtil.of(req.getReader()).toModel(StudentModel.class);
-//        Long result = studentService.addNewStudent(studentModel);
-//        ResponseObject responseObject = new ResponseObject();
-//        responseObject.setMessage(result.toString());
-//        if(-1 == result.longValue())
-//        {
-//            responseObject.setStatus(400);
-//            responseObject.setMessage("Failed to add new Student!");
-//        } else {
-//            responseObject.setStatus(200);
-//        }
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.writeValue(resp.getOutputStream(), responseObject);
+        UserModel userModel = HttpUtil.of(req.getReader()).toModel(UserModel.class);
+        Long result = userService.addNewUser(userModel);
+        ResponseObject responseObject = new ResponseObject();
+        responseObject.setMessage(result.toString());
+        if(-1 == result) {
+            responseObject.setStatus(400);
+            responseObject.setMessage("Failed to add new user");
+        } else {
+            responseObject.setStatus(200);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(resp.getOutputStream(), responseObject);
     }
 
     // update student info
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        req.setCharacterEncoding("UTF-8");
-//        resp.setCharacterEncoding("UTF-8");
-//        resp.setContentType("application/json");
-//
-//        StudentModel studentModel = HttpUtil.of(req.getReader()).toModel(StudentModel.class);
-//        studentModel = studentService.updateStudentInfo(studentModel);
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        objectMapper.writeValue(resp.getOutputStream(), studentModel);
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json");
+
+        UserModel userModel = HttpUtil.of(req.getReader()).toModel(UserModel.class);
+        String userId = req.getParameter("userId");
+        if (userId == null){
+            ResponseObject responseFail = new ResponseObject();
+            responseFail.setStatus(0);
+            responseFail.setMessage("Not have id user to update!!");
+            mapper.writeValue(resp.getOutputStream(), responseFail);
+        } else {
+            Integer idUser = Integer.parseInt(userId);
+            userModel.setUserId(idUser);
+            userModel = userService.updateUser(userModel);
+            if (userModel == null){
+                ResponseObject responseFail = new ResponseObject();
+                responseFail.setStatus(0);
+                responseFail.setMessage("Update user failed!!");
+                mapper.writeValue(resp.getOutputStream(), responseFail);
+            }
+            else mapper.writeValue(resp.getOutputStream(), userModel);
+        }
+
     }
 
     @Override

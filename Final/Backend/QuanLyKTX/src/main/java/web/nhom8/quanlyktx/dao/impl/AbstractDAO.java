@@ -71,6 +71,7 @@ public class AbstractDAO<T> implements GenericDAO<T> {
 
             return results;
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         } finally {
             try {

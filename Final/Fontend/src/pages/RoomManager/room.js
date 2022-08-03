@@ -13,6 +13,7 @@ import "./room.module.css";
 import SearchBar from "../../component/searchbar/searchbar";
 
 
+
 const Room = () => {
     const urlGet = 'http://localhost:8080/QuanLyKTX_war_exploded/room';
     const [rooms, setRooms] = useState('');
@@ -28,7 +29,12 @@ const Room = () => {
     const getRoom = useRef()
 
     useEffect(() => {
-        fetch(urlGet)
+        const token = localStorage.getItem("token-auth");
+        fetch(urlGet, {
+            headers:{
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => { setRooms(data); console.log(data); })
     }, [change]);

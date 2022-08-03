@@ -2,6 +2,7 @@ package web.nhom8.quanlyktx.controller.guest;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import web.nhom8.quanlyktx.model.LoginModel;
+import web.nhom8.quanlyktx.model.ResponseLoginObject;
 import web.nhom8.quanlyktx.model.ResponseObject;
 import web.nhom8.quanlyktx.model.UserModel;
 import web.nhom8.quanlyktx.service.IUserService;
@@ -64,9 +65,11 @@ public class LoginAPI extends HttpServlet {
             status = 200;
             System.out.println(msg);
         }
-        ResponseObject responseObject = new ResponseObject();
+        ResponseLoginObject responseObject = new ResponseLoginObject();
         responseObject.setMessage(msg);
         responseObject.setStatus(status);
+        if (userModel != null)
+            responseObject.setRoleId(userModel.getRoleId());
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(resp.getOutputStream(), responseObject);

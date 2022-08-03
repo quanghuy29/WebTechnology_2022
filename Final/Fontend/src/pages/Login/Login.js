@@ -5,15 +5,12 @@ import classNames from "classnames/bind";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./Login.module.scss";
-
-import AuthContext from "../../context/AuthProvider";
+import { setAuthToken } from '../../helpers/setAuthToken';
 
 const cx = classNames.bind(styles);
 const LOGIN_URL = "http://localhost:8080/QuanLyKTX_war_exploded/api-login";
 
 function Login() {
-  const { setAuth } = useContext(AuthContext);
-
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -25,22 +22,12 @@ function Login() {
 
   const classes = cx("input", "form-control", isInvalid);
 
-  // useEffect(() => {
-  //     if (username.trim().length === 0 || password.trim().length === 0) {
-  //         setIsInvalid("is-invalid")
-  //     } else {
-  //         setIsInvalid('')
-  //     }
-  // }, [blur])
-
   const handleValidate = () => {
     setBlur(!blur);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("login")
 
     const dataLogin = JSON.stringify({ email: username, password });
 
@@ -54,14 +41,15 @@ function Login() {
 
         const token = res?.data?.message;
         localStorage.setItem("token-auth", token)
+        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('roleId', res?.data?.roleId);
+        setAuthToken(token);
         const roles = res?.data?.status;
-        setAuth({ username, password, roles, token });
         setUsername("");
         setPassword("");
-
         navigate(from, { replace: true });
-
         toast[optionToast](res.data.message);
+        window.location.reload();
       } else if (res.data?.status === 400) {
         optionToast = "error";
         toast[optionToast](res.data.message);

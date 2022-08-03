@@ -4,11 +4,16 @@ import axios from "axios";
 
 const DeleteRoom = forwardRef((props, ref) => {
     const roomId = props.roomId;
+    const token = localStorage.getItem("token-auth");
     const urlDelete = 'http://localhost:8080/QuanLyKTX_war_exploded/room';
 
     useImperativeHandle(ref, () => ({
         deleteRoom() {
-            axios.delete(urlDelete, {params: {idRoom: roomId}})
+            axios.delete(urlDelete, {params: {idRoom: roomId},
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
                 .then(res => console.log(res));
         }
     }))

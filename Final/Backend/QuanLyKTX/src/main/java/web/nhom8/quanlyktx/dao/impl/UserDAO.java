@@ -71,4 +71,13 @@ public class UserDAO extends AbstractDAO<UserModel> implements IUserDAO {
         if(result == null) result = Long.valueOf(-1);
         return result;
     }
+
+    @Override
+    public UserModel updateUser(UserModel userModel) {
+        String sql = "UPDATE User SET RoleId = ?, Username = ?, Password = ?, State = ?" +
+                " WHERE UserId = ?";
+        update(sql, userModel.getRoleId(), userModel.getUsername(), userModel.getPassword(),
+                userModel.getUserState(), userModel.getUserId());
+        return findOne(userModel.getUserId());
+    }
 }

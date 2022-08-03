@@ -1,7 +1,10 @@
 package web.nhom8.quanlyktx.service.impl;
 
 import web.nhom8.quanlyktx.dao.IStudentDAO;
+import web.nhom8.quanlyktx.dao.IStudentRoomDAO;
 import web.nhom8.quanlyktx.model.StudentModel;
+import web.nhom8.quanlyktx.model.StudentRoomModel;
+import web.nhom8.quanlyktx.service.IStudentRoomService;
 import web.nhom8.quanlyktx.service.IStudentService;
 
 import javax.inject.Inject;
@@ -10,6 +13,8 @@ import java.util.List;
 public class StudentService implements IStudentService {
     @Inject
     private IStudentDAO studentDAO;
+    @Inject
+    private IStudentRoomDAO studentRoomDAO;
 
     @Override
     public List<StudentModel> findAll() {
@@ -39,6 +44,10 @@ public class StudentService implements IStudentService {
     @Override
     public StudentModel updateStudentInfo(StudentModel newStudentModel) {
         studentDAO.updateStudentInfo(newStudentModel);
+        StudentRoomModel student = studentRoomDAO.findByStudentId((long)newStudentModel.getStudentId());
+        student.setStudentCode(newStudentModel.getStudentCode());
+        student.setStudentName(newStudentModel.getFullname());
+        studentRoomDAO.updateName(student);
         return studentDAO.findByStudentCode(newStudentModel.getStudentCode());
     }
 
